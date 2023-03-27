@@ -1,5 +1,6 @@
 import React from 'react';
 import { io } from 'socket.io-client';
+
 function MessageRoom() {
   const socket = io('http://localhost:3001', {
     extraHeaders: { mode: 'cors' },
