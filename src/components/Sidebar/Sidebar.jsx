@@ -1,12 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { GiStaticWaves } from 'react-icons/gi';
 import { RiCompass3Fill } from 'react-icons/ri';
 import { BsPlus } from 'react-icons/bs';
 import { FiSettings } from 'react-icons/fi';
 import { MdOutlineLightMode, MdDarkMode } from 'react-icons/md';
 import { Link } from 'react-router-dom';
+import { useSpring, animated } from '@react-spring/web';
+
+const Icon = ({ icon, text, style = {} }) => {
+  return (
+    <div style={style} className='sidebar-icon group'>
+      {icon}
+      {text && (
+        <span className='sidebar-tooltip group-hover:scale-100'>{text}</span>
+      )}
+    </div>
+  );
+};
+const AnimatedSun = animated(Icon);
+const AnimatedMoon = animated(Icon);
 
 function Sidebar({ theme, setTheme }) {
+  /*   const [toggleAnimation, setToggleAnimation] = useState(false);
+   */
+  const handler = () => {
+    theme === 'light' ? setTheme('dark') : setTheme('light');
+    /*     setToggleAnimation(!toggleAnimation);
+     */
+  };
   return (
     <nav className='fixed top-0 left-0 h-screen w-16 flex flex-col dark:bg-gray-900 dark:text-white shadow-lg'>
       <div>
@@ -26,30 +47,19 @@ function Sidebar({ theme, setTheme }) {
           <Icon icon={<FiSettings size={32} />} text={'Settings'} />
         </Link>
       </div>
-      <div
-        onClick={() =>
-          theme === 'light' ? setTheme('dark') : setTheme('light')
-        }
-      >
+      <div>
         {theme === 'light' ? (
-          <Icon icon={<MdDarkMode size={32} />} />
+          <div onClick={handler} className='rounded-3xl'>
+            <AnimatedMoon icon={<MdDarkMode size={32} />} />
+          </div>
         ) : (
-          <Icon icon={<MdOutlineLightMode size={32} />} />
+          <div onClick={handler} className='rounded-3xl'>
+            <AnimatedSun icon={<MdOutlineLightMode size={32} />} />
+          </div>
         )}
       </div>
     </nav>
   );
 }
-
-const Icon = ({ icon, text }) => {
-  return (
-    <div className='sidebar-icon group'>
-      {icon}
-      {text && (
-        <span className='sidebar-tooltip group-hover:scale-100'>{text}</span>
-      )}
-    </div>
-  );
-};
 
 export default Sidebar;
