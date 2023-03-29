@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Outlet } from 'react-router';
-import Sidebar from '../components/Sidebar/Sidebar';
+import Sidebar from '../components/sidebar/Sidebar';
 
 function Layout() {
   const [theme, setTheme] = useState('light');
