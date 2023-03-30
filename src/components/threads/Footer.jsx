@@ -10,17 +10,18 @@ function Footer({ threadName = 'the group', setMessage, submitMessage }) {
       // submit the data
       e.preventDefault();
       submitMessage();
+      e.target.value = '';
     }
   };
   return (
-    <div>
+    <div className=' dark:bg-gray-700 w-[calc(80%-3.2rem)] absolute bottom-0 '>
       <TextareaAutosize
         rows={'1'}
         style={{ height: 'auto' }}
         onInput={(e) => {
-          e.parentNode.dataset.replicatedValue = e.value;
+          e.target.dataset.replicatedValue = e.value;
         }}
-        className='p-2.5 dark:bg-gray-700 w-[calc(80%-4rem)] resize-none absolute bottom-3 rounded-lg placeholder-gray-500'
+        className='p-2.5 dark:bg-gray-600 m-3 mt-1 w-100 focus:outline-none resize-none rounded-lg placeholder-gray-500 shadow-md drop-shadow-sm'
         onKeyDown={(e) => handleEnterPress(e)}
         onChange={(e) => setMessage(e.target.value)}
         type='text'

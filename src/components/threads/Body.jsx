@@ -29,11 +29,9 @@ function Body({ recievedMessage = null, sentMessage = null }) {
       setCurrentThread([sentMessage]);
     }
   }, [sentMessage]);
-  useEffect(() => {
-    console.log('thread state:', currentThread);
-  }, [currentThread]);
+
   return (
-    <div className=''>
+    <div className='flex flex-col gap-3 overflow-scroll h-[calc(100vh-6rem)] flex-1]'>
       {currentThread.length !== 0 &&
         currentThread.map((messageObj) => <Message message={messageObj} />)}
     </div>

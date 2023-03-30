@@ -1,15 +1,25 @@
 import React from 'react';
 import gfm from 'remark-gfm'; // GH flavored markdown plugin
 import a11yEmoji from '@fec/remark-a11y-emoji';
-import ReactMarkdown from 'react-markdown';
 import remarkGemoji from 'remark-gemoji';
+import ReactMarkdown from 'react-markdown';
+import UserHead from '../users/UserHead';
+import Timestamp from '../utilities/Timestamp';
+
 function Message({ message }) {
   console.log(message);
   return (
-    <div>
-      <ReactMarkdown remarkPlugins={[gfm, a11yEmoji, remarkGemoji]}>
-        {message.message}
-      </ReactMarkdown>
+    <div className='flex gap-2 hover:dark:bg-gray-800 p-3'>
+      <UserHead />
+      <div>
+        <Timestamp
+          timestamp={message.timestamp}
+          username={message.user.username}
+        />
+        <ReactMarkdown remarkPlugins={[gfm, a11yEmoji, remarkGemoji]}>
+          {message.message}
+        </ReactMarkdown>
+      </div>
     </div>
   );
 }

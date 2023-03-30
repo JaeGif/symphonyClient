@@ -22,10 +22,7 @@ function Thread({ socket, room }) {
         room: room,
         user: user,
         message: message,
-        timestamp:
-          new Date(Date.now()).getHours() +
-          ':' +
-          new Date(Date.now()).getMinutes(),
+        timestamp: new Date(Date.now()).toString(),
       };
       await socket.emit('send_message', data);
       setSentMessage(data);

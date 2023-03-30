@@ -7,7 +7,7 @@ function Layout() {
   return (
     <div className={`${theme}`}>
       <div
-        className={`flex space-x-16 dark:bg-gray-800 dark:text-white h-screen w-screen`}
+        className={`flex space-x-16 dark:bg-gray-700 dark:text-white h-screen w-screen overflow-hidden`}
       >
         <Sidebar theme={theme} setTheme={setTheme} />
         <Outlet />
