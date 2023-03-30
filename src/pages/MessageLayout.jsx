@@ -5,7 +5,7 @@ import Room from './Room';
 
 function MessageLayout() {
   return (
-    <div>
+    <div className='debug flex w-screen'>
       <CurrentChats />
       <Room />
       <Outlet />

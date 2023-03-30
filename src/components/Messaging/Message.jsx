@@ -1,13 +1,15 @@
 import React from 'react';
 import gfm from 'remark-gfm'; // GH flavored markdown plugin
-import torchlight from 'remark-torchlight'; // syntax highlighting plugin for code
+import a11yEmoji from '@fec/remark-a11y-emoji';
 import ReactMarkdown from 'react-markdown';
-
+import remarkGemoji from 'remark-gemoji';
 function Message({ message }) {
+  console.log(message);
   return (
     <div>
-      message
-      <ReactMarkdown remarkPlugins={[gfm, torchlight]}>{message}</ReactMarkdown>
+      <ReactMarkdown remarkPlugins={[gfm, a11yEmoji, remarkGemoji]}>
+        {message.message}
+      </ReactMarkdown>
     </div>
   );
 }

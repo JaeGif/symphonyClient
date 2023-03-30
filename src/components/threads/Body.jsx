@@ -33,12 +33,9 @@ function Body({ recievedMessage = null, sentMessage = null }) {
     console.log('thread state:', currentThread);
   }, [currentThread]);
   return (
-    <div>
-      maps here
-      {currentThread.length >= 1 &&
-        currentThread.map((message) => {
-          <Message message={message} />;
-        })}
+    <div className=''>
+      {currentThread.length !== 0 &&
+        currentThread.map((messageObj) => <Message message={messageObj} />)}
     </div>
   );
 }

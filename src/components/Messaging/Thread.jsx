@@ -38,7 +38,7 @@ function Thread({ socket, room }) {
     });
   }, [socket]);
   return (
-    <div>
+    <div className=''>
       <Header />
       <Body recievedMessage={recievedMessage} sentMessage={sentMessage} />
       <Footer

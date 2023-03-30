@@ -29,16 +29,14 @@ function Room() {
       socket.disconnect(); */
     };
   }, []);
-  const sendChat = () => {
-    socket.emit('message', { message: body });
-  };
+
   useEffect(() => {
     socket.on('broadcast_message', (data) => {
       setMessages([...messages, data]);
     });
   }, [socket]);
   return (
-    <div>
+    <div className='flex-1'>
       <Thread socket={socket} room={room} />
     </div>
   );

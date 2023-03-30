@@ -5,9 +5,13 @@ import Sidebar from '../components/sidebar/Sidebar';
 function Layout() {
   const [theme, setTheme] = useState('light');
   return (
-    <div className={`flex ${theme} space-x-44`}>
-      <Sidebar theme={theme} setTheme={setTheme} />
-      <Outlet />
+    <div className={`${theme}`}>
+      <div
+        className={`flex space-x-16 dark:bg-gray-800 dark:text-white h-screen w-screen`}
+      >
+        <Sidebar theme={theme} setTheme={setTheme} />
+        <Outlet />
+      </div>
     </div>
   );
 }
