@@ -11,8 +11,8 @@ function Body({ recievedMessage = null, sentMessage = null }) {
 
     if (currentThread.length >= 1 && keys.length !== 0) {
       setCurrentThread(([...currentThread]) => [
-        ...currentThread,
         recievedMessage,
+        ...currentThread,
       ]);
     } else if (currentThread.length === 0 && keys.length !== 0) {
       setCurrentThread([recievedMessage]);
@@ -23,7 +23,7 @@ function Body({ recievedMessage = null, sentMessage = null }) {
     console.log(keys);
     // populate thread when sending a message
     if (currentThread.length >= 1 && keys.length !== 0) {
-      setCurrentThread(([...currentThread]) => [...currentThread, sentMessage]);
+      setCurrentThread(([...currentThread]) => [sentMessage, ...currentThread]);
     } else if (currentThread.length === 0 && keys.length !== 0) {
       console.log(sentMessage);
       setCurrentThread([sentMessage]);
@@ -31,7 +31,7 @@ function Body({ recievedMessage = null, sentMessage = null }) {
   }, [sentMessage]);
 
   return (
-    <div className='flex flex-col gap-3 overflow-scroll h-[calc(100vh-6rem)] flex-1]'>
+    <div className='flex flex-col-reverse overflow-scroll h-[calc(100vh-6rem)] flex-1]'>
       {currentThread.length !== 0 &&
         currentThread.map((messageObj) => <Message message={messageObj} />)}
     </div>

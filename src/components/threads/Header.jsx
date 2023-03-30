@@ -6,7 +6,7 @@ function Header({
   users,
 }) {
   return (
-    <div className='shadow-md shadow-gray-800 flex p-1 content-center justify-start'>
+    <div className='shadow-sm shadow-gray-800 flex p-1 content-center justify-start'>
       <div className='border-r-gray-600 border-solid border-r p-1.5'>
         <p className='font-semibold'>{threadName}</p>
       </div>
