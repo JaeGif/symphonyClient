@@ -11,7 +11,7 @@ function Message({ message }) {
   return (
     <div className='flex gap-2 hover:dark:bg-gray-800 p-3'>
       <UserHead />
-      <div>
+      <div className='message'>
         <Timestamp
           timestamp={message.timestamp}
           username={message.user.username}
