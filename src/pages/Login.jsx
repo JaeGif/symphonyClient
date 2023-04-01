@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import Background from '../components/Effects/Background';
 
 function Login() {
-  return <div>Login</div>;
+  return (
+    <div>
+      <Background />
+    </div>
+  );
 }
 
 export default Login;

@@ -11,7 +11,7 @@ import Error404 from './pages/Error404';
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState({}); // Stores user data
-  const [isLoggedIn, setIsLoggedIn] = useState(true); // Boolean for conditionally showing login routes
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Boolean for conditionally showing login routes
 
   const loginUser = (isGuest = false) => {};
   const registerUser = () => {};

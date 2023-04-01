@@ -1,0 +1,23 @@
+.colorimg {
+  -webkit-mask-image: url('/assets/inkmask_bottom.png');
+  -webkit-mask-size: cover;
+  -webkit-mask-position: 0% 0%;
+
+  mask-image: url('/assets/inkmask_bottom.png');
+  mask-size: cover;
+  mask-position: 0% 0%;
+}
+
+@keyframes addColor {
+  0% {
+    mask-position: 0% 0%;
+    -webkit-mask-position: 0% 0%;
+  }
+  100% {
+    mask-position: 100% 0%;
+    -webkit-mask-position: 100% 0%;
+  }
+}
+.animation {
+  animation: addColor 2500ms steps(48) forwards;
+}
