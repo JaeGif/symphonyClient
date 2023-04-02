@@ -19,5 +19,5 @@
   }
 }
 .animation {
-  animation: addColor 2500ms steps(48) forwards;
+  animation: addColor 2500ms steps(24) forwards;
 }

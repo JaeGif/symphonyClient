@@ -6,12 +6,12 @@ function Background() {
     <>
       <div className='relative w-screen h-screen overflow-hidden debug'>
         <img
-          className={`min-w-[2160px] min-h-[3840px] ${style.animation} ${style.colorimg} absolute debug`}
+          className={` max-w-screen max-h-[3840px] min-h-full ${style.animation} ${style.colorimg} absolute debug`}
           src='/assets/graffiti-grey.png'
           alt='background grey'
         ></img>
         <img
-          className='min-w-[2160px] min-h-[3840px] block debug'
+          className='max-w-screen max-h-[3840px] min-h-full block debug'
           src='/assets/graffiti-original.jpg'
           alt='background color'
         ></img>
