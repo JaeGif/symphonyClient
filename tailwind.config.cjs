@@ -8,6 +8,7 @@ module.exports = {
       secondary: '#5865f2',
       colors: {
         gray: {
+          950: '#18191B',
           900: '#202225',
           800: '#2f3136',
           700: '#36393f',
@@ -18,6 +19,9 @@ module.exports = {
           100: '#f2f3f5',
         },
       },
+    },
+    fontFamily: {
+      dirtyClassic: ['dirtyClassic', 'sans-serif'],
     },
   },
   plugins: [],

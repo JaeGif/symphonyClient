@@ -1,9 +1,9 @@
 .colorimg {
-  -webkit-mask-image: url('/assets/inkmask_bottom.png');
+  -webkit-mask-image: url('/assets/masks/inkmask_bottom.png');
   -webkit-mask-size: cover;
   -webkit-mask-position: 0% 0%;
 
-  mask-image: url('/assets/inkmask_bottom.png');
+  mask-image: url('/assets/masks/inkmask_bottom.png');
   mask-size: cover;
   mask-position: 0% 0%;
 }

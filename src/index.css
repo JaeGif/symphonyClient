@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'dirtyClassic';
+  src: url('/assets/fonts/DirtyAndClassic-K1no.ttf');
+}
+@font-face {
+  font-family: 'uni-sans';
+  src: url('/assets/fonts/unisans.ttf');
+}
+@layer base {
+  html {
+    font-family: uni-sans, system-ui, sans-serif;
+  }
+}
 @layer components {
   .sidebar-icon {
     @apply relative flex items-center justify-center h-12 w-12 mt-2 mb-2 mx-auto shadow-lg dark:bg-gray-800 text-pink-500 hover:bg-pink-600 dark:hover:text-white hover:text-blue-400 rounded-3xl hover:rounded-xl transition-all duration-100 ease-linear cursor-pointer;
