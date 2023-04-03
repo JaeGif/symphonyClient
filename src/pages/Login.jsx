@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Background from '../components/effects/Background';
-import { motion, useTransform, useMotionValue } from 'framer-motion';
+import { motion } from 'framer-motion';
+import { Bars } from 'react-loading-icons';
 
-function Login() {
+function Login({ loginUser }) {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
   const [animationDone, setAnimationDone] = useState(false);
-  const x = useMotionValue(0);
+
   useEffect(() => {
     setTimeout(() => setAnimationDone(true), 2500);
+    return () => {
+      setIsLoading(false);
+    };
   }, []);
-
+  const [isLoading, setIsLoading] = useState(false);
   return (
     <div>
       <Background />
@@ -37,7 +44,10 @@ function Login() {
               </label>
               <input
                 type='text'
-                className='w-full bg-gray-900 h-9 text-gray-300 rounded-sm border-gray-950 border-[1px] text-xl'
+                onChange={(e) => {
+                  setUsername(e.target.value);
+                }}
+                className='w-full bg-gray-900 h-9 text-gray-300 rounded-sm border-gray-950 border-[1px] text-xl pl-1'
               />
             </div>
             <div>
@@ -46,12 +56,21 @@ function Login() {
               </label>
               <input
                 type='password'
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
                 className='w-full bg-gray-900 h-9 text-gray-300 rounded-sm border-gray-950 border-[1px] text-xl'
               />
             </div>
             <div>
-              <button className='h-8 bg-blue-800 hover:bg-blue-700 w-full rounded-r-sm text-md'>
-                Login
+              <button
+                onClick={() => {
+                  setIsLoading(true);
+                  loginUser(username, password);
+                }}
+                className='h-8 bg-blue-800 hover:bg-blue-700 w-full rounded-sm text-md flex justify-center items-center'
+              >
+                {isLoading ? <Bars className='h-5' /> : 'Login'}
               </button>
               <Link className='text-blue-500 text-sm' to='/register'>
                 Register an Account
