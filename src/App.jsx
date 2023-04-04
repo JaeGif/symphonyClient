@@ -5,7 +5,7 @@ import {
   Navigate,
   useNavigate,
 } from 'react-router-dom';
-import { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from './pages/Layout';
 import MessageLayout from './pages/MessageLayout';
 import Room from './pages/Room';
@@ -14,20 +14,23 @@ import UserProfile from './pages/UserProfile';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Error404 from './pages/Error404';
+const UserContext = React.createContext(null);
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState({}); // Stores user data
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Boolean for conditionally showing login routes
+  const [loginStatus, setLoginStatus] = useState(0);
   const apiURL = import.meta.env.VITE_SOCKET_ADDRESS;
   const navigate = useNavigate();
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('user');
-
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON);
+      console.log(user);
       setLoggedInUser(user);
       setIsLoggedIn(true);
+      navigate('/', { replace: true });
       /*      
       setToken(user.token); */
     }
@@ -57,8 +60,9 @@ function App() {
       method: 'POST',
       body: userData,
     });
+    setLoginStatus(res.status);
     const data = await res.json();
-    console.log(data);
+
     fetchUserData(data.user, data.token);
   };
 
@@ -67,24 +71,29 @@ function App() {
   };
 
   return (
-    <Routes>
-      <Route path='/login' element={<Login loginUser={loginUser} />} />
-      <Route path='/register' element={<Register />} />
-      {isLoggedIn ? (
-        <Route path='/' element={<Layout />}>
-          <Route path='messages' element={<MessageLayout />}>
-            <Route path=':id' element={<Room />} />
+    <UserContext.Provider value={loggedInUser}>
+      <Routes>
+        <Route
+          path='/login'
+          element={<Login loginUser={loginUser} loginStatus={loginStatus} />}
+        />
+        <Route path='/register' element={<Register />} />
+        {isLoggedIn ? (
+          <Route path='/' element={<Layout />}>
+            <Route path='messages' element={<MessageLayout />}>
+              <Route path=':id' element={<Room />} />
+            </Route>
+            <Route path='profile' element={<UserLayout />}>
+              <Route path=':id' element={<UserProfile />} />
+            </Route>
           </Route>
-          <Route path='profile' element={<UserLayout />}>
-            <Route path=':id' element={<UserProfile />} />
-          </Route>
-        </Route>
-      ) : (
-        <Route path='*' element={<Navigate to='/login' />} />
-      )}
-      <Route path='*' element={<Error404 />} />
-    </Routes>
+        ) : (
+          <Route path='*' element={<Navigate to='/login' />} />
+        )}
+        <Route path='*' element={<Error404 />} />
+      </Routes>
+    </UserContext.Provider>
   );
 }
 
-export default App;
+export { App, UserContext };

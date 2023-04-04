@@ -3,7 +3,7 @@ import { Outlet } from 'react-router';
 import Sidebar from '../components/sidebar/Sidebar';
 
 function Layout() {
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState('dark');
   return (
     <div className={`${theme}`}>
       <div

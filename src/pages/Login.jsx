@@ -4,7 +4,7 @@ import Background from '../components/effects/Background';
 import { motion } from 'framer-motion';
 import { Bars } from 'react-loading-icons';
 
-function Login({ loginUser }) {
+function Login({ loginUser, loginStatus }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -16,6 +16,11 @@ function Login({ loginUser }) {
       setIsLoading(false);
     };
   }, []);
+  useEffect(() => {
+    if (loginStatus !== 0) {
+      setIsLoading(false);
+    }
+  }, [loginStatus]);
   const [isLoading, setIsLoading] = useState(false);
   return (
     <div>
@@ -44,6 +49,12 @@ function Login({ loginUser }) {
               </label>
               <input
                 type='text'
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter') {
+                    setIsLoading(true);
+                    loginUser(username, password);
+                  }
+                }}
                 onChange={(e) => {
                   setUsername(e.target.value);
                 }}
@@ -56,6 +67,12 @@ function Login({ loginUser }) {
               </label>
               <input
                 type='password'
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter') {
+                    setIsLoading(true);
+                    loginUser(username, password);
+                  }
+                }}
                 onChange={(e) => {
                   setPassword(e.target.value);
                 }}
