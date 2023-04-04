@@ -7,7 +7,6 @@ import UserHead from '../users/UserHead';
 import Timestamp from '../utilities/Timestamp';
 
 function Message({ message }) {
-  console.log(message);
   return (
     <div className='flex gap-2 hover:dark:bg-gray-800 p-3'>
       <UserHead />

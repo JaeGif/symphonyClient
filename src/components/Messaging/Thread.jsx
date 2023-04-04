@@ -1,16 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { UserContext } from '../../App';
 import Body from '../threads/Body';
 import Footer from '../threads/Footer';
 import Header from '../threads/Header';
 // thread maps messages into a full thread with correct layout
 function Thread({ socket, room }) {
   // dummy user
-  const user = {
-    firstName: 'Jae',
-    lastName: "It's",
-    username: "It's Jae",
-    rooms: [room],
-  };
+  const user = useContext(UserContext);
+
   const [message, setMessage] = useState();
   const [sentMessage, setSentMessage] = useState({});
   const [recievedMessage, setRecievedMessage] = useState({});
@@ -30,7 +27,6 @@ function Thread({ socket, room }) {
   };
   useEffect(() => {
     socket.on('recieve_message', (data) => {
-      console.log(data);
       setRecievedMessage(data);
     });
   }, [socket]);
