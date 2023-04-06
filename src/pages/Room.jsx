@@ -15,7 +15,6 @@ function Room() {
     reconnectionDelay: 100,
     reconnectionAttempts: 10,
   });
-  const [messages, setMessages] = useState([]);
 
   // this room id would be fetched from a MONGO converstation collection
   const [room, setRoom] = useState(id);
@@ -28,11 +27,6 @@ function Room() {
     joinRoom();
   }, []);
 
-  useEffect(() => {
-    socket.on('broadcast_message', (data) => {
-      setMessages([...messages, data]);
-    });
-  }, [socket]);
   return (
     <div className='flex-1'>
       <Thread socket={socket} room={room} />

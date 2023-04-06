@@ -5,6 +5,7 @@ import {
   Navigate,
   useNavigate,
 } from 'react-router-dom';
+
 import React, { useState, useEffect } from 'react';
 import Layout from './pages/Layout';
 import MessageLayout from './pages/MessageLayout';
@@ -15,6 +16,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Error404 from './pages/Error404';
 const UserContext = React.createContext(null);
+const TokenContext = React.createContext(null);
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState({}); // Stores user data
@@ -115,4 +117,4 @@ function App() {
   );
 }
 
-export { App, UserContext };
+export { App, UserContext, TokenContext };
