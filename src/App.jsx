@@ -20,21 +20,34 @@ function App() {
   const [loggedInUser, setLoggedInUser] = useState({}); // Stores user data
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Boolean for conditionally showing login routes
   const [loginStatus, setLoginStatus] = useState(0);
+  const [checkedLoginState, setCheckedLoginState] = useState(false);
+  const [token, setToken] = useState(null);
+
   const apiURL = import.meta.env.VITE_SOCKET_ADDRESS;
   const navigate = useNavigate();
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('user');
     if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON);
-      console.log(user);
-      setLoggedInUser(user);
-      setIsLoggedIn(true);
-      navigate('/', { replace: true });
-      /*      
-      setToken(user.token); */
+      const data = JSON.parse(loggedUserJSON);
+      parseJwt(data);
     }
+    setCheckedLoginState(true);
   }, []);
+  const parseJwt = (data) => {
+    const decode = JSON.parse(atob(data.token.split('.')[1]));
+    if (decode.expire * 1000 < new Date().getTime()) {
+      clearExpiredData();
+      console.log('Token Expired');
+    } else {
+      setLoggedInUser(data.user);
+      setToken(data.token);
+      setIsLoggedIn(true);
+    }
+  };
+  const clearExpiredData = () => {
+    localStorage.clear();
+  };
   const fetchUserData = async (id, token) => {
     const res = await fetch(`${apiURL}/api/users/${id}`, {
       mode: 'cors',
@@ -43,12 +56,12 @@ function App() {
       },
     });
     const data = await res.json();
-    setLoggedInUser(loggedInUser);
+    setLoggedInUser(data.user);
     setIsLoggedIn(true);
     navigate('/', { replace: true });
     window.localStorage.setItem(
       'user',
-      JSON.stringify({ ...data.user, token: token })
+      JSON.stringify({ user: data.user, token: token })
     );
   };
   const loginUser = async (username, password, isGuest = false) => {
@@ -62,7 +75,7 @@ function App() {
     });
     setLoginStatus(res.status);
     const data = await res.json();
-
+    setToken(data.token);
     fetchUserData(data.user, data.token);
   };
 
@@ -72,26 +85,32 @@ function App() {
 
   return (
     <UserContext.Provider value={loggedInUser}>
-      <Routes>
-        <Route
-          path='/login'
-          element={<Login loginUser={loginUser} loginStatus={loginStatus} />}
-        />
-        <Route path='/register' element={<Register />} />
-        {isLoggedIn ? (
-          <Route path='/' element={<Layout />}>
-            <Route path='messages' element={<MessageLayout />}>
-              <Route path=':id' element={<Room />} />
-            </Route>
-            <Route path='profile' element={<UserLayout />}>
-              <Route path=':id' element={<UserProfile />} />
-            </Route>
-          </Route>
-        ) : (
-          <Route path='*' element={<Navigate to='/login' />} />
+      <TokenContext.Provider value={token}>
+        {checkedLoginState && (
+          <Routes>
+            <Route
+              path='/login'
+              element={
+                <Login loginUser={loginUser} loginStatus={loginStatus} />
+              }
+            />
+            <Route path='/register' element={<Register />} />
+            {isLoggedIn ? (
+              <Route exact path='/' element={<Layout />}>
+                <Route path='messages' element={<MessageLayout />}>
+                  <Route path=':id' element={<Room />} />
+                </Route>
+                <Route path='profile' element={<UserLayout />}>
+                  <Route path=':id' element={<UserProfile />} />
+                </Route>
+              </Route>
+            ) : (
+              <Route path='*' element={<Navigate to='/login' />} />
+            )}
+            <Route path='*' element={<Error404 />} />
+          </Routes>
         )}
-        <Route path='*' element={<Error404 />} />
-      </Routes>
+      </TokenContext.Provider>
     </UserContext.Provider>
   );
 }

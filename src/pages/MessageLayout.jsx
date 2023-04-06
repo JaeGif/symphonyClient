@@ -7,7 +7,6 @@ function MessageLayout() {
   return (
     <div className='flex w-screen'>
       <CurrentChats />
-      <Room />
       <Outlet />
     </div>
   );

@@ -15,6 +15,7 @@ function Thread({ socket, room }) {
   const submitMessage = async () => {
     if (message !== '') {
       // send message
+      console.log(user);
       const data = {
         room: room,
         user: user,

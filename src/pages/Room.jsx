@@ -1,33 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import io from 'socket.io-client';
+import { UserContext } from '../App';
 import Thread from '../components/messaging/Thread';
+import { useParams } from 'react-router';
+
 const socketAddress = import.meta.env.VITE_SOCKET_ADDRESS;
 
 function Room() {
+  let { id } = useParams();
+  console.log(id);
+  const user = useContext(UserContext);
   const socket = io.connect(`${socketAddress}`, {
     reconnection: true,
     reconnectionDelay: 100,
     reconnectionAttempts: 10,
   });
-  const [body, setBody] = useState('');
   const [messages, setMessages] = useState([]);
 
   // this room id would be fetched from a MONGO converstation collection
-  const [username, setUsername] = useState('Jae');
-  const [room, setRoom] = useState('room454545');
+  const [room, setRoom] = useState(id);
   const joinRoom = () => {
-    console.log('connect');
-
-    if (username !== '' && room) {
+    if (user.username !== '' && room) {
       socket.emit('join_room', room);
     }
   };
   useEffect(() => {
     joinRoom();
-    return () => {
-      /*       console.log('disconnect');
-      socket.disconnect(); */
-    };
   }, []);
 
   useEffect(() => {
