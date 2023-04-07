@@ -1,42 +1,42 @@
 import React from 'react';
 import Topic from './Topic';
 
-function TopicsList({ setTopic }) {
+function TopicsList({ handleTopicSelection }) {
   return (
     <div className='h-full overflow-scroll w-full'>
       <Topic
-        setTopic={setTopic}
+        handleTopicSelection={handleTopicSelection}
         title='Create New Topic'
         icon={'/assets/favicons/search.png'}
       />
       <p className='text-gray-500 m-2'>START FROM A TOPIC</p>
       <Topic
-        setTopic={setTopic}
+        handleTopicSelection={handleTopicSelection}
         title='Gaming'
         icon={'/assets/favicons/controller.png'}
       />
       <Topic
-        setTopic={setTopic}
+        handleTopicSelection={handleTopicSelection}
         title='Club'
         icon={'/assets/favicons/golf-club.png'}
       />
       <Topic
-        setTopic={setTopic}
+        handleTopicSelection={handleTopicSelection}
         title='Study'
         icon={'/assets/favicons/study.png'}
       />
       <Topic
-        setTopic={setTopic}
+        handleTopicSelection={handleTopicSelection}
         title='Friends'
         icon={'/assets/favicons/living-room.png'}
       />
       <Topic
-        setTopic={setTopic}
+        handleTopicSelection={handleTopicSelection}
         title='Artists'
         icon={'/assets/favicons/artist.png'}
       />
       <Topic
-        setTopic={setTopic}
+        handleTopicSelection={handleTopicSelection}
         title='Community'
         icon={'/assets/favicons/search.png'}
       />

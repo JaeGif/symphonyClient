@@ -1,10 +1,10 @@
 import React from 'react';
 
-function Topic({ setTopic, title = 'Title', icon = null }) {
+function Topic({ handleTopicSelection, title = 'Title', icon = null }) {
   return (
     <div
       onClick={() => {
-        setTopic(title);
+        handleTopicSelection(title);
       }}
       className='border-[1px] border-gray-500 rounded-md flex justify-between items-center p-2 m-2 hover:bg-gray-200 cursor-pointer'
     >
