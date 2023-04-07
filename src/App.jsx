@@ -24,6 +24,7 @@ function App() {
   const [loginStatus, setLoginStatus] = useState(0);
   const [checkedLoginState, setCheckedLoginState] = useState(false);
   const [token, setToken] = useState(null);
+  const [createRoom, setCreateRoom] = useState(false);
 
   const apiURL = import.meta.env.VITE_SOCKET_ADDRESS;
   const navigate = useNavigate();

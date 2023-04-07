@@ -1,0 +1,18 @@
+import React from 'react';
+
+function Topic({ setTopic, title = 'Title', icon = null }) {
+  return (
+    <div
+      onClick={() => {
+        setTopic(title);
+      }}
+      className='border-[1px] border-gray-500 rounded-md flex justify-between items-center p-2 m-2 hover:bg-gray-200 cursor-pointer'
+    >
+      <img className='h-10' src={icon} alt='topic icon' />
+      <p className='font-bold'>{title}</p>
+      <img src='/assets/favicons/next.svg' alt='right chevron' />
+    </div>
+  );
+}
+
+export default Topic;
