@@ -51,7 +51,7 @@ function App() {
   const clearExpiredData = () => {
     localStorage.clear();
   };
-  const fetchUserData = async (id, token) => {
+  const fetchUserData = async (id, token, refetch = false) => {
     const res = await fetch(`${apiURL}/api/users/${id}`, {
       mode: 'cors',
       headers: {
@@ -61,7 +61,9 @@ function App() {
     const data = await res.json();
     setLoggedInUser(data.user);
     setIsLoggedIn(true);
-    navigate('/', { replace: true });
+    if (!refetch) {
+      navigate('/', { replace: true });
+    }
     window.localStorage.setItem(
       'user',
       JSON.stringify({ user: data.user, token: token })
@@ -85,7 +87,9 @@ function App() {
   const registerUser = () => {
     // to be completed
   };
-
+  const refreshUserData = async () => {
+    fetchUserData(loggedInUser._id, token, true);
+  };
   return (
     <UserContext.Provider value={loggedInUser}>
       <TokenContext.Provider value={token}>
@@ -99,7 +103,11 @@ function App() {
             />
             <Route path='/register' element={<Register />} />
             {isLoggedIn ? (
-              <Route exact path='/' element={<Layout />}>
+              <Route
+                exact
+                path='/'
+                element={<Layout refreshUserData={refreshUserData} />}
+              >
                 <Route path='messages' element={<MessageLayout />}>
                   <Route path=':id' element={<Room />} />
                 </Route>

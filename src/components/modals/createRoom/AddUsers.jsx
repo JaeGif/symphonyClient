@@ -1,13 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext, useEffect, useState } from 'react';
-import { TokenContext } from '../../../App';
+import { TokenContext, UserContext } from '../../../App';
 import UserHead from '../../users/UserHead';
 import uniqid from 'uniqid';
 const apiURL = import.meta.env.VITE_SOCKET_ADDRESS;
 
-function AddUsers({ handleUserSelection }) {
+function AddUsers({ handleUsersSelection }) {
   const token = useContext(TokenContext);
-  const [users, setUsers] = useState([]);
+  const loggedInUser = useContext(UserContext);
+  const [users, setUsers] = useState([{ user: loggedInUser, key: uniqid() }]);
   const [query, setQuery] = useState('');
 
   const searchUsers = async (e) => {
@@ -31,7 +32,7 @@ function AddUsers({ handleUserSelection }) {
   const joinUser = (user) => {
     // no multiple users added at once
     for (let i = 0; i < users.length; i++) {
-      if (user.username === users[i].username) {
+      if (user.username === users[i].user.username) {
         return;
       }
     }
@@ -59,20 +60,22 @@ function AddUsers({ handleUserSelection }) {
       <p>Add people to the room.</p>
       <div className='flex gap-1 mb-1'>
         {users.length > 0 &&
-          users.map((item) => (
+          users.map((item, i) => (
             <div className='bg-blue-400 rounded-md p-1 flex gap-2 items-center'>
               <p>{item.user.username}</p>
-              <img
-                onClick={() => removeFromList(item.key)}
-                className='h-5'
-                src='/assets/favicons/close.svg'
-              />
+              {i !== 0 && (
+                <img
+                  onClick={() => removeFromList(item.key)}
+                  className='h-5 cursor-pointer'
+                  src='/assets/favicons/close.svg'
+                />
+              )}
             </div>
           ))}
       </div>
       <input
         onChange={(e) => updateQueryParams(e)}
-        className='border-[1px] border-pink-500 rounded-sm p-1 w-full'
+        className='border-[1px] border-black rounded-sm p-1 w-full'
         type='text'
         placeholder='Add users'
       />
@@ -80,13 +83,21 @@ function AddUsers({ handleUserSelection }) {
         {searchUsersQuery.isFetched &&
           searchUsersQuery.data &&
           searchUsersQuery.data.map((user) => (
-            <div onClick={() => joinUser({ user: user, key: uniqid() })}>
+            <div
+              className='cursor-pointer'
+              onClick={() => joinUser({ user: user, key: uniqid() })}
+            >
               <UserHead user={user} />
             </div>
           ))}
       </div>
       <div className='flex justify-center'>
-        <p className='w-fit cursor-pointer text-2xl text-blue-500 hover:text-blue-400'>
+        <p
+          onClick={() => {
+            handleUsersSelection(users);
+          }}
+          className='w-fit cursor-pointer text-2xl text-blue-500 hover:text-blue-400'
+        >
           Next
         </p>
       </div>

@@ -1,38 +1,46 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { TokenContext, UserContext } from '../../../App';
+import { useNavigate } from 'react-router';
 import AddUsers from './AddUsers';
 import SubmitNewRoom from './SubmitNewRoom';
 import TopicsList from './TopicsList';
 const apiURL = import.meta.env.VITE_SOCKET_ADDRESS;
 
-function CreateRoom({ toggleCreateRoom }) {
+function CreateRoom({ toggleCreateRoom, refreshUserData }) {
   const loggedInUser = useContext(UserContext);
   const token = useContext(TokenContext);
+  const navigate = useNavigate();
 
   const [topic, setTopic] = useState('');
-  const [users, setUsers] = useState([loggedInUser]);
-  const [publicRoom, setPublicRoom] = useState(false);
+  const [users, setUsers] = useState();
+  const [publicRoom, setPublicRoom] = useState(null);
+  const [roomName, setRoomName] = useState(null);
   const [formStage, setFormStage] = useState('topic');
 
   const fetchCreateRoom = async () => {
-    const body = new FormData();
-    data.append('users', users);
-    data.append('topic', topic);
-    data.append('public', publicRoom);
+    let input = {
+      users: JSON.stringify(users),
+      topic: topic,
+      title: roomName,
+      public: publicRoom,
+    };
+    console.log(input);
 
     const res = await fetch(`${apiURL}/api/rooms`, {
       mode: 'cors',
       method: 'POST',
-      body: body,
+      body: JSON.stringify(input),
       headers: {
         Authorization: 'Bearer' + ' ' + token,
+        'Content-Type': 'application/json',
       },
     });
     if (res.status === 200) {
+      const data = await res.json();
+      refreshUserData();
       toggleCreateRoom();
+      navigate(`/messages/${data.room}`);
     }
-    const data = await res.json();
-    console.log(res);
   };
   const stageOfForm = () => {
     switch (formStage) {
@@ -54,10 +62,16 @@ function CreateRoom({ toggleCreateRoom }) {
     setUsers(usersList);
     changeToSubmit();
   };
-  const handleSubmitSelection = (bool) => {
+  const handleSubmitSelection = (title, bool) => {
+    setRoomName(title);
     setPublicRoom(bool);
-    fetchCreateRoom();
   };
+  useEffect(() => {
+    if (roomName && typeof publicRoom === 'boolean') {
+      fetchCreateRoom();
+    }
+  }, [roomName, publicRoom]);
+
   const changeToUsers = () => {
     setFormStage('users');
   };
@@ -76,7 +90,7 @@ function CreateRoom({ toggleCreateRoom }) {
         <img className='h-10' src='/assets/favicons/close-grey.svg' />
       </span>
       <h1>Create a room</h1>
-      <p className='text-gray-500'>
+      <p className='text-gray-500 mb-1'>
         Your room is where you and your friends hang out. Create a room to start
         talking.
       </p>
