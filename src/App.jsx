@@ -16,6 +16,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Error404 from './pages/Error404';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import RoomMountingWrapper from './components/utilities/RoomMountingWrapper';
 const UserContext = React.createContext(null);
 const TokenContext = React.createContext(null);
 
@@ -110,7 +111,7 @@ function App() {
                 element={<Layout refreshUserData={refreshUserData} />}
               >
                 <Route path='messages' element={<MessageLayout />}>
-                  <Route path=':id' element={<Room />} />
+                  <Route path=':id' element={<RoomMountingWrapper />} />
                 </Route>
                 <Route path='profile' element={<UserLayout />}>
                   <Route path=':id' element={<UserProfile />} />

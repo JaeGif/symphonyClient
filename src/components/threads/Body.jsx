@@ -90,6 +90,7 @@ function Body({ room, recievedMessage = null, sentMessage = null }) {
     >
       {currentThread.length !== 0 &&
         currentThread.map((messageObj) => <Message message={messageObj} />)}
+      {messagesQuery.isFetching && <p>Loading</p>}
     </div>
   );
 }
