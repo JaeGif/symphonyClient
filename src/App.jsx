@@ -15,6 +15,7 @@ import UserProfile from './pages/UserProfile';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Error404 from './pages/Error404';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 const UserContext = React.createContext(null);
 const TokenContext = React.createContext(null);
 
@@ -121,6 +122,7 @@ function App() {
             <Route path='*' element={<Error404 />} />
           </Routes>
         )}
+        <ReactQueryDevtools />
       </TokenContext.Provider>
     </UserContext.Provider>
   );
