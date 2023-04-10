@@ -31,20 +31,25 @@ function CurrentChats() {
   });
 
   return (
-    <div className='w-1/5 min-w-fit dark:bg-gray-800 shadow-sm overflow-scroll'>
+    <div
+      style={{ transform: 'scaleX(-1)' }}
+      className={`w-1/5 min-w-fit dark:bg-gray-800 shadow-sm overflow-scroll`}
+    >
       {roomsQueries.map((query) =>
         query.isSuccess ? (
           <Link to={`/messages/${query.data._id}`}>
             <div
+              style={{ transform: 'scaleX(-1)' }}
               className={
                 roomParam.id == query.data._id
-                  ? `p-5 hover:bg-gray-900 cursor-pointer border-r-blue-500 border-r-4 rounded-sm`
-                  : 'p-5 hover:bg-gray-900 cursor-pointer'
+                  ? `p-5 hover:bg-gray-900 cursor-pointer border-r-blue-500 border-r-4 rounded-sm flex justify-between items-center`
+                  : 'p-5 hover:bg-gray-900 cursor-pointer flex justify-between items-center'
               }
             >
               <p className={roomParam.id == query.data._id && `text-pink-500`}>
                 {query.data.title}
               </p>
+              <img className='h-8' src='/assets/favicons/ellipses.svg' />
             </div>
           </Link>
         ) : (
@@ -56,5 +61,4 @@ function CurrentChats() {
     </div>
   );
 }
-
 export default CurrentChats;

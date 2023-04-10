@@ -8,9 +8,9 @@ import Timestamp from '../utilities/Timestamp';
 
 function Message({ message }) {
   return (
-    <div className='flex gap-2 hover:dark:bg-gray-800 p-3'>
+    <div className={`flex gap-2 hover:dark:bg-gray-800 p-3`}>
       <UserHead user={message.user} />
-      <div className='message'>
+      <div>
         <Timestamp
           timestamp={message.timestamp}
           username={message.user.username}

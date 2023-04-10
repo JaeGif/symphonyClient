@@ -2,11 +2,14 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import Message from '../messaging/Message';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { TokenContext } from '../../App';
+import LoadingChat from '../utilities/LoadingChat';
+
 const apiURL = import.meta.env.VITE_SOCKET_ADDRESS;
 
 function Body({ room, recievedMessage = null, sentMessage = null }) {
   const [currentThread, setCurrentThread] = useState([]);
   const ref = useRef(null);
+  const skeletonMap = Array(0, 1, 2, 3, 4, 5, 6, 7, 8);
 
   const token = useContext(TokenContext);
   const returnLimit = 10;
@@ -82,15 +85,19 @@ function Body({ room, recievedMessage = null, sentMessage = null }) {
       setCurrentThread([sentMessage]);
     }
   }, [sentMessage]);
-
+  console.log(messagesQuery);
   return (
     <div
       ref={ref}
-      className='flex flex-col-reverse overflow-scroll h-[calc(100vh-6rem)] flex-1]'
+      className={
+        messagesQuery.isFetching
+          ? 'overflow-hidden '
+          : 'flex flex-col-reverse overflow-scroll h-[calc(100vh-6rem)] flex-1]'
+      }
     >
       {currentThread.length !== 0 &&
         currentThread.map((messageObj) => <Message message={messageObj} />)}
-      {messagesQuery.isFetching && <p>Loading</p>}
+      {messagesQuery.isFetching && skeletonMap.map((el) => <LoadingChat />)}
     </div>
   );
 }

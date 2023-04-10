@@ -50,7 +50,7 @@ function SubmitNewRoom({ handleSubmitSelection }) {
           onClick={() => {
             handleSubmitSelection(title, isPublic);
           }}
-          className='w-fit pr-8 pl-8 pt-1 pb-1 bg-green-500 hover:bg-green-400 cursor-pointer text-2xl rounded-md'
+          className='w-fit pr-8 pl-8 pt-1 pb-1 text-blue-500 hover:text-blue-400 cursor-pointer text-2xl rounded-md'
         >
           Create
         </button>
