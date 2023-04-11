@@ -110,7 +110,10 @@ function App() {
                 path='/'
                 element={<Layout refreshUserData={refreshUserData} />}
               >
-                <Route path='messages' element={<MessageLayout />}>
+                <Route
+                  path='messages'
+                  element={<MessageLayout refreshUserData={refreshUserData} />}
+                >
                   <Route path=':id' element={<RoomMountingWrapper />} />
                 </Route>
                 <Route path='profile' element={<UserLayout />}>
