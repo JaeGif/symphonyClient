@@ -9,7 +9,7 @@ import {
 import React, { useState, useEffect } from 'react';
 import Layout from './pages/Layout';
 import MessageLayout from './pages/MessageLayout';
-import Room from './pages/Room';
+import Explore from './pages/Explore';
 import UserLayout from './pages/UserLayout';
 import UserProfile from './pages/UserProfile';
 import Login from './pages/Login';
@@ -116,6 +116,7 @@ function App() {
                 >
                   <Route path=':id' element={<RoomMountingWrapper />} />
                 </Route>
+                <Route path='explore' element={<Explore />} />
                 <Route path='profile' element={<UserLayout />}>
                   <Route path=':id' element={<UserProfile />} />
                 </Route>

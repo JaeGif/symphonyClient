@@ -30,7 +30,7 @@ function Sidebar({ theme, setTheme, toggleCreateRoom }) {
         <Link to={'/messages'}>
           <Icon icon={<GiStaticWaves size={32} />} text={'Direct Messages'} />
         </Link>
-        <Link to={'/'}>
+        <Link to={'/explore'}>
           <Icon
             icon={<RiCompass3Fill size={32} />}
             text={'Explore Public Rooms'}
