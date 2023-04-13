@@ -9,7 +9,7 @@ function Explore({}) {
   const token = useContext(TokenContext);
 
   const getPopular = async () => {
-    const res = await fetch(`${apiURL}/api/rooms?popular=true`, {
+    const res = await fetch(`${apiURL}/api/rooms?popular=true&returnLimit=9`, {
       mode: 'cors',
       headers: {
         Authorization: 'Bearer' + ' ' + token,
@@ -23,12 +23,17 @@ function Explore({}) {
     queryFn: getPopular,
   });
   return (
-    <div className='p-4 flex w-full h-full items-center flex-col debug'>
+    <div className='p-4 flex w-full items-center flex-col overflow-scroll'>
       <h1>Explore</h1>
-      <div className='w-full debug'>
+      <div>Search</div>
+      <div className='w-full'>
         <h2>Popular Rooms</h2>
-        {popularRoomsQuery.data &&
-          popularRoomsQuery.data.map((room) => <RoomCard room={room} />)}
+        <div className='flex justify-center h-full w-full'>
+          <div className='grid grid-cols-fluid grid-rows-3 h-full w-full gap-y-4 gap-x-1'>
+            {popularRoomsQuery.data &&
+              popularRoomsQuery.data.map((room) => <RoomCard room={room} />)}
+          </div>
+        </div>
       </div>
     </div>
   );

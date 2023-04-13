@@ -20,6 +20,9 @@ module.exports = {
         },
       },
     },
+    gridTemplateColumns: {
+      fluid: 'repeat(auto-fit, minmax(20rem, 1fr))',
+    },
     fontFamily: {
       dirtyClassic: ['dirtyClassic', 'sans-serif'],
     },
