@@ -17,6 +17,7 @@ import Register from './pages/Register';
 import Error404 from './pages/Error404';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import RoomMountingWrapper from './components/utilities/RoomMountingWrapper';
+import SearchResults from './pages/SearchResults';
 const UserContext = React.createContext(null);
 const TokenContext = React.createContext(null);
 
