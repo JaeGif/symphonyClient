@@ -7,7 +7,7 @@ function Timestamp({ timestamp, username }) {
         <em className='font-bold text-pink-500'>{username}</em>
       </p>
       <p>
-        <em className='text-xs text-gray-400'>{timestamp}</em>
+        <em className='text-xs dark:text-gray-400 text-black'>{timestamp}</em>
       </p>
     </div>
   );

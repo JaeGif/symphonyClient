@@ -9,7 +9,7 @@ import { useSpring, animated } from '@react-spring/web';
 
 const Icon = ({ icon, text, style = {} }) => {
   return (
-    <div style={style} className='sidebar-icon group'>
+    <div style={style} className='sidebar-icon group bg-gray-200'>
       {icon}
       {text && (
         <span className='sidebar-tooltip group-hover:scale-100'>{text}</span>
@@ -25,7 +25,7 @@ function Sidebar({ theme, setTheme, toggleCreateRoom }) {
     theme === 'light' ? setTheme('dark') : setTheme('light');
   };
   return (
-    <nav className='fixed top-0 left-0 h-screen w-16 flex flex-col dark:bg-gray-900 dark:text-white shadow-lg'>
+    <nav className='fixed top-0 left-0 h-screen w-16 flex flex-col dark:bg-gray-900 dark:border-none bg-gray-300 border-r-[1px] border-gray-300 dark:text-white shadow-lg'>
       <div>
         <Link to={'/messages'}>
           <Icon icon={<GiStaticWaves size={32} />} text={'Direct Messages'} />

@@ -19,7 +19,7 @@ function Layout({ refreshUserData }) {
         />
       )}
       <div
-        className={`flex space-x-16 dark:bg-gray-700 dark:text-white h-screen w-screen overflow-hidden`}
+        className={`flex space-x-16 dark:bg-gray-700 dark:text-white bg-gray-200 h-screen w-screen overflow-hidden`}
       >
         <Sidebar
           toggleCreateRoom={toggleCreateRoom}

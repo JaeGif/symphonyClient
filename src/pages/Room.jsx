@@ -28,7 +28,7 @@ function Room() {
   }, []);
 
   return (
-    <div className='flex-1'>
+    <div className='flex-1 dark:bg-inherit bg-gray-200'>
       <Thread socket={socket} room={room} />
     </div>
   );

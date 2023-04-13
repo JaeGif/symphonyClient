@@ -9,7 +9,7 @@ function RoomCard({ room }) {
   const token = useContext(TokenContext);
 
   return (
-    <div className='flex flex-col justify-between bg-gray-950 w-80 h-36 rounded-lg p-4 shadow-md'>
+    <div className='flex flex-col justify-between dark:bg-gray-950 bg-gray-100 w-80 h-36 rounded-md p-4 shadow-md border-l-4 border-blue-500'>
       <div className='flex gap-2'>
         <div className='w-12 h-12 rounded-3xl bg-gray-900 overflow-hidden'>
           <img className='w-12 h-12' alt='img' />
@@ -23,7 +23,7 @@ function RoomCard({ room }) {
         </div>
       </div>
       <div className='flex justify-center'>
-        <button className='bg-pink-500 w-fit p-6 pt-2 pb-2 rounded-md'>
+        <button className='bg-pink-500 w-fit p-6 pt-2 pb-2 rounded-md hover:bg-pink-700 hover:text-black text-white'>
           Join
         </button>
       </div>

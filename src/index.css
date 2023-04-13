@@ -20,7 +20,7 @@
     @apply relative flex items-center justify-center h-12 w-12 mt-2 mb-2 mx-auto shadow-lg dark:bg-gray-800 text-pink-500 hover:bg-pink-600 dark:hover:text-white hover:text-blue-400 rounded-3xl hover:rounded-xl transition-all duration-100 ease-linear cursor-pointer;
   }
   .sidebar-tooltip {
-    @apply absolute w-auto p-2 m-2 min-w-max left-14 rounded-md shadow-md dark:text-white dark:bg-gray-900 text-xs font-bold transition-all duration-100 origin-left scale-0;
+    @apply absolute w-auto p-2 m-2 min-w-max left-14 rounded-md shadow-md dark:text-white dark:bg-gray-900 bg-gray-100 text-xs font-bold transition-all duration-100 origin-left scale-0;
   }
   .debug {
     @apply border-red-900 border-solid border-2;

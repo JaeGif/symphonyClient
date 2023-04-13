@@ -35,7 +35,7 @@ function CurrentChats({ refreshUserData }) {
   return (
     <div
       style={{ transform: 'scaleX(-1)' }}
-      className={`w-1/5 min-w-fit dark:bg-gray-800 shadow-sm overflow-scroll`}
+      className={`w-1/5 min-w-fit dark:bg-gray-800 bg-gray-100 shadow-sm overflow-scroll`}
     >
       {roomsQueries.map((query) =>
         query.isSuccess ? (
@@ -44,8 +44,8 @@ function CurrentChats({ refreshUserData }) {
               style={{ transform: 'scaleX(-1)' }}
               className={
                 roomParam.id === query.data._id
-                  ? `p-5 hover:bg-gray-900 cursor-pointer border-r-blue-500 border-r-4 rounded-sm flex justify-between items-center relative`
-                  : 'p-5 hover:bg-gray-900 cursor-pointer flex justify-between items-center relative'
+                  ? `p-5 dark:hover:bg-gray-900 hover:bg-gray-300 cursor-pointer border-r-blue-500 border-r-4 rounded-sm flex justify-between items-center relative`
+                  : 'p-5 dark:hover:bg-gray-900 hover:bg-gray-300 cursor-pointer flex justify-between items-center relative'
               }
             >
               <p
