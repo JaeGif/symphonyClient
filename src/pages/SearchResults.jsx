@@ -1,4 +1,5 @@
 import React from 'react';
+import RoomCard from '../components/details/RoomCard';
 
 function SearchResults({ data }) {
   return (
