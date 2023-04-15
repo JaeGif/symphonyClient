@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import React, { useContext, useEffect, useState } from 'react';
 import { UserContext, TokenContext } from '../App';
 import RoomCard from '../components/details/RoomCard';
@@ -6,6 +6,7 @@ import Search from '../components/modals/createRoom/Search';
 import { useOutlet } from 'react-router';
 import { useSearchParams } from 'react-router-dom';
 import uniqid from 'uniqid';
+import { QueryClient } from '@tanstack/react-query';
 
 import SearchResults from './SearchResults';
 
@@ -23,6 +24,7 @@ function Explore() {
   ];
   const user = useContext(UserContext);
   const token = useContext(TokenContext);
+  const queryClient = useQueryClient();
   const [searchParams, setSearchParams] = useSearchParams({});
   const [searching, setSearching] = useState(false);
   const [selected, setSelected] = useState(null);
@@ -30,6 +32,8 @@ function Explore() {
   const [query, setQuery] = useState('');
 
   useEffect(() => {
+    console.log('Turned');
+
     let params = {};
     if (query) {
       params.title = query;
@@ -58,7 +62,20 @@ function Explore() {
     queryFn: getPopular,
   });
   const getSearchResults = async () => {
-    const res = await fetch(`${apiURL}/api/rooms?${searchParams}`, {
+    console.log(searchParams, 'fetching');
+
+    let params = {};
+    let searchQuery = '';
+    if (query) {
+      params.title = query;
+      searchQuery = `title=${query}`;
+    }
+    if (topicQuery) {
+      params.topic = topicQuery;
+      searchQuery += `&topic=${topicQuery}`;
+    }
+
+    const res = await fetch(`${apiURL}/api/rooms?${searchQuery}`, {
       mode: 'cors',
       method: 'GET',
       headers: { Authorization: 'Bearer' + ' ' + token },
@@ -67,7 +84,7 @@ function Explore() {
     return data.rooms;
   };
   const searchRoomsQuery = useQuery({
-    queryKey: ['rooms', { q: query }],
+    queryKey: ['rooms', { q: query, t: topicQuery }],
     queryFn: getSearchResults,
   });
   const handleSearching = (e) => {
@@ -129,9 +146,7 @@ function Explore() {
         ) : (
           <>
             <h2>Relevant Rooms</h2>
-            {searchParams &&
-            searchRoomsQuery.data &&
-            searchRoomsQuery.data.length !== 0 ? (
+            {searchRoomsQuery.data && searchRoomsQuery.data.length !== 0 ? (
               <SearchResults data={searchRoomsQuery.data} />
             ) : (
               <h1>No rooms match your search.</h1>
