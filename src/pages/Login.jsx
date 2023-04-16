@@ -11,7 +11,7 @@ function Login({ loginUser, loginStatus }) {
   const [animationDone, setAnimationDone] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => setAnimationDone(true), 2500);
+    setTimeout(() => setAnimationDone(true), 1500);
     return () => {
       setIsLoading(false);
     };
@@ -96,6 +96,11 @@ function Login({ loginUser, loginStatus }) {
           </div>
         </div>
       </motion.div>
+      <div className='fixed bottom-5 left-5'>
+        <p className='text-white text-sm'>
+          <em>Background image from wallpaperflare</em>
+        </p>
+      </div>
     </div>
   );
 }

@@ -27,6 +27,7 @@ function App() {
   const [loginStatus, setLoginStatus] = useState(0);
   const [checkedLoginState, setCheckedLoginState] = useState(false);
   const [token, setToken] = useState(null);
+  const [registerStatus, setRegisterStatus] = useState(0);
   const [createRoom, setCreateRoom] = useState(false);
 
   const apiURL = import.meta.env.VITE_SOCKET_ADDRESS;
@@ -87,9 +88,20 @@ function App() {
     fetchUserData(data.user, data.token);
   };
 
-  const registerUser = () => {
+  const registerUser = async (data) => {
     // to be completed
+    const userData = new URLSearchParams();
+    userData.append('username', data.username);
+    userData.append('password', data.password);
+    userData.append('email', data.email);
+    const res = await fetch(`${apiURL}/register`, {
+      mode: 'cors',
+      method: 'POST',
+      body: userData,
+    });
+    setRegisterStatus(res.status);
   };
+
   const refreshUserData = async () => {
     fetchUserData(loggedInUser._id, token, true);
   };
@@ -104,7 +116,16 @@ function App() {
                 <Login loginUser={loginUser} loginStatus={loginStatus} />
               }
             />
-            <Route path='/register' element={<Register />} />
+            <Route
+              path='/register'
+              element={
+                <Register
+                  registerUser={registerUser}
+                  registerStatus={registerStatus}
+                  setRegisterStatus={setRegisterStatus}
+                />
+              }
+            />
             {isLoggedIn ? (
               <Route
                 exact

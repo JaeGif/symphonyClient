@@ -32,8 +32,6 @@ function Explore() {
   const [query, setQuery] = useState('');
 
   useEffect(() => {
-    console.log('Turned');
-
     let params = {};
     if (query) {
       params.title = query;
@@ -62,8 +60,6 @@ function Explore() {
     queryFn: getPopular,
   });
   const getSearchResults = async () => {
-    console.log(searchParams, 'fetching');
-
     let params = {};
     let searchQuery = '';
     if (query) {
@@ -72,7 +68,9 @@ function Explore() {
     }
     if (topicQuery) {
       params.topic = topicQuery;
-      searchQuery += `&topic=${topicQuery}`;
+      if (!query) {
+        searchQuery = `topic=${topicQuery}`;
+      } else searchQuery += `&topic=${topicQuery}`;
     }
 
     const res = await fetch(`${apiURL}/api/rooms?${searchQuery}`, {
@@ -96,10 +94,14 @@ function Explore() {
     if (selected === i) {
       setSelected(null);
       setTopicQuery('');
+      if (query === '') {
+        setSearching(false);
+      }
     } else {
       setTopicQuery(e.target.textContent);
       setSelected(i);
     }
+    if (!searching) setSearching(true);
   };
 
   return (
