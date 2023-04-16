@@ -89,7 +89,11 @@ function Login({ loginUser, loginStatus }) {
               >
                 {isLoading ? <Bars className='h-5' /> : 'Login'}
               </button>
-              <Link className='text-blue-500 text-sm' to='/register'>
+              <Link
+                className='text-blue-500 text-sm'
+                to='/register'
+                replace={true}
+              >
                 Register an Account
               </Link>
             </div>

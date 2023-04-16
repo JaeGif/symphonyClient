@@ -66,7 +66,7 @@ function App() {
     setLoggedInUser(data.user);
     setIsLoggedIn(true);
     if (!refetch) {
-      navigate('/', { replace: true });
+      navigate('/explore', { replace: true });
     }
     window.localStorage.setItem(
       'user',

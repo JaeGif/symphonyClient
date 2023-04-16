@@ -281,7 +281,11 @@ function Register({ registerUser, registerStatus, setRegisterStatus }) {
               >
                 {isLoading ? <Bars className='h-5' /> : 'Register'}
               </button>
-              <Link className='text-blue-500 text-sm' to='/login'>
+              <Link
+                className='text-blue-500 text-sm'
+                to='/login'
+                replace={true}
+              >
                 Already have an account?
               </Link>
             </div>
