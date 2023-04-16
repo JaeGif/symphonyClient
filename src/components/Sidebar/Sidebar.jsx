@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { GiStaticWaves } from 'react-icons/gi';
 import { RiCompass3Fill } from 'react-icons/ri';
 import { BsPlus } from 'react-icons/bs';
@@ -6,6 +6,7 @@ import { FiSettings } from 'react-icons/fi';
 import { MdOutlineLightMode, MdDarkMode } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { useSpring, animated } from '@react-spring/web';
+import { UserContext } from '../../App';
 
 const Icon = ({ icon, text, style = {} }) => {
   return (
@@ -21,6 +22,7 @@ const AnimatedSun = animated(Icon);
 const AnimatedMoon = animated(Icon);
 
 function Sidebar({ theme, setTheme, toggleCreateRoom }) {
+  const user = useContext(UserContext);
   const handler = () => {
     theme === 'light' ? setTheme('dark') : setTheme('light');
   };
@@ -39,7 +41,7 @@ function Sidebar({ theme, setTheme, toggleCreateRoom }) {
         <div onClick={() => toggleCreateRoom()}>
           <Icon icon={<BsPlus size={52} />} text={'New Chat'} />
         </div>
-        <Link>
+        <Link to={`/profile/${user._id}`}>
           <Icon icon={<FiSettings size={32} />} text={'Settings'} />
         </Link>
       </div>
