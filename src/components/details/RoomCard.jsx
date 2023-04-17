@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { UserContext, TokenContext } from '../../App';
 
 const apiURL = import.meta.env.VITE_SOCKET_ADDRESS;
@@ -7,7 +7,17 @@ const apiURL = import.meta.env.VITE_SOCKET_ADDRESS;
 function RoomCard({ room, refreshUserData }) {
   const user = useContext(UserContext);
   const token = useContext(TokenContext);
+  const [isMember, setIsMember] = useState(false);
+  useEffect(() => {
+    for (let i = 0; i < user.rooms.length; i++) {
+      if (user.rooms[i] === room._id) {
+        setIsMember(true);
+      }
+    }
+  }, [user.rooms.length]);
   const joinRoomPut = async () => {
+    setIsMember(true);
+
     const payload = {
       user: user._id,
       room: room._id,
@@ -52,12 +62,19 @@ function RoomCard({ room, refreshUserData }) {
         </div>
       </div>
       <div className='flex justify-center'>
-        <button
-          onClick={joinRoomPut}
-          className='bg-pink-500 w-fit p-6 pt-2 pb-2 rounded-md hover:bg-pink-700 hover:text-black text-white'
-        >
-          Join
-        </button>
+        {!isMember ? (
+          <button
+            onClick={joinRoomPut}
+            disabled={isMember}
+            className='bg-pink-500 w-fit p-6 pt-2 pb-2 rounded-md hover:bg-pink-700 hover:text-black text-white'
+          >
+            Join
+          </button>
+        ) : (
+          <p>
+            <em className='text-gray-500'>Already a member.</em>
+          </p>
+        )}
       </div>
     </div>
   );

@@ -1,12 +1,9 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import React, { useContext, useEffect, useState } from 'react';
 import { UserContext, TokenContext } from '../App';
-import RoomCard from '../components/details/RoomCard';
 import Search from '../components/modals/createRoom/Search';
-import { useOutlet } from 'react-router';
 import { useSearchParams } from 'react-router-dom';
 import uniqid from 'uniqid';
-import { QueryClient } from '@tanstack/react-query';
 
 import SearchResults from './SearchResults';
 

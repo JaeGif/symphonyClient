@@ -64,8 +64,8 @@ function App() {
     });
     const data = await res.json();
     setLoggedInUser(data.user);
-    setIsLoggedIn(true);
     if (!refetch) {
+      setIsLoggedIn(true);
       navigate('/explore', { replace: true });
     }
     window.localStorage.setItem(
