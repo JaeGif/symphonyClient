@@ -1,14 +1,22 @@
 import { useQueries } from '@tanstack/react-query';
-import React, { useContext } from 'react';
-import { useOutletContext } from 'react-router';
+import React, { useContext, useEffect, useState } from 'react';
+import { useOutletContext, useParams } from 'react-router';
 import { TokenContext } from '../App';
 import UserHead from '../components/users/UserHead';
 const apiURL = import.meta.env.VITE_SOCKET_ADDRESS;
 
-function UserProfile() {
+function UserProfile({ logoutUser }) {
   const token = useContext(TokenContext);
   const user = useOutletContext();
+  const profile = useParams();
+  const [isCurrentUser, setIsCurrentUser] = useState(false);
   const rooms = user.rooms;
+
+  useEffect(() => {
+    if (user._id === profile.id) {
+      setIsCurrentUser(true);
+    }
+  }, [user._id, profile.id]);
 
   const getRooms = async (room) => {
     console.log(room.queryKey[1]._id);
@@ -27,7 +35,7 @@ function UserProfile() {
   });
   return (
     <div className='dark:bg-gray-900 bg-white rounded-lg p-4 dark:text-white max-w-xl'>
-      <UserHead hover={false} user={user} />
+      <UserHead hover={false} user={user} size={'2xl'} />
       {user.isModerator && (
         <div>
           <h3 className='w-fit m-2 text-blue-400'>Roles</h3>
@@ -79,6 +87,15 @@ function UserProfile() {
                 )
             )}
           </div>
+        </div>
+      )}
+      {isCurrentUser && (
+        <div
+          onClick={() => logoutUser()}
+          className='flex items-center mt-4 w-fit gap-1 hover:cursor-pointer'
+        >
+          <img className='h-6' src='/assets/favicons/logout.svg' />
+          <p className='text-red-600 text-center'>Logout</p>
         </div>
       )}
     </div>

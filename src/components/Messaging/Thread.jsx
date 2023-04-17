@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { UserContext } from '../../App';
+import { TokenContext, UserContext } from '../../App';
 import Body from '../threads/Body';
 import Footer from '../threads/Footer';
 import Header from '../threads/Header';
@@ -7,7 +7,6 @@ import Header from '../threads/Header';
 function Thread({ socket, room }) {
   // dummy user
   const user = useContext(UserContext);
-
   const [message, setMessage] = useState();
   const [sentMessage, setSentMessage] = useState({});
   const [recievedMessage, setRecievedMessage] = useState({});
@@ -21,20 +20,18 @@ function Thread({ socket, room }) {
         message: message,
         timestamp: new Date(Date.now()).toString(),
       };
-      console.log(data);
       await socket.emit('send_message', data);
       setSentMessage(data);
     }
   };
   useEffect(() => {
     socket.on('recieve_message', (data) => {
-      console.log(data);
       setRecievedMessage(data);
     });
   }, [socket]);
   return (
     <div className=''>
-      <Header />
+      <Header room={room} />
       <Body
         room={room}
         recievedMessage={recievedMessage}

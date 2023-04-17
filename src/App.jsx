@@ -87,7 +87,12 @@ function App() {
     setToken(data.token);
     fetchUserData(data.user, data.token);
   };
-
+  const logoutUser = async () => {
+    setIsLoggedIn(false);
+    setLoggedInUser({});
+    setToken('');
+    window.localStorage.clear();
+  };
   const registerUser = async (data) => {
     // to be completed
     const userData = new URLSearchParams();
@@ -143,7 +148,10 @@ function App() {
                   element={<Explore refreshUserData={refreshUserData} />}
                 />
                 <Route path='profile' element={<UserLayout />}>
-                  <Route path=':id' element={<UserProfile />} />
+                  <Route
+                    path=':id'
+                    element={<UserProfile logoutUser={logoutUser} />}
+                  />
                 </Route>
               </Route>
             ) : (

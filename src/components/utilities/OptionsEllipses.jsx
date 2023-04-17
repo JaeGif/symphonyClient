@@ -1,4 +1,5 @@
 import React, { useContext, useRef, useState, useEffect } from 'react';
+import TailSpin from 'react-loading-icons/dist/esm/components/tail-spin';
 import { TokenContext, UserContext } from '../../App';
 import style from './options.module.css';
 
@@ -8,6 +9,7 @@ function OptionsEllipses({ room, size, refreshUserData }) {
   const token = useContext(TokenContext);
   const loggedInUser = useContext(UserContext);
   const [isToggled, setIsToggled] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const ref = useRef(null);
 
   const handleRemoveUser = async () => {
@@ -76,16 +78,18 @@ function OptionsEllipses({ room, size, refreshUserData }) {
               : 'invisible absolute top-0 w-full p-6'
           }
         >
-          <p
+          <div
+            className='flex justify-center items-center'
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
               handleRemoveUser();
+              setIsLoading(true);
             }}
             type='button'
           >
-            Leave
-          </p>
+            {!isLoading ? <p>Leave</p> : <TailSpin className='h-6' />}
+          </div>
         </div>
       }
       <img className={size} src={`/assets/favicons/ellipses.svg`} />

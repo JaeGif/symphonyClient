@@ -8,7 +8,6 @@ const socketAddress = import.meta.env.VITE_SOCKET_ADDRESS;
 
 function Room() {
   let { id } = useParams();
-  console.log(id);
   const user = useContext(UserContext);
   const socket = io.connect(`${socketAddress}`, {
     reconnection: true,

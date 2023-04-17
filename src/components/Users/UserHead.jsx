@@ -1,7 +1,7 @@
 import React from 'react';
 const apiURL = import.meta.env.VITE_SOCKET_ADDRESS;
 // displays user profile picture, and their username next to messages
-function UserHead({ user, hover = true }) {
+function UserHead({ user, hover = true, size = 'md' }) {
   return (
     <div
       className={
@@ -13,7 +13,7 @@ function UserHead({ user, hover = true }) {
       <div className='h-10 w-10 overflow-hidden rounded-3xl'>
         <img className='h-10' src={`${apiURL}/${user.avatar}`} />
       </div>
-      <p>{user.username}</p>
+      <p className={`text-${size}`}>{user.username}</p>
     </div>
   );
 }
