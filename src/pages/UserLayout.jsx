@@ -7,7 +7,6 @@ const apiURL = import.meta.env.VITE_SOCKET_ADDRESS;
 function UserLayout() {
   const userId = useParams();
   const token = useContext(TokenContext);
-  console.log(userId.id);
   const getUser = async () => {
     const res = await fetch(`${apiURL}/api/users/${userId.id}`, {
       mode: 'cors',

@@ -15,19 +15,20 @@ function Thread({ socket, room }) {
   const submitMessage = async () => {
     if (message !== '') {
       // send message
-      console.log(user);
       const data = {
         room: room,
         user: user,
         message: message,
         timestamp: new Date(Date.now()).toString(),
       };
+      console.log(data);
       await socket.emit('send_message', data);
       setSentMessage(data);
     }
   };
   useEffect(() => {
     socket.on('recieve_message', (data) => {
+      console.log(data);
       setRecievedMessage(data);
     });
   }, [socket]);

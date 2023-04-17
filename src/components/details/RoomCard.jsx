@@ -6,6 +6,7 @@ const apiURL = import.meta.env.VITE_SOCKET_ADDRESS;
 
 function RoomCard({ room, refreshUserData }) {
   const user = useContext(UserContext);
+
   const token = useContext(TokenContext);
   const [isMember, setIsMember] = useState(false);
   useEffect(() => {
