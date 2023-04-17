@@ -138,7 +138,10 @@ function App() {
                 >
                   <Route path=':id' element={<RoomMountingWrapper />} />
                 </Route>
-                <Route path='explore' element={<Explore />} />
+                <Route
+                  path='explore'
+                  element={<Explore refreshUserData={refreshUserData} />}
+                />
                 <Route path='profile' element={<UserLayout />}>
                   <Route path=':id' element={<UserProfile />} />
                 </Route>

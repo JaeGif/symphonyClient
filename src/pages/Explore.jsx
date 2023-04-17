@@ -12,7 +12,7 @@ import SearchResults from './SearchResults';
 
 const apiURL = import.meta.env.VITE_SOCKET_ADDRESS;
 
-function Explore() {
+function Explore({ refreshUserData }) {
   const topics = [
     'Gaming',
     'Study',
@@ -142,14 +142,20 @@ function Explore() {
           <>
             <h2>Popular Rooms</h2>
             {popularRoomsQuery.data && (
-              <SearchResults data={popularRoomsQuery.data} />
+              <SearchResults
+                refreshUserData={refreshUserData}
+                data={popularRoomsQuery.data}
+              />
             )}
           </>
         ) : (
           <>
             <h2>Relevant Rooms</h2>
             {searchRoomsQuery.data && searchRoomsQuery.data.length !== 0 ? (
-              <SearchResults data={searchRoomsQuery.data} />
+              <SearchResults
+                refreshUserData={refreshUserData}
+                data={searchRoomsQuery.data}
+              />
             ) : (
               <h1>No rooms match your search.</h1>
             )}
