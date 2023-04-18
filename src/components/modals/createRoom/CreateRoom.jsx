@@ -15,6 +15,8 @@ function CreateRoom({ toggleCreateRoom, refreshUserData }) {
   const [users, setUsers] = useState();
   const [publicRoom, setPublicRoom] = useState(null);
   const [roomName, setRoomName] = useState(null);
+  const [description, setDescription] = useState('');
+
   const [formStage, setFormStage] = useState('topic');
 
   const fetchCreateRoom = async () => {
@@ -23,6 +25,7 @@ function CreateRoom({ toggleCreateRoom, refreshUserData }) {
       topic: topic,
       title: roomName,
       public: publicRoom,
+      description: description,
     };
     console.log(input);
 
@@ -62,9 +65,12 @@ function CreateRoom({ toggleCreateRoom, refreshUserData }) {
     setUsers(usersList);
     changeToSubmit();
   };
-  const handleSubmitSelection = (title, bool) => {
-    setRoomName(title);
-    setPublicRoom(bool);
+  const handleSubmitSelection = (title, bool, desc) => {
+    if (title) {
+      setRoomName(title);
+      setPublicRoom(bool);
+      setDescription(desc);
+    }
   };
   useEffect(() => {
     if (roomName && typeof publicRoom === 'boolean') {
