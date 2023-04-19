@@ -3,11 +3,14 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useOutletContext, useParams } from 'react-router';
 import { TokenContext } from '../App';
 import UserHead from '../components/users/UserHead';
-const apiURL = import.meta.env.VITE_SOCKET_ADDRESS;
-
-function UserProfile({ logoutUser }) {
+import { Room, User } from '../utilities/Interfaces';
+const apiURL: string = import.meta.env.VITE_SOCKET_ADDRESS;
+type UserProfileProps = {
+  logoutUser: Function;
+};
+function UserProfile({ logoutUser }: UserProfileProps) {
   const token = useContext(TokenContext);
-  const user = useOutletContext();
+  const user = useOutletContext<User>();
   const profile = useParams();
   const [isCurrentUser, setIsCurrentUser] = useState(false);
   const rooms = user.rooms;
@@ -18,9 +21,9 @@ function UserProfile({ logoutUser }) {
     }
   }, [user._id, profile.id]);
 
-  const getRooms = async (room) => {
-    console.log(room.queryKey[1]._id);
-    const res = await fetch(`${apiURL}/api/rooms/${room.queryKey[1]._id}`, {
+  const getRooms = async (room: string): Promise<Room> => {
+    console.log('yes');
+    const res = await fetch(`${apiURL}/api/rooms/${room}`, {
       mode: 'cors',
       headers: { Authorization: 'Bearer' + ' ' + token },
     });
@@ -28,9 +31,9 @@ function UserProfile({ logoutUser }) {
     return data.room;
   };
   const userRooms = useQueries({
-    queries: rooms.map((room) => ({
+    queries: rooms.map((room: string) => ({
       queryKey: ['room', { _id: room }],
-      queryFn: (room) => getRooms(room),
+      queryFn: () => getRooms(room),
     })),
   });
   return (

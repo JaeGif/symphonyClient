@@ -1,6 +1,9 @@
 import React from 'react';
-
-function Timestamp({ timestamp, username }) {
+type TimestampProps = {
+  timestamp: string;
+  username: string;
+};
+function Timestamp({ timestamp, username }: TimestampProps) {
   return (
     <div className='flex gap-2'>
       <p>

@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { Outlet } from 'react-router';
 import CreateRoom from '../components/modals/createRoom/CreateRoom';
 import Sidebar from '../components/sidebar/Sidebar';
-
-function Layout({ refreshUserData }) {
-  const [theme, setTheme] = useState('dark');
-  const [createRoom, setCreateRoom] = useState(false);
+type LayoutProps = {
+  refreshUserData: Function;
+};
+function Layout({ refreshUserData }: LayoutProps) {
+  const [theme, setTheme] = useState<'light' | 'dark'>('dark');
+  const [createRoom, setCreateRoom] = useState<boolean>(false);
   const toggleCreateRoom = () => {
     setCreateRoom(!createRoom);
   };

@@ -4,14 +4,29 @@ import { motion } from 'framer-motion';
 import { Bars } from 'react-loading-icons';
 import { useNavigate } from 'react-router';
 import RegisterBackground from '../components/effects/RegisterBackground';
-const apiURL = import.meta.env.VITE_SOCKET_ADDRESS;
+const apiURL: string = import.meta.env.VITE_SOCKET_ADDRESS;
 
-function Register({ registerUser, registerStatus, setRegisterStatus }) {
+type RegisterProps = {
+  registerUser: Function;
+  registerStatus: number;
+  setRegisterStatus: Function;
+};
+type ValidityObject = {
+  username: boolean;
+  password: boolean;
+  email: boolean;
+  confirmPassword: boolean;
+};
+function Register({
+  registerUser,
+  registerStatus,
+  setRegisterStatus,
+}: RegisterProps) {
   const navigate = useNavigate();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [validObj, setValidObj] = useState({
+  const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [confirmPassword, setConfirmPassword] = useState<string>('');
+  const [validObj, setValidObj] = useState<ValidityObject>({
     username: false,
     password: false,
     email: false,
@@ -35,7 +50,7 @@ function Register({ registerUser, registerStatus, setRegisterStatus }) {
     };
   }, []);
 
-  function validatePassword(e) {
+  function validatePassword(e: React.ChangeEvent<HTMLInputElement>) {
     const password = e.target;
     password.setCustomValidity('');
 
@@ -57,7 +72,7 @@ function Register({ registerUser, registerStatus, setRegisterStatus }) {
       }
     }
   }
-  function matchPasswords(e) {
+  function matchPasswords(e: React.ChangeEvent<HTMLInputElement>) {
     const firstPassword = password;
     const confirmPassword = e.target;
     confirmPassword.setCustomValidity('');
@@ -74,7 +89,7 @@ function Register({ registerUser, registerStatus, setRegisterStatus }) {
       confirmPassword.reportValidity();
     }
   }
-  const checkUnique = async (e) => {
+  const checkUnique = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const username = e.target;
     username.setCustomValidity('');
 
@@ -101,7 +116,7 @@ function Register({ registerUser, registerStatus, setRegisterStatus }) {
     }
   };
 
-  const validateEmail = (e) => {
+  const validateEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     const email = e.target;
     email.setCustomValidity('');
     if (email.checkValidity()) {
@@ -121,21 +136,23 @@ function Register({ registerUser, registerStatus, setRegisterStatus }) {
       }
     }
   };
-  const handleUsername = (e) => {
+  const handleUsername = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);
   };
 
-  const handleEmail = (e) => {
+  const handleEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
-  const handlePassword = (e) => {
+  const handlePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
-  const handleConfirmPassword = (e) => {
+  const handleConfirmPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setConfirmPassword(e.target.value);
   };
-  const validityCheck = (e) => {
-    const button = e.target;
+  const validityCheck = (
+    e: React.KeyboardEvent<HTMLElement> | React.MouseEvent<HTMLElement>
+  ) => {
+    const button = e.target as HTMLButtonElement;
     button.setCustomValidity('');
     let invalidStr = '';
     if (
@@ -180,9 +197,10 @@ function Register({ registerUser, registerStatus, setRegisterStatus }) {
     <div className='overflow-hidden w-screen h-screen'>
       <RegisterBackground />
       <motion.div
-        animate={
-          ({ opacity: animationDone ? 1 : 0 }, { scale: animationDone ? 1 : 0 })
-        }
+        animate={{
+          opacity: animationDone ? 1 : 0,
+          scale: animationDone ? 1 : 0,
+        }}
         style={{ originX: 1, x: 0 }}
         className={
           animationDone
@@ -203,7 +221,7 @@ function Register({ registerUser, registerStatus, setRegisterStatus }) {
               <input
                 type='email'
                 onBlur={(e) => validateEmail(e)}
-                onKeyPress={(e) => {
+                onKeyDown={(e) => {
                   if (e.key === 'Enter') {
                     setIsLoading(true);
                   }
@@ -222,7 +240,7 @@ function Register({ registerUser, registerStatus, setRegisterStatus }) {
               <input
                 type='text'
                 autoComplete='true'
-                onKeyPress={(e) => {
+                onKeyDown={(e) => {
                   if (e.key === 'Enter') {
                     setIsLoading(true);
                   }
@@ -239,7 +257,7 @@ function Register({ registerUser, registerStatus, setRegisterStatus }) {
               </label>
               <input
                 type='password'
-                onKeyPress={(e) => {
+                onKeyDown={(e: React.KeyboardEvent<HTMLElement>) => {
                   if (e.key === 'Enter') {
                     setIsLoading(true);
                     validityCheck(e);
@@ -257,7 +275,7 @@ function Register({ registerUser, registerStatus, setRegisterStatus }) {
               </label>
               <input
                 type='password'
-                onKeyPress={(e) => {
+                onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
                   if (e.key === 'Enter') {
                     setIsLoading(true);
                     validityCheck(e);
@@ -272,7 +290,7 @@ function Register({ registerUser, registerStatus, setRegisterStatus }) {
             <div>
               <button
                 disabled={buttonDisabled}
-                onClick={(e) => {
+                onClick={(e: React.MouseEvent<HTMLElement>) => {
                   e.preventDefault();
                   validityCheck(e);
                 }}

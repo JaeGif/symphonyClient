@@ -7,7 +7,8 @@ import Room from '../../pages/Room';
 function RoomMountingWrapper() {
   const user = useContext(UserContext);
   const { id } = useParams();
-  const isMember = () => {
+  const isMember = (): boolean => {
+    if (!user) return false;
     for (let i = 0; i < user.rooms.length; i++) {
       if (user.rooms[i] === id) return true;
     }

@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom';
 import Background from '../components/effects/Background';
 import { motion } from 'framer-motion';
 import { Bars } from 'react-loading-icons';
-
-function Login({ loginUser, loginStatus }) {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-
-  const [animationDone, setAnimationDone] = useState(false);
+type LoginProps = {
+  loginUser: Function;
+  loginStatus: number;
+};
+function Login({ loginUser, loginStatus }: LoginProps) {
+  const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [animationDone, setAnimationDone] = useState<boolean>(false);
 
   useEffect(() => {
     setTimeout(() => setAnimationDone(true), 1500);
@@ -26,9 +28,10 @@ function Login({ loginUser, loginStatus }) {
     <div>
       <Background />
       <motion.div
-        animate={
-          ({ opacity: animationDone ? 1 : 0 }, { scale: animationDone ? 1 : 0 })
-        }
+        animate={{
+          opacity: animationDone ? 1 : 0,
+          scale: animationDone ? 1 : 0,
+        }}
         style={{ originX: 1, x: 0 }}
         className={
           animationDone
@@ -49,7 +52,7 @@ function Login({ loginUser, loginStatus }) {
               </label>
               <input
                 type='text'
-                onKeyPress={(e) => {
+                onKeyDown={(e) => {
                   if (e.key === 'Enter') {
                     setIsLoading(true);
                     loginUser(username, password);
@@ -67,7 +70,7 @@ function Login({ loginUser, loginStatus }) {
               </label>
               <input
                 type='password'
-                onKeyPress={(e) => {
+                onKeyDown={(e) => {
                   if (e.key === 'Enter') {
                     setIsLoading(true);
                     loginUser(username, password);

@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Outlet, useParams } from 'react-router';
 import { TokenContext } from '../App';
 import { useQuery } from '@tanstack/react-query';
-const apiURL = import.meta.env.VITE_SOCKET_ADDRESS;
+const apiURL: string = import.meta.env.VITE_SOCKET_ADDRESS;
 
 function UserLayout() {
   const userId = useParams();

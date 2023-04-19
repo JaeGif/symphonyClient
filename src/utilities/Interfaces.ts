@@ -2,12 +2,13 @@ export interface User {
   _id: string;
   firstName?: string;
   lastName?: string;
+  website?: string;
   email: string;
-  bio: string;
+  bio?: string;
   username: string;
   isModerator: boolean;
   avatar?: string;
-  rooms: number[];
+  rooms: string[];
 }
 export interface Room {
   users: string[];

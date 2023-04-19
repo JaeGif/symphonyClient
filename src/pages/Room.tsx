@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
-import io from 'socket.io-client';
+import * as io from 'socket.io-client';
 import { UserContext } from '../App';
 import Thread from '../components/messaging/Thread';
 import { useParams } from 'react-router';
 
-const socketAddress = import.meta.env.VITE_SOCKET_ADDRESS;
+const socketAddress: string = import.meta.env.VITE_SOCKET_ADDRESS;
 
 function Room() {
   let { id } = useParams();
@@ -18,6 +18,7 @@ function Room() {
   // this room id would be fetched from a MONGO converstation collection
   const [room, setRoom] = useState(id);
   const joinRoom = () => {
+    if (!user) return;
     if (user.username !== '' && room) {
       socket.emit('join_room', room);
     }

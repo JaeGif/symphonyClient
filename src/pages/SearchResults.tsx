@@ -1,7 +1,10 @@
 import React from 'react';
 import RoomCard from '../components/details/RoomCard';
-
-function SearchResults({ data, refreshUserData }) {
+type SearchResultsProps = {
+  data: string[];
+  refreshUserData: Function;
+};
+function SearchResults({ data, refreshUserData }: SearchResultsProps) {
   return (
     <div>
       <div className='flex justify-center h-full w-full'>

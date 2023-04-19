@@ -8,8 +8,10 @@ import uniqid from 'uniqid';
 import SearchResults from './SearchResults';
 
 const apiURL = import.meta.env.VITE_SOCKET_ADDRESS;
-
-function Explore({ refreshUserData }) {
+type ExploreProps = {
+  refreshUserData: Function;
+};
+function Explore({ refreshUserData }: ExploreProps) {
   const topics = [
     'Gaming',
     'Study',
@@ -23,13 +25,16 @@ function Explore({ refreshUserData }) {
   const token = useContext(TokenContext);
   const queryClient = useQueryClient();
   const [searchParams, setSearchParams] = useSearchParams({});
-  const [searching, setSearching] = useState(false);
-  const [selected, setSelected] = useState(null);
-  const [topicQuery, setTopicQuery] = useState('');
-  const [query, setQuery] = useState('');
+  const [searching, setSearching] = useState<boolean>(false);
+  const [selected, setSelected] = useState<number | null>(null);
+  const [topicQuery, setTopicQuery] = useState<string>('');
+  const [query, setQuery] = useState<string>('');
 
   useEffect(() => {
-    let params = {};
+    let params: {
+      title?: string;
+      topic?: string;
+    } = {};
     if (query) {
       params.title = query;
     }
@@ -42,22 +47,25 @@ function Explore({ refreshUserData }) {
     }
   }, [query, topicQuery]);
 
-  const getPopular = async () => {
+  const getPopular = async (): Promise<string[]> => {
     const res = await fetch(`${apiURL}/api/rooms?popular=true&returnLimit=9`, {
       mode: 'cors',
       headers: {
         Authorization: 'Bearer' + ' ' + token,
       },
     });
-    const data = await res.json({});
+    const data = await res.json();
     return data.rooms;
   };
   const popularRoomsQuery = useQuery({
     queryKey: ['rooms', { popular: true }],
     queryFn: getPopular,
   });
-  const getSearchResults = async () => {
-    let params = {};
+  const getSearchResults = async (): Promise<string[]> => {
+    let params: {
+      title?: string;
+      topic?: string;
+    } = {};
     let searchQuery = '';
     if (query) {
       params.title = query;
@@ -75,19 +83,22 @@ function Explore({ refreshUserData }) {
       method: 'GET',
       headers: { Authorization: 'Bearer' + ' ' + token },
     });
-    const data = await res.json({});
+    const data = await res.json();
     return data.rooms;
   };
   const searchRoomsQuery = useQuery({
     queryKey: ['rooms', { q: query, t: topicQuery }],
     queryFn: getSearchResults,
   });
-  const handleSearching = (e) => {
+  const handleSearching = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value !== '') {
       setSearching(true);
     }
   };
-  const handleTopicSelection = (e, i) => {
+  const handleTopicSelection = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    i: number
+  ) => {
     if (selected === i) {
       setSelected(null);
       setTopicQuery('');
@@ -95,7 +106,8 @@ function Explore({ refreshUserData }) {
         setSearching(false);
       }
     } else {
-      setTopicQuery(e.target.textContent);
+      const target = e.target as HTMLButtonElement;
+      setTopicQuery(target.textContent || '');
       setSelected(i);
     }
     if (!searching) setSearching(true);
@@ -119,7 +131,9 @@ function Explore({ refreshUserData }) {
               <button
                 key={uniqid()}
                 id={uniqid()}
-                onClick={(e) => {
+                onClick={(
+                  e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+                ) => {
                   handleTopicSelection(e, i);
                 }}
                 className={
