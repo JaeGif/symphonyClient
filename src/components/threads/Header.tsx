@@ -2,8 +2,19 @@ import React, { useContext } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { UserContext, TokenContext } from '../../App';
 const apiURL = import.meta.env.VITE_SOCKET_ADDRESS;
-
-function Header({ room }) {
+interface Room {
+  users: string[];
+  messages?: string[];
+  public: boolean;
+  topic: string;
+  description?: string;
+  title: string;
+  avatar?: string;
+}
+type HeaderProps = {
+  room: Room;
+};
+function Header({ room }: HeaderProps) {
   const user = useContext(UserContext);
   const token = useContext(TokenContext);
   const getRoom = async () => {

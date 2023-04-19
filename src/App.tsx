@@ -18,19 +18,24 @@ import Error404 from './pages/Error404';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import RoomMountingWrapper from './components/utilities/RoomMountingWrapper';
 import SearchResults from './pages/SearchResults';
-const UserContext = React.createContext(null);
-const TokenContext = React.createContext(null);
+import { User } from './utilities/Interfaces';
+const UserContext = React.createContext<User | null>(null);
+const TokenContext = React.createContext<string | null>(null);
+type LoginDataProps = {
+  user: User;
+  token: string;
+};
 
 function App() {
-  const [loggedInUser, setLoggedInUser] = useState({}); // Stores user data
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Boolean for conditionally showing login routes
-  const [loginStatus, setLoginStatus] = useState(0);
-  const [checkedLoginState, setCheckedLoginState] = useState(false);
-  const [token, setToken] = useState(null);
-  const [registerStatus, setRegisterStatus] = useState(0);
-  const [createRoom, setCreateRoom] = useState(false);
+  const [loggedInUser, setLoggedInUser] = useState<User | null>(null); // Stores user data
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false); // Boolean for conditionally showing login routes
+  const [loginStatus, setLoginStatus] = useState<number>(0);
+  const [checkedLoginState, setCheckedLoginState] = useState<boolean>(false);
+  const [token, setToken] = useState<string | null>(null);
+  const [registerStatus, setRegisterStatus] = useState<number>(0);
+  const [createRoom, setCreateRoom] = useState<boolean>(false);
 
-  const apiURL = import.meta.env.VITE_SOCKET_ADDRESS;
+  const apiURL: string = import.meta.env.VITE_SOCKET_ADDRESS;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -41,7 +46,7 @@ function App() {
     }
     setCheckedLoginState(true);
   }, []);
-  const parseJwt = (data) => {
+  const parseJwt = (data: LoginDataProps): void => {
     const decode = JSON.parse(atob(data.token.split('.')[1]));
     if (decode.expire * 1000 < new Date().getTime()) {
       clearExpiredData();
@@ -55,7 +60,11 @@ function App() {
   const clearExpiredData = () => {
     localStorage.clear();
   };
-  const fetchUserData = async (id, token, refetch = false) => {
+  const fetchUserData = async (
+    id: string,
+    token: string | null,
+    refetch: boolean = false
+  ): Promise<void> => {
     const res = await fetch(`${apiURL}/api/users/${id}`, {
       mode: 'cors',
       headers: {
@@ -73,7 +82,11 @@ function App() {
       JSON.stringify({ user: data.user, token: token })
     );
   };
-  const loginUser = async (username, password, isGuest = false) => {
+  const loginUser = async (
+    username: string,
+    password: string,
+    isGuest = false
+  ): Promise<void> => {
     const userData = new URLSearchParams();
     userData.append('username', username);
     userData.append('password', password);
@@ -84,16 +97,24 @@ function App() {
     });
     setLoginStatus(res.status);
     const data = await res.json();
-    setToken(data.token);
-    fetchUserData(data.user, data.token);
+    if (data.token) {
+      setToken(data.token);
+    }
+    if (data.user && data.token) {
+      fetchUserData(data.user, data.token);
+    }
   };
   const logoutUser = async () => {
     setIsLoggedIn(false);
-    setLoggedInUser({});
+    setLoggedInUser(null);
     setToken('');
     window.localStorage.clear();
   };
-  const registerUser = async (data) => {
+  const registerUser = async (data: {
+    username: string;
+    password: string;
+    email: string;
+  }): Promise<void> => {
     // to be completed
     const userData = new URLSearchParams();
     userData.append('username', data.username);
@@ -108,7 +129,7 @@ function App() {
   };
 
   const refreshUserData = async () => {
-    fetchUserData(loggedInUser._id, token, true);
+    if (loggedInUser) fetchUserData(loggedInUser._id, token, true);
   };
   return (
     <UserContext.Provider value={loggedInUser}>
@@ -133,7 +154,6 @@ function App() {
             />
             {isLoggedIn ? (
               <Route
-                exact
                 path='/'
                 element={<Layout refreshUserData={refreshUserData} />}
               >

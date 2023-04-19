@@ -1,15 +1,7 @@
 import React from 'react';
+import { User } from '../../utilities/Interfaces';
 const apiURL = import.meta.env.VITE_SOCKET_ADDRESS;
-interface User {
-  firstName?: string;
-  lastName?: string;
-  email: string;
-  bio: string;
-  username: string;
-  isModerator: boolean;
-  avatar?: string;
-  rooms: number[];
-}
+
 type UserHeadProps = {
   user: User;
   hover: boolean;
