@@ -3,54 +3,35 @@ import TailSpin from 'react-loading-icons/dist/esm/components/tail-spin';
 import { TokenContext, UserContext } from '../../App';
 import style from './options.module.css';
 
-const apiURL = import.meta.env.VITE_SOCKET_ADDRESS;
+const apiURL: string = import.meta.env.VITE_SOCKET_ADDRESS;
 
-function OptionsEllipses({ room, size, refreshUserData }) {
+type OptionsEllipsesProps = {
+  room: string;
+  size: string;
+  refreshUserData: Function;
+};
+function OptionsEllipses({
+  room,
+  size,
+  refreshUserData,
+}: OptionsEllipsesProps) {
   const token = useContext(TokenContext);
   const loggedInUser = useContext(UserContext);
   const [isToggled, setIsToggled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const ref = useRef(null);
+  const ref = useRef<HTMLInputElement>(null);
 
-  const handleRemoveUser = async () => {
-    const data = { order: 'userLeaving', user: loggedInUser._id, room: room };
-    const res = await fetch(`${apiURL}/api/rooms/${room}`, {
-      mode: 'cors',
-      method: 'PUT',
-      body: JSON.stringify(data),
-      headers: {
-        Authorization: 'Bearer' + ' ' + token,
-        'Content-Type': 'application/json',
-      },
-    });
-    const userRes = await fetch(`${apiURL}/api/users/${loggedInUser._id}`, {
-      mode: 'cors',
-      method: 'PUT',
-      body: JSON.stringify(data),
-      headers: {
-        Authorization: 'Bearer' + ' ' + token,
-        'Content-Type': 'application/json',
-      },
-    });
-    if (res.status === 200 && userRes.status === 200) {
-      refreshUserData();
-      handleClose();
-      document.removeEventListener('click', handleClickOutside, true);
-    } else if (res.status !== 200) {
-      const jsonData = await res.json();
-    }
-  };
-  const handleOpen = (e) => {
+  const handleOpen = (e: React.FormEvent<HTMLDivElement>): void => {
     e.preventDefault();
     e.stopPropagation();
     setIsToggled(true);
   };
-  const handleClose = (e) => {
+  const handleClose = (): void => {
     setIsToggled(false);
   };
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (ref.current && !ref.current.contains(event.target)) {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
         handleClose();
       }
     };
@@ -59,6 +40,36 @@ function OptionsEllipses({ room, size, refreshUserData }) {
       document.removeEventListener('click', handleClickOutside, true);
     };
   }, []);
+
+  const handleRemoveUser = async () => {
+    if (loggedInUser) {
+      const data = { order: 'userLeaving', user: loggedInUser._id, room: room };
+      const res = await fetch(`${apiURL}/api/rooms/${room}`, {
+        mode: 'cors',
+        method: 'PUT',
+        body: JSON.stringify(data),
+        headers: {
+          Authorization: 'Bearer' + ' ' + token,
+          'Content-Type': 'application/json',
+        },
+      });
+      const userRes = await fetch(`${apiURL}/api/users/${loggedInUser._id}`, {
+        mode: 'cors',
+        method: 'PUT',
+        body: JSON.stringify(data),
+        headers: {
+          Authorization: 'Bearer' + ' ' + token,
+          'Content-Type': 'application/json',
+        },
+      });
+      if (res.status === 200 && userRes.status === 200) {
+        refreshUserData();
+        handleClose();
+      } else if (res.status !== 200) {
+        const jsonData = await res.json();
+      }
+    }
+  };
   return (
     <div
       onClick={(e) => {
@@ -86,7 +97,6 @@ function OptionsEllipses({ room, size, refreshUserData }) {
               handleRemoveUser();
               setIsLoading(true);
             }}
-            type='button'
           >
             {!isLoading ? <p>Leave</p> : <TailSpin className='h-6' />}
           </div>

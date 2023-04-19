@@ -1,6 +1,10 @@
 import React from 'react';
-
-function EmojiIcon({ icon, mouseOver, mouseOut }) {
+type EmojiIconProps = {
+  icon: React.ReactNode;
+  mouseOver: Function;
+  mouseOut: Function;
+};
+function EmojiIcon({ icon, mouseOver, mouseOut }: EmojiIconProps) {
   return (
     <div
       onMouseOut={() => {
