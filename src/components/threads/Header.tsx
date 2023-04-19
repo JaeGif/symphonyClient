@@ -12,7 +12,7 @@ interface Room {
   avatar?: string;
 }
 type HeaderProps = {
-  room: Room;
+  room: string | undefined;
 };
 function Header({ room }: HeaderProps) {
   const user = useContext(UserContext);

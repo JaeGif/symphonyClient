@@ -3,15 +3,10 @@ import { BsEmojiSmile, BsEmojiWink } from 'react-icons/bs';
 import EmojiIcon from '../utilities/EmojiIcon';
 import TextareaAutosize from 'react-textarea-autosize';
 type FooterProps = {
-  threadName: string;
   setMessage: Function;
   submitMessage: Function;
 };
-function Footer({
-  threadName = 'the group',
-  setMessage,
-  submitMessage,
-}: FooterProps) {
+function Footer({ setMessage, submitMessage }: FooterProps) {
   const [wink, setWink] = useState(false);
   const handleEnterPress = (e: any) => {
     // enter key has code 13
@@ -38,7 +33,7 @@ function Footer({
         className='p-2.5 dark:bg-gray-600 m-3 mt-1 mr-0 w-screen focus:outline-none resize-none rounded-lg placeholder-gray-500 shadow-md drop-shadow-sm'
         onKeyDown={(e) => handleEnterPress(e)}
         onChange={(e) => setMessage(e.target.value)}
-        placeholder={`Message ${threadName}`}
+        placeholder={`Message the group`}
       ></TextareaAutosize>
 
       <EmojiIcon

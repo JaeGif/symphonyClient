@@ -1,15 +1,24 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { TokenContext, UserContext } from '../../App';
+import * as io from 'socket.io-client';
 import Body from '../threads/Body';
 import Footer from '../threads/Footer';
 import Header from '../threads/Header';
+import { MessageType } from '../../utilities/Interfaces';
+
+type ThreadProps = {
+  socket: io.Socket;
+  room: string | undefined;
+};
 // thread maps messages into a full thread with correct layout
-function Thread({ socket, room }) {
+function Thread({ socket, room }: ThreadProps) {
   // dummy user
   const user = useContext(UserContext);
-  const [message, setMessage] = useState();
-  const [sentMessage, setSentMessage] = useState({});
-  const [recievedMessage, setRecievedMessage] = useState({});
+  const [message, setMessage] = useState<string>();
+  const [sentMessage, setSentMessage] = useState<MessageType | null>(null);
+  const [recievedMessage, setRecievedMessage] = useState<MessageType | null>(
+    null
+  );
 
   const submitMessage = async () => {
     if (message !== '') {
@@ -20,7 +29,7 @@ function Thread({ socket, room }) {
         message: message,
         timestamp: new Date(Date.now()).toString(),
       };
-      await socket.emit('send_message', data);
+      socket.emit('send_message', data);
       setSentMessage(data);
     }
   };
@@ -37,13 +46,7 @@ function Thread({ socket, room }) {
         recievedMessage={recievedMessage}
         sentMessage={sentMessage}
       />
-      <Footer
-        room={room}
-        user={user}
-        socket={socket}
-        setMessage={setMessage}
-        submitMessage={submitMessage}
-      />
+      <Footer setMessage={setMessage} submitMessage={submitMessage} />
     </div>
   );
 }

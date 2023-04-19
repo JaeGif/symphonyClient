@@ -11,6 +11,7 @@ export interface User {
   rooms: string[];
 }
 export interface Room {
+  _id: string;
   users: string[];
   messages?: string[];
   public: boolean;
@@ -18,4 +19,10 @@ export interface Room {
   description?: string;
   title: string;
   avatar?: string;
+}
+export interface MessageType {
+  room: string | undefined;
+  user: User | null;
+  message: string | undefined;
+  timestamp: string;
 }

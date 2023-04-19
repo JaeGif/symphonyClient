@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, ReactNode, CSSProperties } from 'react';
 import { GiStaticWaves } from 'react-icons/gi';
 import { RiCompass3Fill } from 'react-icons/ri';
 import { BsPlus } from 'react-icons/bs';
@@ -7,8 +7,12 @@ import { MdOutlineLightMode, MdDarkMode } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { useSpring, animated } from '@react-spring/web';
 import { UserContext } from '../../App';
-
-const Icon = ({ icon, text, style = {} }) => {
+type IconProps = {
+  icon: ReactNode;
+  text: string;
+  style: CSSProperties;
+};
+const Icon = ({ icon, text, style }: IconProps) => {
   return (
     <div style={style} className='sidebar-icon group bg-gray-200'>
       {icon}
@@ -20,8 +24,12 @@ const Icon = ({ icon, text, style = {} }) => {
 };
 const AnimatedSun = animated(Icon);
 const AnimatedMoon = animated(Icon);
-
-function Sidebar({ theme, setTheme, toggleCreateRoom }) {
+type SidebarProps = {
+  theme: 'light' | 'dark';
+  setTheme: Function;
+  toggleCreateRoom: Function;
+};
+function Sidebar({ theme, setTheme, toggleCreateRoom }: SidebarProps) {
   const user = useContext(UserContext);
   const handler = () => {
     theme === 'light' ? setTheme('dark') : setTheme('light');

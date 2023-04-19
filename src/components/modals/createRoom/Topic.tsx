@@ -1,6 +1,10 @@
-import React from 'react';
-
-function Topic({ handleTopicSelection, title = 'Title', icon = null }) {
+import React, { ReactNode } from 'react';
+type TopicProps = {
+  handleTopicSelection: Function;
+  title: string;
+  icon: string;
+};
+function Topic({ handleTopicSelection, title = 'Title', icon }: TopicProps) {
   return (
     <div
       onClick={() => {

@@ -16,7 +16,7 @@ function Room() {
   });
 
   // this room id would be fetched from a MONGO converstation collection
-  const [room, setRoom] = useState(id);
+  const [room, setRoom] = useState<string | undefined>(id);
   const joinRoom = () => {
     if (!user) return;
     if (user.username !== '' && room) {

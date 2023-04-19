@@ -3,15 +3,18 @@ import React, { useContext, useEffect, useState } from 'react';
 import { TokenContext, UserContext } from '../../../App';
 import UserHead from '../../users/UserHead';
 import uniqid from 'uniqid';
+import { User } from '../../../utilities/Interfaces';
 const apiURL = import.meta.env.VITE_SOCKET_ADDRESS;
-
-function AddUsers({ handleUsersSelection }) {
+type AddUsersProps = {
+  handleUsersSelection: Function;
+};
+function AddUsers({ handleUsersSelection }: AddUsersProps) {
   const token = useContext(TokenContext);
   const loggedInUser = useContext(UserContext);
   const [users, setUsers] = useState([{ user: loggedInUser, key: uniqid() }]);
   const [query, setQuery] = useState('');
 
-  const searchUsers = async (e) => {
+  const searchUsers = async () => {
     const res = await fetch(`${apiURL}/api/users?q=${query}`, {
       mode: 'cors',
       headers: {
@@ -21,7 +24,7 @@ function AddUsers({ handleUsersSelection }) {
     const data = await res.json();
     return data.users;
   };
-  const updateQueryParams = (e) => {
+  const updateQueryParams = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
   };
   const searchUsersQuery = useQuery({
@@ -29,16 +32,18 @@ function AddUsers({ handleUsersSelection }) {
     queryFn: searchUsers,
     enabled: Boolean(query),
   });
-  const joinUser = (user) => {
+  const joinUser = (userData: { user: User; key: string }) => {
     // no multiple users added at once
+    if (!userData) return;
+
     for (let i = 0; i < users.length; i++) {
-      if (user.username === users[i].user.username) {
+      if (userData.user.username === users[i].user?.username) {
         return;
       }
     }
-    setUsers([...users, user]);
+    setUsers([...users, userData]);
   };
-  const removeFromList = (key) => {
+  const removeFromList = (key: string) => {
     let usersObj = [...users];
     for (let i = 0; i < usersObj.length; i++) {
       console.log(users[i].key, key);
@@ -62,7 +67,7 @@ function AddUsers({ handleUsersSelection }) {
         {users.length > 0 &&
           users.map((item, i) => (
             <div className='bg-blue-400 rounded-md p-1 flex gap-2 items-center'>
-              <p>{item.user.username}</p>
+              <p>{item.user?.username}</p>
               {i !== 0 && (
                 <img
                   onClick={() => removeFromList(item.key)}
@@ -82,12 +87,12 @@ function AddUsers({ handleUsersSelection }) {
       <div>
         {searchUsersQuery.isFetched &&
           searchUsersQuery.data &&
-          searchUsersQuery.data.map((user) => (
+          searchUsersQuery.data.map((user: User) => (
             <div
               className='cursor-pointer'
               onClick={() => joinUser({ user: user, key: uniqid() })}
             >
-              <UserHead user={user} />
+              <UserHead user={user} hover={true} size={'md'} />
             </div>
           ))}
       </div>

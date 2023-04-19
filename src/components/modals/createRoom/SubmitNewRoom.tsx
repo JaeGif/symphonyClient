@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import style from './submit.module.css';
-
-function SubmitNewRoom({ handleSubmitSelection }) {
+type SubmitNewRoomProps = {
+  handleSubmitSelection: Function;
+};
+function SubmitNewRoom({ handleSubmitSelection }: SubmitNewRoomProps) {
   const maxCount = 150;
   const [isPublic, setIsPublic] = useState(true);
   const [title, setTitle] = useState('');
@@ -25,10 +27,7 @@ function SubmitNewRoom({ handleSubmitSelection }) {
         <fieldset
           className={`relative border-[1px] border-pink-500 ${style.rounded}`}
         >
-          <legend
-            htmlFor='title'
-            className='rounded-md absolute text-xs m-0 ml-1 p-0 pl-1 pr-1 -top-2 bg-white text-gray-500'
-          >
+          <legend className='rounded-md absolute text-xs m-0 ml-1 p-0 pl-1 pr-1 -top-2 bg-white text-gray-500'>
             Give your room a name
           </legend>
           <input
@@ -53,7 +52,6 @@ function SubmitNewRoom({ handleSubmitSelection }) {
               setDescription(e.target.value);
             }}
             className='p-1 rounded-md w-full border-[1px] border-pink-500 resize-none'
-            type='text'
             name='description'
             id='description'
           ></textarea>

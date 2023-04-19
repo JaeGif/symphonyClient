@@ -4,18 +4,21 @@ import { useNavigate } from 'react-router';
 import AddUsers from './AddUsers';
 import SubmitNewRoom from './SubmitNewRoom';
 import TopicsList from './TopicsList';
-const apiURL = import.meta.env.VITE_SOCKET_ADDRESS;
-
-function CreateRoom({ toggleCreateRoom, refreshUserData }) {
+const apiURL: string = import.meta.env.VITE_SOCKET_ADDRESS;
+type CreateRoomProps = {
+  toggleCreateRoom: Function;
+  refreshUserData: Function;
+};
+function CreateRoom({ toggleCreateRoom, refreshUserData }: CreateRoomProps) {
   const loggedInUser = useContext(UserContext);
   const token = useContext(TokenContext);
   const navigate = useNavigate();
 
-  const [topic, setTopic] = useState('');
-  const [users, setUsers] = useState();
-  const [publicRoom, setPublicRoom] = useState(null);
-  const [roomName, setRoomName] = useState(null);
-  const [description, setDescription] = useState('');
+  const [topic, setTopic] = useState<string>('');
+  const [users, setUsers] = useState<string[]>();
+  const [publicRoom, setPublicRoom] = useState<boolean | null>(null);
+  const [roomName, setRoomName] = useState<string | null>(null);
+  const [description, setDescription] = useState<string>('');
 
   const [formStage, setFormStage] = useState('topic');
 
@@ -57,15 +60,19 @@ function CreateRoom({ toggleCreateRoom, refreshUserData }) {
         return <TopicsList handleTopicSelection={handleTopicSelection} />;
     }
   };
-  const handleTopicSelection = (title) => {
+  const handleTopicSelection = (title: string) => {
     setTopic(title);
     changeToUsers();
   };
-  const handleUsersSelection = (usersList) => {
+  const handleUsersSelection = (usersList: string[]) => {
     setUsers(usersList);
     changeToSubmit();
   };
-  const handleSubmitSelection = (title, bool, desc) => {
+  const handleSubmitSelection = (
+    title: string,
+    bool: boolean,
+    desc: string
+  ) => {
     if (title) {
       setRoomName(title);
       setPublicRoom(bool);

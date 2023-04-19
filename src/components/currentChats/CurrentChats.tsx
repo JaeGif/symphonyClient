@@ -5,15 +5,17 @@ import { Link, useParams } from 'react-router-dom';
 import { BallTriangle } from 'react-loading-icons';
 import OptionsEllipses from '../utilities/OptionsEllipses';
 
-const apiURL = import.meta.env.VITE_SOCKET_ADDRESS;
-
-function CurrentChats({ refreshUserData }) {
+const apiURL: string = import.meta.env.VITE_SOCKET_ADDRESS;
+type CurrentChatsProps = {
+  refreshUserData: Function;
+};
+function CurrentChats({ refreshUserData }: CurrentChatsProps) {
   const loggedInUser = useContext(UserContext);
   const token = useContext(TokenContext);
   const roomParam = useParams();
   const [optionsOpen, setOptionsOpen] = useState(false);
 
-  const fetchRoom = async (room) => {
+  const fetchRoom = async (room: string) => {
     const res = await fetch(`${apiURL}/api/rooms/${room}`, {
       mode: 'cors',
       headers: {
@@ -24,7 +26,7 @@ function CurrentChats({ refreshUserData }) {
     return data.room;
   };
   const roomsQueries = useQueries({
-    queries: loggedInUser.rooms.map((room) => {
+    queries: loggedInUser!.rooms.map((room) => {
       return {
         queryKey: ['room', { _id: room }],
         queryFn: () => fetchRoom(room),

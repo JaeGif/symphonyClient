@@ -1,7 +1,9 @@
 import React from 'react';
 import Topic from './Topic';
-
-function TopicsList({ handleTopicSelection }) {
+type TopicsListProps = {
+  handleTopicSelection: Function;
+};
+function TopicsList({ handleTopicSelection }: TopicsListProps) {
   return (
     <div className='h-full overflow-scroll w-full'>
       <Topic

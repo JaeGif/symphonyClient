@@ -1,8 +1,12 @@
 import React, { useContext } from 'react';
 import { TokenContext, UserContext } from '../../../App';
 const apiURL = import.meta.env.VITE_SCOKET_ADDRESS;
-
-function Search({ setQuery, handleSearching, setSearching }) {
+type SearchProps = {
+  setQuery: Function;
+  handleSearching: Function;
+  setSearching: Function;
+};
+function Search({ setQuery, handleSearching, setSearching }: SearchProps) {
   const user = useContext(UserContext);
   const token = useContext(TokenContext);
 

@@ -1,26 +1,31 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext, useEffect, useState } from 'react';
 import { UserContext, TokenContext } from '../../App';
+import { Room } from '../../utilities/Interfaces';
 
-const apiURL = import.meta.env.VITE_SOCKET_ADDRESS;
-
-function RoomCard({ room, refreshUserData }) {
+const apiURL: string = import.meta.env.VITE_SOCKET_ADDRESS;
+type RoomCardProps = {
+  room: Room;
+  refreshUserData: Function;
+};
+function RoomCard({ room, refreshUserData }: RoomCardProps) {
   const user = useContext(UserContext);
 
   const token = useContext(TokenContext);
   const [isMember, setIsMember] = useState(false);
   useEffect(() => {
+    if (!user) return;
     for (let i = 0; i < user.rooms.length; i++) {
       if (user.rooms[i] === room._id) {
         setIsMember(true);
       }
     }
-  }, [user.rooms.length]);
+  }, [user?.rooms.length]);
   const joinRoomPut = async () => {
     setIsMember(true);
 
     const payload = {
-      user: user._id,
+      user: user?._id,
       room: room._id,
       order: 'userJoining',
     };
@@ -33,7 +38,7 @@ function RoomCard({ room, refreshUserData }) {
       method: 'PUT',
       body: JSON.stringify(payload),
     });
-    const resUser = await fetch(`${apiURL}/api/users/${user._id}`, {
+    const resUser = await fetch(`${apiURL}/api/users/${user?._id}`, {
       mode: 'cors',
       headers: {
         Authorization: 'Bearer' + ' ' + token,

@@ -22,7 +22,6 @@ function UserProfile({ logoutUser }: UserProfileProps) {
   }, [user._id, profile.id]);
 
   const getRooms = async (room: string): Promise<Room> => {
-    console.log('yes');
     const res = await fetch(`${apiURL}/api/rooms/${room}`, {
       mode: 'cors',
       headers: { Authorization: 'Bearer' + ' ' + token },

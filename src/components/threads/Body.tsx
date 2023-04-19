@@ -3,12 +3,16 @@ import Message from '../messaging/Message';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { TokenContext } from '../../App';
 import LoadingChat from '../utilities/LoadingChat';
-
+import { MessageType } from '../../utilities/Interfaces';
 const apiURL = import.meta.env.VITE_SOCKET_ADDRESS;
-
-function Body({ room, recievedMessage = null, sentMessage = null }) {
-  const [currentThread, setCurrentThread] = useState([]);
-  const ref = useRef(null);
+type BodyProps = {
+  room: string | undefined;
+  recievedMessage: MessageType | null;
+  sentMessage: MessageType | null;
+};
+function Body({ room, recievedMessage = null, sentMessage = null }: BodyProps) {
+  const [currentThread, setCurrentThread] = useState<MessageType[]>([]);
+  const ref = useRef<HTMLDivElement | null>(null);
   const skeletonMap = [1];
 
   const token = useContext(TokenContext);
@@ -51,7 +55,8 @@ function Body({ room, recievedMessage = null, sentMessage = null }) {
   }, [messagesQuery.isFetching]);
 
   useEffect(() => {
-    const messageContainer = ref.current;
+    const messageContainer = ref.current as HTMLDivElement;
+    if (!messageContainer) return;
     const onScroll = function () {
       if (messageContainer.scrollTop === 0) {
         if (!messagesQuery.isFetchingNextPage) {
@@ -64,6 +69,7 @@ function Body({ room, recievedMessage = null, sentMessage = null }) {
   }, [messagesQuery.isFetching]);
 
   useEffect(() => {
+    if (!recievedMessage) return;
     const keys = Object.keys(recievedMessage);
 
     if (currentThread.length >= 1 && keys.length !== 0) {
@@ -76,6 +82,7 @@ function Body({ room, recievedMessage = null, sentMessage = null }) {
     }
   }, [recievedMessage]);
   useEffect(() => {
+    if (!sentMessage) return;
     const keys = Object.keys(sentMessage);
     // populate thread when sending a message
     if (currentThread.length >= 1 && keys.length !== 0) {
