@@ -9,8 +9,8 @@ import { useSpring, animated } from '@react-spring/web';
 import { UserContext } from '../../App';
 type IconProps = {
   icon: ReactNode;
-  text: string;
-  style: CSSProperties;
+  text?: string;
+  style?: CSSProperties;
 };
 const Icon = ({ icon, text, style }: IconProps) => {
   return (
@@ -37,7 +37,7 @@ function Sidebar({ theme, setTheme, toggleCreateRoom }: SidebarProps) {
   return (
     <nav className='fixed top-0 left-0 h-screen w-16 flex flex-col dark:bg-gray-900 dark:border-none bg-gray-300 border-r-[1px] border-gray-300 dark:text-white shadow-lg'>
       <div>
-        <Link to={'/messages'}>
+        <Link to={user?.rooms[0] ? `/messages/${user?.rooms[0]}` : '/messages'}>
           <Icon icon={<GiStaticWaves size={32} />} text={'Direct Messages'} />
         </Link>
         <Link to={'/explore'}>
@@ -49,18 +49,21 @@ function Sidebar({ theme, setTheme, toggleCreateRoom }: SidebarProps) {
         <div onClick={() => toggleCreateRoom()}>
           <Icon icon={<BsPlus size={52} />} text={'New Chat'} />
         </div>
-        <Link to={`/profile/${user._id}`}>
+        <Link to={`/profile/${user!._id}`}>
           <Icon icon={<FiSettings size={32} />} text={'Settings'} />
         </Link>
       </div>
       <div>
         {theme === 'light' ? (
           <div onClick={handler} className='rounded-3xl'>
-            <AnimatedMoon icon={<MdDarkMode size={32} />} />
+            <AnimatedMoon icon={<MdDarkMode size={32} />} text={'Theme'} />
           </div>
         ) : (
           <div onClick={handler} className='rounded-3xl'>
-            <AnimatedSun icon={<MdOutlineLightMode size={32} />} />
+            <AnimatedSun
+              icon={<MdOutlineLightMode size={32} />}
+              text={'Theme'}
+            />
           </div>
         )}
       </div>
