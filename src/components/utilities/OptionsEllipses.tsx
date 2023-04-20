@@ -19,7 +19,7 @@ function OptionsEllipses({
   const loggedInUser = useContext(UserContext);
   const [isToggled, setIsToggled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const ref = useRef<HTMLInputElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   const handleOpen = (e: React.FormEvent<HTMLDivElement>): void => {
     e.preventDefault();

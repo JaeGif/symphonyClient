@@ -54,12 +54,7 @@ function AddUsers({ handleUsersSelection }: AddUsersProps) {
       }
     }
   };
-  useEffect(() => {
-    console.log(searchUsersQuery.data);
-  }, [searchUsersQuery.data]);
-  useEffect(() => {
-    console.log(users);
-  }, [users]);
+
   return (
     <div className='w-full gap-1'>
       <p>Add people to the room.</p>

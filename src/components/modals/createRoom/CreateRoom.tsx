@@ -4,6 +4,9 @@ import { useNavigate } from 'react-router';
 import AddUsers from './AddUsers';
 import SubmitNewRoom from './SubmitNewRoom';
 import TopicsList from './TopicsList';
+import uniqid from 'uniqid';
+import { motion } from 'framer-motion';
+
 const apiURL: string = import.meta.env.VITE_SOCKET_ADDRESS;
 type CreateRoomProps = {
   toggleCreateRoom: Function;
@@ -30,7 +33,6 @@ function CreateRoom({ toggleCreateRoom, refreshUserData }: CreateRoomProps) {
       public: publicRoom,
       description: description,
     };
-    console.log(input);
 
     const res = await fetch(`${apiURL}/api/rooms`, {
       mode: 'cors',
@@ -95,7 +97,16 @@ function CreateRoom({ toggleCreateRoom, refreshUserData }: CreateRoomProps) {
     setFormStage('topic');
   };
   return (
-    <div className='max-h-[70vh] min-w-[30vw] absolute z-10 bg-white top-[15vh] left-[calc(35vw)] p-5 flex items-center flex-col rounded-md'>
+    <motion.div
+      key={uniqid()}
+      animate={{
+        opacity: 1,
+        scale: 1,
+      }}
+      initial={{ opacity: 0, scale: 0 }}
+      style={{ originX: 1, x: 0 }}
+      className='max-h-[70vh] min-w-[30vw] absolute z-10 bg-white top-[15vh] left-[calc(35vw)] p-5 flex items-center flex-col rounded-md'
+    >
       <span
         onClick={() => toggleCreateRoom()}
         className='absolute top-3 right-3 cursor-pointer'
@@ -108,7 +119,7 @@ function CreateRoom({ toggleCreateRoom, refreshUserData }: CreateRoomProps) {
         talking.
       </p>
       {stageOfForm()}
-    </div>
+    </motion.div>
   );
 }
 

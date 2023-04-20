@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import gfm from 'remark-gfm'; // GH flavored markdown plugin
 import remarkGemoji from 'remark-gemoji';
 import ReactMarkdown from 'react-markdown';
@@ -7,7 +7,10 @@ import Timestamp from '../utilities/Timestamp';
 import { MessageType } from '../../utilities/Interfaces';
 import { TokenContext, UserContext } from '../../App';
 import { useMutation } from '@tanstack/react-query';
+import MessageOptions from '../modals/messageOptions/MessageOptions';
+import { AnimatePresence } from 'framer-motion';
 const apiURL: string = import.meta.env.VITE_SOCKET_ADDRESS;
+
 type MessageProps = {
   message: MessageType;
 };
@@ -15,7 +18,8 @@ type MessageProps = {
 function Message({ message }: MessageProps) {
   const token = useContext(TokenContext);
   const user = useContext(UserContext);
-  console.log(user, message);
+  const [visibleOptions, setVisibleOptions] = useState<boolean>(false);
+
   const deleteMessage = async () => {
     const res = await fetch(`${apiURL}/api/messages/${message._id}`, {
       mode: 'cors',
@@ -44,8 +48,12 @@ function Message({ message }: MessageProps) {
     mutationKey: ['editMessage'],
     mutationFn: putMessage,
   });
+  const handleDelete = () => {
+    deleteMutation;
+  };
+  const openEdit = () => {};
   return (
-    <div className={`flex hover:dark:bg-gray-800 p-3 justify-between`}>
+    <div className={`flex hover:dark:bg-gray-800 p-3 justify-between relative`}>
       <div className='flex gap-2 items-center'>
         <UserHead hover={false} user={message.user!} size={'md'} />
         <div>
@@ -58,9 +66,23 @@ function Message({ message }: MessageProps) {
           </ReactMarkdown>
         </div>
       </div>
-      {user?._id === message.user?._id && (
-        <img src='/assets/favicons/ellipses.svg' alt='message options' />
+      {user?._id === message.user?._id && !visibleOptions && (
+        <img
+          className='hover:cursor-pointer'
+          onClick={() => setVisibleOptions(true)}
+          src='/assets/favicons/ellipses.svg'
+          alt='message options'
+        />
       )}
+      <AnimatePresence>
+        {visibleOptions && (
+          <MessageOptions
+            handleDelete={handleDelete}
+            openEdit={openEdit}
+            closeOptions={setVisibleOptions}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
