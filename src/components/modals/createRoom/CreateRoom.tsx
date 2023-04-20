@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import { TokenContext, UserContext } from '../../../App';
 import { useNavigate } from 'react-router';
 import AddUsers from './AddUsers';
@@ -22,8 +22,21 @@ function CreateRoom({ toggleCreateRoom, refreshUserData }: CreateRoomProps) {
   const [publicRoom, setPublicRoom] = useState<boolean | null>(null);
   const [roomName, setRoomName] = useState<string | null>(null);
   const [description, setDescription] = useState<string>('');
-
   const [formStage, setFormStage] = useState('topic');
+
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        toggleCreateRoom();
+      }
+    };
+    document.addEventListener('click', handleClickOutside, true);
+    return () => {
+      document.removeEventListener('click', handleClickOutside, true);
+    };
+  }, []);
 
   const fetchCreateRoom = async () => {
     let input = {
@@ -98,13 +111,14 @@ function CreateRoom({ toggleCreateRoom, refreshUserData }: CreateRoomProps) {
   };
   return (
     <motion.div
+      ref={ref}
       key={uniqid()}
       animate={{
         opacity: 1,
         scale: 1,
       }}
       initial={{ opacity: 0, scale: 0 }}
-      style={{ originX: 1, x: 0 }}
+      exit={{ opacity: 0, scale: 0, transition: { duration: 0.1 } }}
       className='max-h-[70vh] min-w-[30vw] absolute z-10 bg-white top-[15vh] left-[calc(35vw)] p-5 flex items-center flex-col rounded-md'
     >
       <span
