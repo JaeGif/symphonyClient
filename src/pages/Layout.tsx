@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Outlet } from 'react-router';
+import { Outlet, useOutlet } from 'react-router';
 import CreateRoom from '../components/modals/createRoom/CreateRoom';
 import Sidebar from '../components/sidebar/Sidebar';
 type LayoutProps = {
