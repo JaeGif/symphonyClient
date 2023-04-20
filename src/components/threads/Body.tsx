@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import Message from '../messaging/Message';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useMutation } from '@tanstack/react-query';
 import { TokenContext } from '../../App';
 import LoadingChat from '../utilities/LoadingChat';
 import { MessageType } from '../../utilities/Interfaces';
@@ -38,6 +38,7 @@ function Body({ room, recievedMessage = null, sentMessage = null }: BodyProps) {
       getNextPageParam: (lastPage, pages) => lastPage.nextCursor ?? undefined,
       getPreviousPageParam: (firstPage, pages) =>
         firstPage.previousCursor ?? undefined,
+      refetchOnWindowFocus: false,
     }
   );
   useEffect(() => {
