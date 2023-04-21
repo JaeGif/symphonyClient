@@ -42,7 +42,7 @@ function MessageOptions({
       </button>
       <button
         className='text-red-500 hover:bg-gray-900 p-5'
-        onCanPlayThrough={() => handleDelete()}
+        onClick={() => handleDelete()}
       >
         Delete
       </button>

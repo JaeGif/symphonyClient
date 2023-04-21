@@ -18,6 +18,15 @@ function Body({ room, recievedMessage = null, sentMessage = null }: BodyProps) {
   const token = useContext(TokenContext);
   const returnLimit = 10;
 
+  const removeMessage = (_id: string) => {
+    for (let i = 0; i < currentThread.length; i++) {
+      if (currentThread[i]._id === _id) {
+        let threadMod = [...currentThread];
+        threadMod.splice(i, 1);
+        setCurrentThread(threadMod);
+      }
+    }
+  };
   const messagesQuery = useInfiniteQuery(
     ['messages', { room: room }],
     async ({ pageParam = 0 }) => {
@@ -100,7 +109,9 @@ function Body({ room, recievedMessage = null, sentMessage = null }: BodyProps) {
       }
     >
       {currentThread.length !== 0 &&
-        currentThread.map((messageObj) => <Message message={messageObj} />)}
+        currentThread.map((messageObj) => (
+          <Message message={messageObj} removeMessage={removeMessage} />
+        ))}
       {messagesQuery.isFetching && skeletonMap.map((el) => <LoadingChat />)}
     </div>
   );

@@ -15,9 +15,10 @@ const apiURL: string = import.meta.env.VITE_SOCKET_ADDRESS;
 
 type MessageProps = {
   message: MessageType;
+  removeMessage: Function;
 };
 
-function Message({ message }: MessageProps) {
+function Message({ message, removeMessage }: MessageProps) {
   const token = useContext(TokenContext);
   const user = useContext(UserContext);
   const [visibleOptions, setVisibleOptions] = useState<boolean>(false);
@@ -31,8 +32,6 @@ function Message({ message }: MessageProps) {
       method: 'DELETE',
       headers: { Authorization: 'Bearer' + ' ' + token },
     });
-    const data = await res.json();
-    return data.message;
   };
   const putMessage = async () => {
     const editData = {
@@ -54,6 +53,9 @@ function Message({ message }: MessageProps) {
   const deleteMutation = useMutation({
     mutationKey: ['deleteMessage'],
     mutationFn: deleteMessage,
+    onSuccess: () => {
+      removeMessage(message._id);
+    },
   });
   const editMutatation = useMutation({
     mutationKey: ['editMessage'],
