@@ -27,9 +27,15 @@ const AnimatedMoon = animated(Icon);
 type SidebarProps = {
   theme: 'light' | 'dark';
   setTheme: Function;
-  toggleCreateRoom: Function;
+  openCreateRoom: Function;
+  createRoom?: boolean;
 };
-function Sidebar({ theme, setTheme, toggleCreateRoom }: SidebarProps) {
+function Sidebar({
+  theme,
+  setTheme,
+  openCreateRoom,
+  createRoom,
+}: SidebarProps) {
   const user = useContext(UserContext);
   const handler = () => {
     theme === 'light' ? setTheme('dark') : setTheme('light');
@@ -46,7 +52,11 @@ function Sidebar({ theme, setTheme, toggleCreateRoom }: SidebarProps) {
             text={'Explore Public Rooms'}
           />
         </Link>
-        <div onClick={() => toggleCreateRoom()}>
+        <div
+          onClick={() => {
+            if (!createRoom) openCreateRoom();
+          }}
+        >
           <Icon icon={<BsPlus size={52} />} text={'New Chat'} />
         </div>
         <Link to={`/profile/${user!._id}`}>

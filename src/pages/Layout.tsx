@@ -12,12 +12,19 @@ function Layout({ refreshUserData }: LayoutProps) {
   const toggleCreateRoom = () => {
     setCreateRoom(!createRoom);
   };
-
+  const closeCreateRoom = () => {
+    if (createRoom) setCreateRoom(false);
+  };
+  const openCreateRoom = () => {
+    if (!createRoom) setCreateRoom(true);
+  };
   return (
     <div className={`${theme} relative`}>
       <AnimatePresence>
         {createRoom && (
           <CreateRoom
+            openCreateRoom={openCreateRoom}
+            closeCreateRoom={closeCreateRoom}
             toggleCreateRoom={toggleCreateRoom}
             refreshUserData={refreshUserData}
           />
@@ -27,7 +34,8 @@ function Layout({ refreshUserData }: LayoutProps) {
         className={`flex space-x-16 dark:bg-gray-700 dark:text-white bg-gray-200 h-screen w-screen overflow-hidden`}
       >
         <Sidebar
-          toggleCreateRoom={toggleCreateRoom}
+          createRoom={createRoom}
+          openCreateRoom={openCreateRoom}
           theme={theme}
           setTheme={setTheme}
         />

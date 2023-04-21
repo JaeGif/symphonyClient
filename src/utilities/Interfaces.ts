@@ -21,7 +21,7 @@ export interface Room {
   avatar?: string;
 }
 export interface MessageType {
-  _id: string;
+  _id?: string;
   room: string | undefined;
   user: User | null;
   message: string | undefined;

@@ -5,6 +5,7 @@ import Body from '../threads/Body';
 import Footer from '../threads/Footer';
 import Header from '../threads/Header';
 import { MessageType } from '../../utilities/Interfaces';
+import uniqid from 'uniqid';
 
 type ThreadProps = {
   socket: io.Socket;
@@ -24,6 +25,7 @@ function Thread({ socket, room }: ThreadProps) {
     if (message !== '') {
       // send message
       const data = {
+        _id: uniqid() + Date.now(),
         room: room,
         user: user,
         message: message,
@@ -35,6 +37,7 @@ function Thread({ socket, room }: ThreadProps) {
   };
   useEffect(() => {
     socket.on('recieve_message', (data) => {
+      console.log(data);
       setRecievedMessage(data);
     });
   }, [socket]);

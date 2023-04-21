@@ -11,8 +11,15 @@ const apiURL: string = import.meta.env.VITE_SOCKET_ADDRESS;
 type CreateRoomProps = {
   toggleCreateRoom: Function;
   refreshUserData: Function;
+  openCreateRoom: Function;
+  closeCreateRoom: Function;
 };
-function CreateRoom({ toggleCreateRoom, refreshUserData }: CreateRoomProps) {
+function CreateRoom({
+  toggleCreateRoom,
+  refreshUserData,
+  openCreateRoom,
+  closeCreateRoom,
+}: CreateRoomProps) {
   const loggedInUser = useContext(UserContext);
   const token = useContext(TokenContext);
   const navigate = useNavigate();
@@ -29,7 +36,7 @@ function CreateRoom({ toggleCreateRoom, refreshUserData }: CreateRoomProps) {
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) {
-        toggleCreateRoom();
+        closeCreateRoom();
       }
     };
     document.addEventListener('click', handleClickOutside, true);
@@ -59,7 +66,7 @@ function CreateRoom({ toggleCreateRoom, refreshUserData }: CreateRoomProps) {
     if (res.status === 200) {
       const data = await res.json();
       refreshUserData();
-      toggleCreateRoom();
+      closeCreateRoom();
       navigate(`/messages/${data.room}`);
     }
   };
@@ -122,7 +129,7 @@ function CreateRoom({ toggleCreateRoom, refreshUserData }: CreateRoomProps) {
       className='max-h-[70vh] min-w-[30vw] absolute z-10 bg-white top-[15vh] left-[calc(35vw)] p-5 flex items-center flex-col rounded-md'
     >
       <span
-        onClick={() => toggleCreateRoom()}
+        onClick={() => closeCreateRoom()}
         className='absolute top-3 right-3 cursor-pointer'
       >
         <img className='h-10' src='/assets/favicons/close-grey.svg' />
