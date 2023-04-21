@@ -7,10 +7,9 @@ import { MessageType } from '../../utilities/Interfaces';
 const apiURL = import.meta.env.VITE_SOCKET_ADDRESS;
 type BodyProps = {
   room: string | undefined;
-  recievedMessage: MessageType | null;
-  sentMessage: MessageType | null;
+  recievedMessage: MessageType;
 };
-function Body({ room, recievedMessage = null, sentMessage = null }: BodyProps) {
+function Body({ room, recievedMessage }: BodyProps) {
   const [currentThread, setCurrentThread] = useState<MessageType[]>([]);
   const ref = useRef<HTMLDivElement | null>(null);
   const skeletonMap = [1];
@@ -21,9 +20,11 @@ function Body({ room, recievedMessage = null, sentMessage = null }: BodyProps) {
   const removeMessage = (_id: string) => {
     for (let i = 0; i < currentThread.length; i++) {
       if (currentThread[i]._id === _id) {
+        console.log('removing', i, currentThread[i]);
         let threadMod = [...currentThread];
         threadMod.splice(i, 1);
         setCurrentThread(threadMod);
+        break;
       }
     }
   };
@@ -52,9 +53,13 @@ function Body({ room, recievedMessage = null, sentMessage = null }: BodyProps) {
   );
   useEffect(() => {
     if (messagesQuery.data) {
+      console.log(messagesQuery.data.pages.length - 1);
+
       if (currentThread.length !== 0) {
+        console.log('copy thread');
         setCurrentThread([
           ...currentThread,
+
           ...messagesQuery.data.pages[messagesQuery.data.pages.length - 1]
             .messages,
         ]);
@@ -62,7 +67,7 @@ function Body({ room, recievedMessage = null, sentMessage = null }: BodyProps) {
         setCurrentThread(messagesQuery.data.pages[0].messages);
       }
     }
-  }, [messagesQuery.isFetching]);
+  }, [messagesQuery.data?.pages.length]);
 
   useEffect(() => {
     const messageContainer = ref.current as HTMLDivElement;
@@ -79,28 +84,10 @@ function Body({ room, recievedMessage = null, sentMessage = null }: BodyProps) {
   }, [messagesQuery.isFetching]);
 
   useEffect(() => {
-    if (!recievedMessage) return;
-    const keys = Object.keys(recievedMessage);
-
-    if (currentThread.length >= 1 && keys.length !== 0) {
-      setCurrentThread(([...currentThread]) => [
-        recievedMessage,
-        ...currentThread,
-      ]);
-    } else if (currentThread.length === 0 && keys.length !== 0) {
-      setCurrentThread([recievedMessage]);
-    }
+    console.log(recievedMessage);
+    if (recievedMessage) setCurrentThread([recievedMessage, ...currentThread]);
+    console.log(currentThread);
   }, [recievedMessage]);
-  useEffect(() => {
-    if (!sentMessage) return;
-    const keys = Object.keys(sentMessage);
-    // populate thread when sending a message
-    if (currentThread.length >= 1 && keys.length !== 0) {
-      setCurrentThread(([...currentThread]) => [sentMessage, ...currentThread]);
-    } else if (currentThread.length === 0 && keys.length !== 0) {
-      setCurrentThread([sentMessage]);
-    }
-  }, [sentMessage]);
   return (
     <div
       ref={ref}

@@ -25,7 +25,6 @@ function Message({ message, removeMessage }: MessageProps) {
   const [edits, setEdits] = useState<string | undefined>(message.message);
   const [isEditing, setIsEditing] = useState<boolean>(false);
 
-  const queryClient = useQueryClient();
   const deleteMessage = async () => {
     const res = await fetch(`${apiURL}/api/messages/${message._id}`, {
       mode: 'cors',
