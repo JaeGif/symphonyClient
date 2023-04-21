@@ -126,7 +126,7 @@ function CreateRoom({
       }}
       initial={{ opacity: 0, scale: 0 }}
       exit={{ opacity: 0, scale: 0, transition: { duration: 0.1 } }}
-      className='max-h-[70vh] min-w-[30vw] absolute z-10 bg-white top-[15vh] left-[calc(35vw)] p-5 flex items-center flex-col rounded-md'
+      className='max-h-[70vh] min-w-[30vw] absolute z-10 bg-white shadow-2xl top-[15vh] left-[calc(35vw)] p-5 flex items-center flex-col rounded-md'
     >
       <span
         onClick={() => closeCreateRoom()}

@@ -7,7 +7,7 @@ type LayoutProps = {
   refreshUserData: Function;
 };
 function Layout({ refreshUserData }: LayoutProps) {
-  const [theme, setTheme] = useState<'light' | 'dark'>('dark');
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const [createRoom, setCreateRoom] = useState<boolean>(false);
   const toggleCreateRoom = () => {
     setCreateRoom(!createRoom);

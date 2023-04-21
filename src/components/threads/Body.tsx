@@ -92,7 +92,7 @@ function Body({ room, recievedMessage }: BodyProps) {
     <div
       ref={ref}
       className={
-        'flex flex-col-reverse overflow-scroll h-[calc(100vh-7rem)] flex-1 debug'
+        'flex flex-col-reverse overflow-scroll h-[calc(100vh-7rem)] flex-1'
       }
     >
       {currentThread.length !== 0 &&
