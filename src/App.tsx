@@ -21,6 +21,8 @@ import SearchResults from './pages/SearchResults';
 import { User } from './utilities/Interfaces';
 const UserContext = React.createContext<User | null>(null);
 const TokenContext = React.createContext<string | null>(null);
+const ThemeContext = React.createContext<'light' | 'dark'>('dark');
+
 type LoginDataProps = {
   user: User;
   token: string;
@@ -33,6 +35,7 @@ function App() {
   const [checkedLoginState, setCheckedLoginState] = useState<boolean>(false);
   const [token, setToken] = useState<string | null>(null);
   const [registerStatus, setRegisterStatus] = useState<number>(0);
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
   const apiURL: string = import.meta.env.VITE_SOCKET_ADDRESS;
   const navigate = useNavigate();
@@ -134,56 +137,65 @@ function App() {
   return (
     <UserContext.Provider value={loggedInUser}>
       <TokenContext.Provider value={token}>
-        {checkedLoginState && (
-          <Routes>
-            <Route
-              path='/login'
-              element={
-                <Login loginUser={loginUser} loginStatus={loginStatus} />
-              }
-            />
-            <Route
-              path='/register'
-              element={
-                <Register
-                  registerUser={registerUser}
-                  registerStatus={registerStatus}
-                  setRegisterStatus={setRegisterStatus}
-                />
-              }
-            />
-            {isLoggedIn ? (
+        <ThemeContext.Provider value={theme}>
+          {checkedLoginState && (
+            <Routes>
               <Route
-                path='/'
-                element={<Layout refreshUserData={refreshUserData} />}
-              >
-                <Route
-                  path='messages'
-                  element={<MessageLayout refreshUserData={refreshUserData} />}
-                >
-                  <Route path=':id' element={<RoomMountingWrapper />} />
-                </Route>
-                <Route
-                  path='explore'
-                  element={<Explore refreshUserData={refreshUserData} />}
-                />
-                <Route path='profile' element={<UserLayout />}>
-                  <Route
-                    path=':id'
-                    element={<UserProfile logoutUser={logoutUser} />}
+                path='/login'
+                element={
+                  <Login loginUser={loginUser} loginStatus={loginStatus} />
+                }
+              />
+              <Route
+                path='/register'
+                element={
+                  <Register
+                    registerUser={registerUser}
+                    registerStatus={registerStatus}
+                    setRegisterStatus={setRegisterStatus}
                   />
+                }
+              />
+              {isLoggedIn ? (
+                <Route
+                  path='/'
+                  element={
+                    <Layout
+                      refreshUserData={refreshUserData}
+                      setTheme={setTheme}
+                    />
+                  }
+                >
+                  <Route
+                    path='messages'
+                    element={
+                      <MessageLayout refreshUserData={refreshUserData} />
+                    }
+                  >
+                    <Route path=':id' element={<RoomMountingWrapper />} />
+                  </Route>
+                  <Route
+                    path='explore'
+                    element={<Explore refreshUserData={refreshUserData} />}
+                  />
+                  <Route path='profile' element={<UserLayout />}>
+                    <Route
+                      path=':id'
+                      element={<UserProfile logoutUser={logoutUser} />}
+                    />
+                  </Route>
                 </Route>
-              </Route>
-            ) : (
-              <Route path='*' element={<Navigate to='/login' />} />
-            )}
-            <Route path='*' element={<Error404 />} />
-          </Routes>
-        )}
-        <ReactQueryDevtools />
+              ) : (
+                <Route path='*' element={<Navigate to='/login' />} />
+              )}
+              <Route path='*' element={<Error404 />} />
+            </Routes>
+          )}
+          <ReactQueryDevtools />
+        </ThemeContext.Provider>
       </TokenContext.Provider>
     </UserContext.Provider>
   );
 }
 
-export { App, UserContext, TokenContext };
+export { App, UserContext, TokenContext, ThemeContext };

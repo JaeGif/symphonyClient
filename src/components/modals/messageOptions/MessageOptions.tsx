@@ -32,16 +32,16 @@ function MessageOptions({
       exit={{ opacity: 0, x: -20 }}
       key={uniqid()}
       ref={ref}
-      className='h-full flex bg-gray-950 absolute right-[calc(48px+.75rem)] top-0 rounded-lg overflow-hidden'
+      className='h-full flex dark:bg-gray-950 absolute right-[calc(48px+.75rem)] top-0 rounded-lg overflow-hidden'
     >
       <button
-        className='text-blue-50 hover:bg-gray-900 p-5'
+        className='text-blue-50 dark:hover:bg-gray-900 dark:bg-gray-950 hover:bg-blue-500 bg-blue-400 p-5'
         onClick={() => openEdit()}
       >
         Edit
       </button>
       <button
-        className='text-red-500 hover:bg-gray-900 p-5'
+        className='dark:text-red-500 text-white dark:hover:bg-gray-900 dark:bg-gray-950 hover:bg-red-600 bg-red-500 p-5'
         onClick={() => handleDelete()}
       >
         Delete

@@ -1,6 +1,6 @@
 import React, { useContext, useRef, useState, useEffect } from 'react';
 import TailSpin from 'react-loading-icons/dist/esm/components/tail-spin';
-import { TokenContext, UserContext } from '../../App';
+import { ThemeContext, TokenContext, UserContext } from '../../App';
 import style from './options.module.css';
 
 const apiURL: string = import.meta.env.VITE_SOCKET_ADDRESS;
@@ -17,6 +17,7 @@ function OptionsEllipses({
 }: OptionsEllipsesProps) {
   const token = useContext(TokenContext);
   const loggedInUser = useContext(UserContext);
+  const theme = useContext(ThemeContext);
   const [isToggled, setIsToggled] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -85,7 +86,7 @@ function OptionsEllipses({
           }}
           className={
             isToggled
-              ? `visible left-0 absolute top-0 bg-gray-950 w-full p-6 hover:bg-red-500`
+              ? `visible left-0 absolute top-0 dark:bg-gray-950 bg-gray-400 w-full p-6 hover:bg-red-500`
               : 'invisible absolute top-0 w-full p-6'
           }
         >
@@ -102,7 +103,14 @@ function OptionsEllipses({
           </div>
         </div>
       }
-      <img className={size} src={`/assets/favicons/ellipses.svg`} />
+      <img
+        className={size}
+        src={
+          theme === 'dark'
+            ? `/assets/favicons/ellipses.svg`
+            : '/assets/favicons/ellipses-black.svg'
+        }
+      />
     </div>
   );
 }

@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Outlet, useOutlet } from 'react-router';
 import CreateRoom from '../components/modals/createRoom/CreateRoom';
 import Sidebar from '../components/sidebar/Sidebar';
 import { AnimatePresence } from 'framer-motion';
+import { ThemeContext } from '../App';
 type LayoutProps = {
   refreshUserData: Function;
+  setTheme: Function;
 };
-function Layout({ refreshUserData }: LayoutProps) {
-  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+function Layout({ refreshUserData, setTheme }: LayoutProps) {
+  const theme = useContext(ThemeContext);
   const [createRoom, setCreateRoom] = useState<boolean>(false);
   const toggleCreateRoom = () => {
     setCreateRoom(!createRoom);

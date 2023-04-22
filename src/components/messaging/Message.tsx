@@ -5,7 +5,7 @@ import ReactMarkdown from 'react-markdown';
 import UserHead from '../users/UserHead';
 import Timestamp from '../utilities/Timestamp';
 import { MessageType } from '../../utilities/Interfaces';
-import { TokenContext, UserContext } from '../../App';
+import { ThemeContext, TokenContext, UserContext } from '../../App';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import MessageOptions from '../modals/messageOptions/MessageOptions';
 import { AnimatePresence } from 'framer-motion';
@@ -21,6 +21,8 @@ type MessageProps = {
 function Message({ message, removeMessage }: MessageProps) {
   const token = useContext(TokenContext);
   const user = useContext(UserContext);
+  const theme = useContext(ThemeContext);
+
   const [visibleOptions, setVisibleOptions] = useState<boolean>(false);
   const [edits, setEdits] = useState<string | undefined>(message.message);
   const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -81,7 +83,9 @@ function Message({ message, removeMessage }: MessageProps) {
     setIsEditing(true);
   };
   return (
-    <div className={`flex hover:dark:bg-gray-800 p-3 justify-between relative`}>
+    <div
+      className={`flex hover:dark:bg-gray-600 p-3 hover:bg-gray-300 justify-between relative`}
+    >
       <div className='flex gap-2 items-center'>
         <UserHead hover={false} user={message.user!} size={'md'} />
         <div>
@@ -111,7 +115,11 @@ function Message({ message, removeMessage }: MessageProps) {
         <img
           className='hover:cursor-pointer'
           onClick={() => setVisibleOptions(true)}
-          src='/assets/favicons/ellipses.svg'
+          src={
+            theme === 'dark'
+              ? '/assets/favicons/ellipses.svg'
+              : '/assets/favicons/ellipses-black.svg'
+          }
           alt='message options'
         />
       )}
