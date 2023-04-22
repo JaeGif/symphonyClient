@@ -31,7 +31,7 @@ function UserCard({ logoutUser }: UserCardProps) {
     })),
   });
   return (
-    <div className='dark:bg-gray-900 bg-white rounded-lg p-4 dark:text-white max-w-xl'>
+    <div className='dark:bg-gray-900 bg-white rounded-lg p-4 dark:text-white max-w-xl max-h-max'>
       <UserHead hover={false} user={user} size={'2xl'} />
       {user.isModerator && (
         <div>

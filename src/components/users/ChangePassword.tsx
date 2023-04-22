@@ -34,7 +34,7 @@ function ChangePassword() {
     }
   }
   return (
-    <div>
+    <div className='dark:bg-gray-900 bg-white'>
       <div>
         <label>New Password</label>
         <input onChange={(e) => validatePassword(e)} type='password' />

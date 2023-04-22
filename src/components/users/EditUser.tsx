@@ -16,9 +16,9 @@ function EditUser() {
             className={
               openTab === item
                 ? item === 'Profile'
-                  ? 'p-5 cursor-pointer relative w-20 bg-white rounded-tl-md h-10 flex flex-1 justify-center items-center select-none'
-                  : 'p-5 cursor-pointer relative w-20 bg-white rounded-tr-md h-10 flex flex-1 justify-center items-center select-none'
-                : 'p-5 cursor-pointer relative w-20 bg-white h-10 flex flex-1 justify-center items-center select-none'
+                  ? 'p-5 cursor-pointer relative w-20 dark:bg-gray-900 bg-white rounded-tl-md h-10 flex flex-1 justify-center items-center select-none'
+                  : 'p-5 cursor-pointer relative w-20 dark:bg-gray-900 bg-white rounded-tr-md h-10 flex flex-1 justify-center items-center select-none'
+                : 'p-5 cursor-pointer relative w-20 dark:bg-gray-900 bg-white h-10 flex flex-1 justify-center items-center select-none'
             }
             key={item}
             onClick={() => setOpenTab(item)}
@@ -37,9 +37,9 @@ function EditUser() {
         <AnimatePresence mode={'wait'}>
           <motion.div
             key={uniqid()}
-            initial={{ y: -50 }}
-            animate={{ y: 0 }}
-            exit={{ y: -50 }}
+            initial={{ y: -500, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -500, opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
             {openTab === 'Profile' && <ChangeUserInformation />}
