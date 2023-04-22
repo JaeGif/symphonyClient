@@ -16,7 +16,7 @@ function UserProfile({ logoutUser }: UserProfileProps) {
   const isCurrentUser = useIsCurrentUser(user._id, profile.id!);
 
   return (
-    <div className='flex'>
+    <div className='flex gap-4'>
       <UserCard logoutUser={logoutUser} />
       {isCurrentUser && <EditUser />}
     </div>
