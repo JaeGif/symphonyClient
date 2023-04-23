@@ -3,8 +3,10 @@ import ChangeUserInformation from './ChangeUserInformation';
 import ChangePassword from './ChangePassword';
 import { motion, AnimatePresence } from 'framer-motion';
 import uniqid from 'uniqid';
-
-function EditUser() {
+type EditUserProps = {
+  refreshUserData: Function;
+};
+function EditUser({ refreshUserData }: EditUserProps) {
   const options = ['Profile', 'Password'];
 
   const [openTab, setOpenTab] = useState<string>(options[0]);
@@ -42,7 +44,9 @@ function EditUser() {
             exit={{ y: -500, opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
-            {openTab === 'Profile' && <ChangeUserInformation />}
+            {openTab === 'Profile' && (
+              <ChangeUserInformation refreshUserData={refreshUserData} />
+            )}
             {openTab === 'Password' && <ChangePassword />}
           </motion.div>
         </AnimatePresence>

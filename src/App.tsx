@@ -181,7 +181,12 @@ function App() {
                   <Route path='profile' element={<UserLayout />}>
                     <Route
                       path=':id'
-                      element={<UserProfile logoutUser={logoutUser} />}
+                      element={
+                        <UserProfile
+                          logoutUser={logoutUser}
+                          refreshUserData={refreshUserData}
+                        />
+                      }
                     />
                   </Route>
                 </Route>

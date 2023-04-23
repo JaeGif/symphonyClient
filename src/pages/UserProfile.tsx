@@ -9,8 +9,9 @@ import UserCard from '../components/users/UserCard';
 import useIsCurrentUser from '../hooks/useIsCurrentUser';
 type UserProfileProps = {
   logoutUser: Function;
+  refreshUserData: Function;
 };
-function UserProfile({ logoutUser }: UserProfileProps) {
+function UserProfile({ logoutUser, refreshUserData }: UserProfileProps) {
   const user = useOutletContext<User>();
   const profile = useParams();
   const isCurrentUser = useIsCurrentUser(user._id, profile.id!);
@@ -18,7 +19,7 @@ function UserProfile({ logoutUser }: UserProfileProps) {
   return (
     <div className='flex gap-4'>
       <UserCard logoutUser={logoutUser} />
-      {isCurrentUser && <EditUser />}
+      {isCurrentUser && <EditUser refreshUserData={refreshUserData} />}
     </div>
   );
 }

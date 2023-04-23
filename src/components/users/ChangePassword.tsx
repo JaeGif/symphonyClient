@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import Bars from 'react-loading-icons/dist/esm/components/bars';
 
 function ChangePassword() {
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [visible, setVisible] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   function validatePassword(e: React.ChangeEvent<HTMLInputElement>) {
     const password = e.target;
     password.setCustomValidity('');
@@ -66,8 +69,8 @@ function ChangePassword() {
           type={visible ? 'text' : 'password'}
         />
       </div>
-      <button className='dark:bg-blue-600 bg-blue-400 hover:bg-blue-500 text-white p-3 rounded-md dark:hover:bg-blue-500'>
-        Confirm Changes
+      <button className='dark:bg-blue-600 bg-blue-400 hover:bg-blue-500 text-white p-3 rounded-md dark:hover:bg-blue-500 flex justify-center items-center'>
+        {isLoading ? <Bars className='h-6' /> : 'Confirm Changes'}
       </button>
     </div>
   );

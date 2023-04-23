@@ -1,7 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { FileUploader } from 'react-drag-drop-files';
+import { TokenContext, UserContext } from '../../App';
+import Bars from 'react-loading-icons/dist/esm/components/bars';
 
-function ChangeUserInformation() {
+const apiURL: string = import.meta.env.VITE_SOCKET_ADDRESS;
+type ChangeUserInformationProps = {
+  refreshUserData: Function;
+};
+function ChangeUserInformation({
+  refreshUserData,
+}: ChangeUserInformationProps) {
   const fileTypes = [
     'jpg',
     'png',
@@ -16,14 +24,44 @@ function ChangeUserInformation() {
     'webp',
   ];
   const maxCount = 150;
-
-  const [website, setWebsite] = useState<string>('');
-  const [bio, setBio] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
-  const [imageFile, setImageFile] = useState<File | null>();
-  const [image, setImage] = useState<string | ArrayBuffer | null>('');
+  const user = useContext(UserContext);
+  const token = useContext(TokenContext);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [website, setWebsite] = useState<string | null>(null);
+  const [bio, setBio] = useState<string | null>(null);
+  const [email, setEmail] = useState<string | null>(null);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [image, setImage] = useState<string | ArrayBuffer | null>(null);
   const [disabled, setDisabled] = useState(false);
   const [wordCount, setWordCount] = useState(`0/${maxCount}`);
+  const [statusCode, setStatusCode] = useState<number | null>(null);
+
+  const submitChanges = async () => {
+    setIsLoading(true);
+
+    const data = {
+      bio: bio,
+      email: email,
+      website: website,
+      order: 'updateUser',
+    };
+    const res = await fetch(`${apiURL}/api/users/${user?._id}`, {
+      mode: 'cors',
+      method: 'PUT',
+      body: JSON.stringify(data),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer' + ' ' + token,
+      },
+    });
+    setStatusCode(res.status);
+  };
+  useEffect(() => {
+    if (statusCode === 200) {
+      () => refreshUserData();
+    }
+    setIsLoading(false);
+  }, [statusCode]);
 
   const validateEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     const email = e.target;
@@ -44,7 +82,9 @@ function ChangeUserInformation() {
     setImageFile(file);
   };
   const countWords = () => {
-    const length = bio.length;
+    let modBio = bio;
+    if (!modBio) modBio = '';
+    const length = modBio.length;
     setWordCount(`${length}/${maxCount}`);
     if (length >= maxCount) {
       setDisabled(true);
@@ -119,6 +159,12 @@ function ChangeUserInformation() {
           type='text'
         />
       </div>
+      <button
+        onClick={submitChanges}
+        className='dark:bg-blue-600 bg-blue-400 hover:bg-blue-500 text-white p-3 rounded-md dark:hover:bg-blue-500 flex justify-center items-center'
+      >
+        {isLoading ? <Bars className='h-6' /> : 'Confirm Changes'}
+      </button>
     </div>
   );
 }
