@@ -88,7 +88,7 @@ function ChangeUserInformation() {
       <div className='flex flex-col'>
         <label className='text-blue-400 text-xl font-bold'>Email</label>
         <input
-          className='bg-gray-100 p-3 rounded-md'
+          className='bg-gray-100 dark:bg-gray-950 p-3 rounded-md'
           onChange={(e) => validateEmail(e)}
           type='email'
         />
@@ -101,7 +101,7 @@ function ChangeUserInformation() {
           onChange={(e) => {
             setBio(e.target.value);
           }}
-          className='p-3 rounded-md w-full border-[1px] bg-gray-100 outline-none resize-y'
+          className='p-3 rounded-md w-full bg-gray-100 dark:bg-gray-950 outline-none resize-y'
           name='description'
           id='description'
         ></textarea>
@@ -114,7 +114,7 @@ function ChangeUserInformation() {
       <div className='flex flex-col'>
         <label className='text-blue-400 text-xl font-bold'>Personal Site</label>
         <input
-          className='bg-gray-100 p-3 rounded-md'
+          className='bg-gray-100 dark:bg-gray-950 p-3 rounded-md'
           onChange={(e) => setWebsite(e.target.value)}
           type='text'
         />
