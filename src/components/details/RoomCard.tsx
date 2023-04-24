@@ -49,23 +49,31 @@ function RoomCard({ room, refreshUserData }: RoomCardProps) {
     });
     const roomData = await resRoom.json();
     const userData = await resUser.json();
-    console.log(roomData, userData);
     refreshUserData();
   };
 
   return (
-    <div className='flex flex-col justify-between dark:bg-gray-950 bg-gray-100 w-80 h-36 rounded-md p-4 shadow-md border-l-4 border-blue-500'>
+    <div className='flex flex-col justify-between dark:bg-gray-950 bg-gray-100 w-80 h-44 rounded-md p-4 shadow-md border-l-4 border-blue-500'>
       <div className='flex gap-2'>
-        <div className='w-12 h-12 rounded-3xl bg-gray-900 overflow-hidden'>
-          <img className='w-12 h-12' alt='img' />
+        <div className='w-12 h-12 rounded-3xl bg-gray-900 overflow-hidden flex justify-center items'>
+          <img
+            className='w-12'
+            src={room.avatar ? room.avatar : '/assets/favicons/symphony.svg'}
+            alt='img'
+          />
         </div>
         <div className='w-[calc(100%-3rem)]'>
           <span className='flex justify-between'>
             <p>{room.title}</p>
-            <em className='text-sm'>{room.topic}</em>
+            <img className='h-8' src={`/assets/favicons/${room.topic}.png`} />
           </span>
           <p>Members: {room.users.length}</p>
         </div>
+      </div>
+      <div className='max-w-full'>
+        <p className='break-normal'>
+          {room.description ? room.description : 'No descrption'}
+        </p>
       </div>
       <div className='flex justify-center'>
         {!isMember ? (

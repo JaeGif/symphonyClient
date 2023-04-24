@@ -30,6 +30,7 @@ function CreateRoom({
   const [roomName, setRoomName] = useState<string | null>(null);
   const [description, setDescription] = useState<string>('');
   const [formStage, setFormStage] = useState('topic');
+  const [imageFile, setImageFile] = useState<Blob | null>(null);
 
   const ref = useRef<HTMLDivElement>(null);
 
@@ -44,6 +45,21 @@ function CreateRoom({
       document.removeEventListener('click', handleClickOutside, true);
     };
   }, []);
+
+  const sendProfileImage = async (room: string) => {
+    let data = new FormData();
+    data.append('image', imageFile!);
+    const res = await fetch(`${apiURL}/api/rooms/avatar/${room}`, {
+      mode: 'cors',
+      method: 'POST',
+      body: data,
+      headers: {
+        Authorization: 'Bearer' + ' ' + token,
+      },
+    });
+    const resImage = await res.json();
+    console.log(resImage);
+  };
 
   const fetchCreateRoom = async () => {
     let input = {
@@ -65,8 +81,8 @@ function CreateRoom({
     });
     if (res.status === 200) {
       const data = await res.json();
+      if (imageFile) sendProfileImage(data.room);
       refreshUserData();
-      closeCreateRoom();
       navigate(`/messages/${data.room}`);
     }
   };
@@ -93,19 +109,21 @@ function CreateRoom({
   const handleSubmitSelection = (
     title: string,
     bool: boolean,
-    desc: string
+    desc: string,
+    imageFile: Blob | null
   ) => {
-    if (title) {
+    if (title && desc) {
       setRoomName(title);
       setPublicRoom(bool);
       setDescription(desc);
+      setImageFile(imageFile);
     }
   };
   useEffect(() => {
     if (roomName && typeof publicRoom === 'boolean') {
       fetchCreateRoom();
     }
-  }, [roomName, publicRoom]);
+  }, [roomName, publicRoom, imageFile]);
 
   const changeToUsers = () => {
     setFormStage('users');

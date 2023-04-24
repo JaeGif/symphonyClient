@@ -37,7 +37,6 @@ function ChangeUserInformation({
   const [statusCode, setStatusCode] = useState<number | null>(null);
 
   const submitChanges = async () => {
-    if (!bio && !email && !website) return;
     const data = {
       bio: bio,
       email: email,
@@ -58,13 +57,11 @@ function ChangeUserInformation({
   useEffect(() => {
     if (statusCode === 200) {
       () => refreshUserData();
-      setStatusCode(0);
     }
-    setIsLoading(false);
+    if (statusCode !== 0) setStatusCode(0);
   }, [statusCode]);
 
   const sendProfileImage = async () => {
-    if (!imageFile) return;
     let data = new FormData();
     data.append('image', imageFile!);
     const res = await fetch(`${apiURL}/api/avatar/${user?._id}`, {
@@ -98,8 +95,11 @@ function ChangeUserInformation({
   };
   const handleSubmit = () => {
     setIsLoading(true);
-    sendProfileImage();
-    submitChanges();
+    if (imageFile) sendProfileImage();
+    else if (bio || email || website) submitChanges();
+    else {
+      setIsLoading(false);
+    }
   };
   const countWords = () => {
     let modBio = bio;

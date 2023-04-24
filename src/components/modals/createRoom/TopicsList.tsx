@@ -8,39 +8,39 @@ function TopicsList({ handleTopicSelection }: TopicsListProps) {
     <div className='h-full overflow-scroll w-full'>
       <Topic
         handleTopicSelection={handleTopicSelection}
-        title='Create New Topic'
-        icon={'/assets/favicons/search.png'}
+        title='Generic'
+        icon={'/assets/favicons/Generic.png'}
       />
-      <p className='text-gray-500 m-2'>START FROM A TOPIC</p>
+      <p className='text-gray-500 m-2'>COMMON TOPICS</p>
       <Topic
         handleTopicSelection={handleTopicSelection}
         title='Gaming'
-        icon={'/assets/favicons/controller.png'}
+        icon={'/assets/favicons/Gaming.png'}
       />
       <Topic
         handleTopicSelection={handleTopicSelection}
         title='Club'
-        icon={'/assets/favicons/golf-club.png'}
+        icon={'/assets/favicons/Club.png'}
       />
       <Topic
         handleTopicSelection={handleTopicSelection}
         title='Study'
-        icon={'/assets/favicons/study.png'}
+        icon={'/assets/favicons/Study.png'}
       />
       <Topic
         handleTopicSelection={handleTopicSelection}
         title='Friends'
-        icon={'/assets/favicons/living-room.png'}
+        icon={'/assets/favicons/Friends.png'}
       />
       <Topic
         handleTopicSelection={handleTopicSelection}
         title='Artists'
-        icon={'/assets/favicons/artist.png'}
+        icon={'/assets/favicons/Artists.png'}
       />
       <Topic
         handleTopicSelection={handleTopicSelection}
         title='Community'
-        icon={'/assets/favicons/search.png'}
+        icon={'/assets/favicons/Community.png'}
       />
     </div>
   );

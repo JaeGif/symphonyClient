@@ -35,7 +35,7 @@ function App() {
   const [checkedLoginState, setCheckedLoginState] = useState<boolean>(false);
   const [token, setToken] = useState<string | null>(null);
   const [registerStatus, setRegisterStatus] = useState<number>(0);
-  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [theme, setTheme] = useState<'light' | 'dark'>('dark');
 
   const apiURL: string = import.meta.env.VITE_SOCKET_ADDRESS;
   const navigate = useNavigate();

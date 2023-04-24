@@ -44,7 +44,7 @@ function Sidebar({
     <nav className='fixed top-0 left-0 h-screen w-16 flex flex-col dark:bg-gray-900 dark:border-none bg-gray-300 border-r-[1px] border-gray-300 dark:text-white shadow-lg'>
       <div>
         <Link to={user?.rooms[0] ? `/messages/${user?.rooms[0]}` : '/messages'}>
-          <Icon icon={<GiStaticWaves size={32} />} text={'Direct Messages'} />
+          <Icon icon={<GiStaticWaves size={32} />} text={'My Rooms'} />
         </Link>
         <Link to={'/explore'}>
           <Icon
@@ -57,10 +57,10 @@ function Sidebar({
             if (!createRoom) openCreateRoom();
           }}
         >
-          <Icon icon={<BsPlus size={52} />} text={'New Chat'} />
+          <Icon icon={<BsPlus size={52} />} text={'Create Room'} />
         </div>
         <Link to={`/profile/${user!._id}`}>
-          <Icon icon={<FiSettings size={32} />} text={'Settings'} />
+          <Icon icon={<FiSettings size={32} />} text={'Profile'} />
         </Link>
       </div>
       <div>

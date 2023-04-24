@@ -1,15 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import style from './submit.module.css';
+import { FileUploader } from 'react-drag-drop-files';
+
 type SubmitNewRoomProps = {
   handleSubmitSelection: Function;
 };
 function SubmitNewRoom({ handleSubmitSelection }: SubmitNewRoomProps) {
-  const maxCount = 150;
+  const maxCount = 40;
+  const fileTypes = [
+    'jpg',
+    'png',
+    'jpeg',
+    'gif',
+    'apng',
+    'svg',
+    'bmp',
+    'bmp ico',
+    'png ico',
+    'avif',
+    'webp',
+  ];
   const [isPublic, setIsPublic] = useState(true);
   const [title, setTitle] = useState('');
   const [disabled, setDisabled] = useState(false);
   const [wordCount, setWordCount] = useState(`0/${maxCount}`);
   const [description, setDescription] = useState('');
+  const [imageFile, setImageFile] = useState<Blob | null>(null);
+  const [image, setImage] = useState<string | ArrayBuffer | null>(null);
+
+  const handleFileParentChild = (file: File) => {
+    setImageFile(file);
+  };
+
+  useEffect(() => {
+    if (!imageFile) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      setImage(e.target!.result);
+    };
+    reader.readAsDataURL(imageFile);
+  }, [imageFile]);
 
   const countWords = () => {
     const length = description.length;
@@ -24,6 +54,27 @@ function SubmitNewRoom({ handleSubmitSelection }: SubmitNewRoomProps) {
   return (
     <div className='w-full flex flex-col gap-5 mt-2'>
       <div className='flex gap-1 flex-col'>
+        {imageFile ? (
+          <div className='flex justify-evenly items-center gap-1 mb-3'>
+            <div className='h-24 w-24 flex justify-center items-center rounded-[50%] overflow-hidden'>
+              <img className='w-24' src={`${image}`} />
+            </div>
+            <img
+              onClick={() => setImageFile(null)}
+              className='h-12 w-12 cursor-pointer'
+              src='/assets/favicons/add-photo.svg'
+            />
+          </div>
+        ) : (
+          <div className='mb-3'>
+            <FileUploader
+              handleChange={handleFileParentChild}
+              name='file'
+              types={fileTypes}
+              onTypeError={() => alert('Invalid file type.')}
+            />
+          </div>
+        )}
         <fieldset
           className={`relative border-[1px] border-pink-500 ${style.rounded}`}
         >
@@ -46,7 +97,7 @@ function SubmitNewRoom({ handleSubmitSelection }: SubmitNewRoomProps) {
             Description
           </label>
           <textarea
-            maxLength={150}
+            maxLength={40}
             onKeyUp={countWords}
             onChange={(e) => {
               setDescription(e.target.value);
@@ -82,7 +133,7 @@ function SubmitNewRoom({ handleSubmitSelection }: SubmitNewRoomProps) {
       <div className='flex justify-center'>
         <button
           onClick={() => {
-            handleSubmitSelection(title, isPublic, description);
+            handleSubmitSelection(title, isPublic, description, imageFile);
           }}
           className='w-fit pr-8 pl-8 pt-1 pb-1 text-blue-500 hover:text-blue-400 cursor-pointer text-2xl rounded-md'
         >
