@@ -18,7 +18,7 @@ function UserHead({ user, hover = true, size = 'md' }: UserHeadProps) {
       }
     >
       <div className='h-10 w-10 overflow-hidden rounded-3xl'>
-        <img className='h-10' src={`${apiURL}/${user.avatar}`} />
+        <img className='h-10' src={`${user.avatar}`} />
       </div>
       <p className={`text-${size}`}>{user.username}</p>
     </div>

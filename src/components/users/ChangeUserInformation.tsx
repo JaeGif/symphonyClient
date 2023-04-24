@@ -30,15 +30,14 @@ function ChangeUserInformation({
   const [website, setWebsite] = useState<string | null>(null);
   const [bio, setBio] = useState<string | null>(null);
   const [email, setEmail] = useState<string | null>(null);
-  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imageFile, setImageFile] = useState<Blob | null>(null);
   const [image, setImage] = useState<string | ArrayBuffer | null>(null);
   const [disabled, setDisabled] = useState(false);
   const [wordCount, setWordCount] = useState(`0/${maxCount}`);
   const [statusCode, setStatusCode] = useState<number | null>(null);
 
   const submitChanges = async () => {
-    setIsLoading(true);
-
+    if (!bio && !email && !website) return;
     const data = {
       bio: bio,
       email: email,
@@ -59,9 +58,25 @@ function ChangeUserInformation({
   useEffect(() => {
     if (statusCode === 200) {
       () => refreshUserData();
+      setStatusCode(0);
     }
     setIsLoading(false);
   }, [statusCode]);
+
+  const sendProfileImage = async () => {
+    if (!imageFile) return;
+    let data = new FormData();
+    data.append('image', imageFile!);
+    const res = await fetch(`${apiURL}/api/avatar/${user?._id}`, {
+      mode: 'cors',
+      method: 'POST',
+      body: data,
+      headers: {
+        Authorization: 'Bearer' + ' ' + token,
+      },
+    });
+    setStatusCode(res.status);
+  };
 
   const validateEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     const email = e.target;
@@ -80,6 +95,11 @@ function ChangeUserInformation({
   };
   const handleFile = (file: File) => {
     setImageFile(file);
+  };
+  const handleSubmit = () => {
+    setIsLoading(true);
+    sendProfileImage();
+    submitChanges();
   };
   const countWords = () => {
     let modBio = bio;
@@ -141,7 +161,7 @@ function ChangeUserInformation({
           onChange={(e) => {
             setBio(e.target.value);
           }}
-          className='p-3 rounded-md w-full bg-gray-100 dark:bg-gray-950 outline-none resize-y'
+          className='p-3 rounded-md w-full bg-gray-100 dark:bg-gray-950 resize-y'
           name='description'
           id='description'
         ></textarea>
@@ -160,7 +180,7 @@ function ChangeUserInformation({
         />
       </div>
       <button
-        onClick={submitChanges}
+        onClick={handleSubmit}
         className='dark:bg-blue-600 bg-blue-400 hover:bg-blue-500 text-white p-3 rounded-md dark:hover:bg-blue-500 flex justify-center items-center'
       >
         {isLoading ? <Bars className='h-6' /> : 'Confirm Changes'}
