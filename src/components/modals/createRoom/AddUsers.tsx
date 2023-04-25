@@ -84,10 +84,10 @@ function AddUsers({ handleUsersSelection }: AddUsersProps) {
           searchUsersQuery.data &&
           searchUsersQuery.data.map((user: User) => (
             <div
-              className='cursor-pointer'
+              className='cursor-pointer hover:bg-gray-300'
               onClick={() => joinUser({ user: user, key: uniqid() })}
             >
-              <UserHead user={user} hover={true} size={'md'} />
+              <UserHead hover={false} user={user} />
             </div>
           ))}
       </div>

@@ -41,14 +41,14 @@ function UserCard({ logoutUser }: UserCardProps) {
           </div>
         </div>
       )}
-      {user.bio !== '' && (
-        <div className='flex flex-col'>
-          <h3 className='w-fit m-2 text-blue-400'>About</h3>
-          <div className='dark:bg-gray-950 bg-gray-100 p-3 rounded-md max-h-80 overflow-scroll'>
-            <p>{user.bio}</p>
-          </div>
+
+      <div className='flex flex-col'>
+        <h3 className='w-fit m-2 text-blue-400'>About</h3>
+        <div className='dark:bg-gray-950 bg-gray-100 p-3 rounded-md max-h-80 overflow-scroll'>
+          <p>{user.bio ? `${user.bio}` : 'I need no introduction.'}</p>
         </div>
-      )}
+      </div>
+
       {user.website !== '' && (
         <div className='flex flex-col'>
           <h3 className='w-fit m-2 text-blue-400'>Personal Site</h3>
@@ -59,7 +59,7 @@ function UserCard({ logoutUser }: UserCardProps) {
           </div>
         </div>
       )}
-      {user.rooms.length !== 0 && (
+      {user.rooms.length !== 0 ? (
         <div>
           <h3 className='text-blue-400 w-fit m-2'>Active Rooms</h3>
           <div className='gap-1 overflow-scroll flex'>
@@ -85,6 +85,11 @@ function UserCard({ logoutUser }: UserCardProps) {
             )}
           </div>
         </div>
+      ) : (
+        <>
+          <h3 className='text-blue-400 w-fit m-2'>Active Rooms</h3>
+          <p>{user.username} hasn't joined any rooms yet.</p>
+        </>
       )}
       {isCurrentUser && (
         <div

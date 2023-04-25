@@ -4,8 +4,8 @@ const apiURL = import.meta.env.VITE_SOCKET_ADDRESS;
 
 type UserHeadProps = {
   user: User;
-  hover: boolean;
-  size: string;
+  hover?: boolean;
+  size?: string;
 };
 // displays user profile picture, and their username next to messages
 function UserHead({ user, hover = true, size = 'md' }: UserHeadProps) {

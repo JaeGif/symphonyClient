@@ -30,17 +30,23 @@ function Header({ room }: HeaderProps) {
     queryFn: getRoom,
   });
   return (
-    <div className='shadow-sm shadow-gray-400 dark:shadow-gray-800 flex p-1 content-center justify-start'>
-      <div className='dark:border-r-gray-600 border-r-gray-400 border-solid border-r p-1.5'>
-        {roomQuery.data && (
-          <p className='font-semibold'>{roomQuery.data.title}</p>
-        )}
+    <div className='shadow-sm shadow-gray-400 dark:shadow-gray-800 flex p-1 pr-4 content-center justify-between items-center'>
+      <div className='flex'>
+        <div className='dark:border-r-gray-600 border-r-gray-400 border-solid border-r p-1.5'>
+          {roomQuery.data && (
+            <p className='font-semibold'>{roomQuery.data.title}</p>
+          )}
+        </div>
+        <div className='flex content-center p-1.5'>
+          {roomQuery.data && (
+            <p className='text-gray-500'>{roomQuery.data.description}</p>
+          )}
+        </div>
       </div>
-      <div className='flex content-center p-1.5'>
-        {roomQuery.data && (
-          <p className='text-gray-500'>{roomQuery.data.description}</p>
-        )}
-      </div>
+      <img
+        className='h-10'
+        src={`/assets/favicons/${roomQuery.data.topic}.png`}
+      />
     </div>
   );
 }

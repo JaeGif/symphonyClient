@@ -86,7 +86,7 @@ function OptionsEllipses({
           }}
           className={
             isToggled
-              ? `visible left-0 absolute top-0 dark:bg-gray-950 bg-gray-400 w-full p-6 hover:bg-red-500`
+              ? `visible left-0 absolute top-0 dark:bg-gray-950 bg-gray-400 w-full p-6 hover:bg-red-500 dark:hover:bg-red-500`
               : 'invisible absolute top-0 w-full p-6'
           }
         >

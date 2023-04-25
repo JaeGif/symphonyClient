@@ -50,13 +50,18 @@ function CurrentChats({ refreshUserData }: CurrentChatsProps) {
                   : 'p-5 dark:hover:bg-gray-900 hover:bg-gray-300 cursor-pointer flex justify-between items-center relative'
               }
             >
-              <p
-                className={
-                  roomParam.id === query.data._id ? `text-pink-500` : ''
-                }
-              >
-                {query.data.title}
-              </p>
+              <div className='flex gap-2 justify-center items-center h-10'>
+                <div className='h-8 max-w-8 relative'>
+                  <img className='h-8' src={`${query.data.avatar}`} />
+                </div>
+                <p
+                  className={
+                    roomParam.id === query.data._id ? `text-pink-500` : ''
+                  }
+                >
+                  {query.data.title}
+                </p>
+              </div>
               <OptionsEllipses
                 refreshUserData={refreshUserData}
                 size='h-8'
