@@ -87,10 +87,16 @@ function Message({ message, removeMessage }: MessageProps) {
       className={`flex hover:dark:bg-gray-600 p-3 hover:bg-gray-300 justify-between relative`}
     >
       <div className='flex gap-2 items-center'>
-        <UserHead hover={false} user={message.user!} size={'md'} />
+        <UserHead
+          hover={false}
+          user={message.user!}
+          isUsername={false}
+          size={'md'}
+        />
         <div>
           <Timestamp
             timestamp={message.timestamp}
+            user={message.user!}
             username={message.user!.username}
           />
           {isEditing ? (

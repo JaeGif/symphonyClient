@@ -7,7 +7,7 @@ import UserHead from './UserHead';
 import useIsCurrentUser from '../../hooks/useIsCurrentUser';
 const apiURL: string = import.meta.env.VITE_SOCKET_ADDRESS;
 type UserCardProps = {
-  logoutUser: Function;
+  logoutUser?: Function;
 };
 function UserCard({ logoutUser }: UserCardProps) {
   const token = useContext(TokenContext);
@@ -93,7 +93,7 @@ function UserCard({ logoutUser }: UserCardProps) {
       )}
       {isCurrentUser && (
         <div
-          onClick={() => logoutUser()}
+          onClick={() => logoutUser!()}
           className='flex items-center mt-4 w-fit gap-1 hover:cursor-pointer'
         >
           <img className='h-6' src='/assets/favicons/logout.svg' />

@@ -1,14 +1,24 @@
 import React from 'react';
 import { User } from '../../utilities/Interfaces';
+import { useNavigate } from 'react-router';
 const apiURL = import.meta.env.VITE_SOCKET_ADDRESS;
 
 type UserHeadProps = {
   user: User;
   hover?: boolean;
   size?: string;
+  redirect?: boolean;
+  isUsername?: boolean;
 };
 // displays user profile picture, and their username next to messages
-function UserHead({ user, hover = true, size = 'md' }: UserHeadProps) {
+function UserHead({
+  user,
+  hover = true,
+  size = 'md',
+  redirect = false,
+  isUsername = true,
+}: UserHeadProps) {
+  const navigate = useNavigate();
   return (
     <div
       className={
@@ -20,7 +30,17 @@ function UserHead({ user, hover = true, size = 'md' }: UserHeadProps) {
       <div className='h-10 w-10 overflow-hidden rounded-3xl'>
         <img className='h-10' src={`${user.avatar}`} />
       </div>
-      <p className={`text-${size}`}>{user.username}</p>
+      {isUsername ? (
+        <p
+          onClick={() => {
+            if (redirect) navigate(`/profile/${user._id}`);
+            else return;
+          }}
+          className={redirect ? `text-${size} cursor-pointer` : `text-${size}`}
+        >
+          {user.username}
+        </p>
+      ) : null}
     </div>
   );
 }
