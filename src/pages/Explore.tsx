@@ -48,12 +48,15 @@ function Explore({ refreshUserData }: ExploreProps) {
   }, [query, topicQuery]);
 
   const getPopular = async (): Promise<string[]> => {
-    const res = await fetch(`${apiURL}/api/rooms?popular=true&returnLimit=9`, {
-      mode: 'cors',
-      headers: {
-        Authorization: 'Bearer' + ' ' + token,
-      },
-    });
+    const res = await fetch(
+      `${apiURL}/api/rooms?popular=true&returnLimit=12&user=${user?._id}`,
+      {
+        mode: 'cors',
+        headers: {
+          Authorization: 'Bearer' + ' ' + token,
+        },
+      }
+    );
     const data = await res.json();
     return data.rooms;
   };
