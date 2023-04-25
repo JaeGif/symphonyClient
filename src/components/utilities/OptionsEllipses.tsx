@@ -91,7 +91,7 @@ function OptionsEllipses({
           }
         >
           <div
-            className='flex justify-center items-center'
+            className='flex justify-center items-center h-8'
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
@@ -99,7 +99,11 @@ function OptionsEllipses({
               setIsLoading(true);
             }}
           >
-            {!isLoading ? <p>Leave</p> : <TailSpin className='h-6' />}
+            {!isLoading ? (
+              <p className='h-full text-lg'>Leave</p>
+            ) : (
+              <TailSpin className='h-8' />
+            )}
           </div>
         </div>
       }

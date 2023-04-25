@@ -19,7 +19,7 @@ function Explore({ refreshUserData }: ExploreProps) {
     'Club',
     'Artists',
     'Community',
-    'Other',
+    'Generic',
   ];
   const user = useContext(UserContext);
   const token = useContext(TokenContext);

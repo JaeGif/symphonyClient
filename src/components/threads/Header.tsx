@@ -43,10 +43,12 @@ function Header({ room }: HeaderProps) {
           )}
         </div>
       </div>
-      <img
-        className='h-10'
-        src={`/assets/favicons/${roomQuery.data.topic}.png`}
-      />
+      {roomQuery.data && (
+        <img
+          className='h-10'
+          src={`/assets/favicons/${roomQuery.data.topic}.png`}
+        />
+      )}
     </div>
   );
 }

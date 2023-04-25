@@ -52,7 +52,10 @@ function CurrentChats({ refreshUserData }: CurrentChatsProps) {
             >
               <div className='flex gap-2 justify-center items-center h-10'>
                 <div className='h-8 max-w-8 relative'>
-                  <img className='h-8' src={`${query.data.avatar}`} />
+                  <img
+                    className='h-8 max-w-[32px]'
+                    src={`${query.data.avatar}`}
+                  />
                 </div>
                 <p
                   className={
