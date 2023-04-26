@@ -65,6 +65,7 @@ function OptionsEllipses({
       });
       if (res.status === 200 && userRes.status === 200) {
         refreshUserData();
+
         handleClose();
       } else if (res.status !== 200) {
         const jsonData = await res.json();

@@ -50,7 +50,7 @@ function Explore({ refreshUserData }: ExploreProps) {
 
   const getPopular = async (): Promise<Room[]> => {
     const res = await fetch(
-      `${apiURL}/api/rooms?popular=true&returnLimit=12&user=${user?._id}`,
+      `${apiURL}/api/rooms?popular=true&returnLimit=20&user=${user?._id}`,
       {
         mode: 'cors',
         headers: {

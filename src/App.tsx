@@ -78,8 +78,8 @@ function App() {
     setLoggedInUser(data.user);
     if (!refetch) {
       setIsLoggedIn(true);
+      navigate('/explore', { replace: true });
     }
-    navigate('/explore', { replace: true });
     window.localStorage.setItem(
       'user',
       JSON.stringify({ user: data.user, token: token })

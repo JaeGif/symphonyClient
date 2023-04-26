@@ -13,7 +13,6 @@ function CurrentChats({ refreshUserData }: CurrentChatsProps) {
   const loggedInUser = useContext(UserContext);
   const token = useContext(TokenContext);
   const roomParam = useParams();
-  const [optionsOpen, setOptionsOpen] = useState(false);
 
   const fetchRoom = async (room: string) => {
     const res = await fetch(`${apiURL}/api/rooms/${room}`, {
