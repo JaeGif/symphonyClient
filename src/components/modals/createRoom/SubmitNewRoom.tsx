@@ -115,7 +115,10 @@ function SubmitNewRoom({ handleSubmitSelection }: SubmitNewRoomProps) {
       </div>
       <div className='flex gap-1 items-center'>
         <input
-          onChange={() => setIsPublic(!isPublic)}
+          onChange={() => {
+            if (isPublic) setIsPublic(false);
+            else setIsPublic(true);
+          }}
           className={`cursor-pointer ${style.cssCheckbox}`}
           type='checkbox'
           defaultChecked

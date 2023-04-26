@@ -4,6 +4,7 @@ import { useInfiniteQuery, useMutation } from '@tanstack/react-query';
 import { TokenContext } from '../../App';
 import LoadingChat from '../utilities/LoadingChat';
 import { MessageType } from '../../utilities/Interfaces';
+import uniqid from 'uniqid';
 const apiURL = import.meta.env.VITE_SOCKET_ADDRESS;
 type BodyProps = {
   room: string | undefined;
@@ -11,6 +12,7 @@ type BodyProps = {
 };
 function Body({ room, recievedMessage }: BodyProps) {
   const [currentThread, setCurrentThread] = useState<MessageType[]>([]);
+  const [savedMessages, setSavedMessages] = useState<MessageType[]>([]);
   const ref = useRef<HTMLDivElement | null>(null);
   const skeletonMap = [1];
 
@@ -52,21 +54,13 @@ function Body({ room, recievedMessage }: BodyProps) {
     }
   );
   useEffect(() => {
-    if (messagesQuery.data) {
-      console.log(messagesQuery.data.pages.length - 1);
-
-      if (currentThread.length !== 0) {
-        console.log('copy thread');
-        setCurrentThread([
-          ...currentThread,
-
-          ...messagesQuery.data.pages[messagesQuery.data.pages.length - 1]
-            .messages,
-        ]);
-      } else if (currentThread.length === 0) {
-        setCurrentThread(messagesQuery.data.pages[0].messages);
-      }
+    if (!messagesQuery.data) return;
+    let intermediateArray = [];
+    for (let i = messagesQuery.data.pages.length - 1; i >= 0; i--) {
+      intermediateArray.push(...messagesQuery.data.pages[i].messages);
     }
+    console.log(intermediateArray);
+    setSavedMessages([...intermediateArray]);
   }, [messagesQuery.data?.pages.length]);
 
   useEffect(() => {
@@ -84,21 +78,39 @@ function Body({ room, recievedMessage }: BodyProps) {
   }, [messagesQuery.isFetching]);
 
   useEffect(() => {
-    console.log(recievedMessage);
-    if (recievedMessage) setCurrentThread([recievedMessage, ...currentThread]);
+    console.log(savedMessages);
+  }, [savedMessages]);
+
+  useEffect(() => {
+    console.log(currentThread);
+    if (recievedMessage)
+      setCurrentThread(currentThread.concat(recievedMessage));
     console.log(currentThread);
   }, [recievedMessage]);
   return (
     <div
       ref={ref}
       className={
-        'flex flex-col-reverse overflow-scroll h-[calc(100vh-7rem)] flex-1'
+        'overflow-scroll h-[calc(100vh-7rem)] flex flex-1 flex-col-reverse'
       }
     >
-      {currentThread.length !== 0 &&
-        currentThread.map((messageObj) => (
-          <Message message={messageObj} removeMessage={removeMessage} />
-        ))}
+      <div>
+        {currentThread.length !== 0 &&
+          currentThread.map((messageObj) => (
+            <Message message={messageObj} removeMessage={removeMessage} />
+          ))}
+      </div>
+      <div>
+        {savedMessages.length !== 0 &&
+          savedMessages.map((messageObj) => (
+            <Message
+              key={uniqid()}
+              message={messageObj}
+              removeMessage={removeMessage}
+            />
+          ))}
+      </div>
+
       {messagesQuery.isFetching && skeletonMap.map((el) => <LoadingChat />)}
     </div>
   );
