@@ -22,8 +22,6 @@ function UserLayout() {
   });
   return (
     <div className='p-6'>
-      {/*       <h1>User Settings</h1>
-       */}{' '}
       {userQuery.data && <Outlet context={userQuery.data} />}
     </div>
   );

@@ -6,6 +6,7 @@ import { useSearchParams } from 'react-router-dom';
 import uniqid from 'uniqid';
 
 import SearchResults from './SearchResults';
+import { Room } from '../utilities/Interfaces';
 
 const apiURL = import.meta.env.VITE_SOCKET_ADDRESS;
 type ExploreProps = {
@@ -47,7 +48,7 @@ function Explore({ refreshUserData }: ExploreProps) {
     }
   }, [query, topicQuery]);
 
-  const getPopular = async (): Promise<string[]> => {
+  const getPopular = async (): Promise<Room[]> => {
     const res = await fetch(
       `${apiURL}/api/rooms?popular=true&returnLimit=12&user=${user?._id}`,
       {
@@ -64,7 +65,7 @@ function Explore({ refreshUserData }: ExploreProps) {
     queryKey: ['rooms', { popular: true }],
     queryFn: getPopular,
   });
-  const getSearchResults = async (): Promise<string[]> => {
+  const getSearchResults = async (): Promise<Room[]> => {
     let params: {
       title?: string;
       topic?: string;
@@ -130,9 +131,8 @@ function Explore({ refreshUserData }: ExploreProps) {
         </div>
         <div className='flex flex-shrink gap-2 w-full pl-5'>
           {topics.map((topic, i) => (
-            <div>
+            <div key={uniqid()}>
               <button
-                key={uniqid()}
                 id={uniqid()}
                 onClick={(
                   e: React.MouseEvent<HTMLButtonElement, MouseEvent>

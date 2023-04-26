@@ -4,7 +4,7 @@ import { useQueries, useQuery } from '@tanstack/react-query';
 import { Link, useParams } from 'react-router-dom';
 import { BallTriangle } from 'react-loading-icons';
 import OptionsEllipses from '../utilities/OptionsEllipses';
-
+import uniqid from 'uniqid';
 const apiURL: string = import.meta.env.VITE_SOCKET_ADDRESS;
 type CurrentChatsProps = {
   refreshUserData: Function;
@@ -41,7 +41,7 @@ function CurrentChats({ refreshUserData }: CurrentChatsProps) {
     >
       {roomsQueries.map((query) =>
         query.isSuccess ? (
-          <Link to={`/messages/${query.data._id}`}>
+          <Link key={uniqid()} to={`/messages/${query.data._id}`}>
             <div
               style={{ transform: 'scaleX(-1)' }}
               className={

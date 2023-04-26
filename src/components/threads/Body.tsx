@@ -97,7 +97,11 @@ function Body({ room, recievedMessage }: BodyProps) {
       <div>
         {currentThread.length !== 0 &&
           currentThread.map((messageObj) => (
-            <Message message={messageObj} removeMessage={removeMessage} />
+            <Message
+              key={uniqid()}
+              message={messageObj}
+              removeMessage={removeMessage}
+            />
           ))}
       </div>
       <div>

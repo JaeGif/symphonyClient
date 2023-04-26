@@ -5,6 +5,7 @@ import { TokenContext } from '../../App';
 import { useQueries } from '@tanstack/react-query';
 import UserHead from './UserHead';
 import useIsCurrentUser from '../../hooks/useIsCurrentUser';
+import uniqid from 'uniqid';
 const apiURL: string = import.meta.env.VITE_SOCKET_ADDRESS;
 type UserCardProps = {
   logoutUser?: Function;
@@ -66,7 +67,10 @@ function UserCard({ logoutUser }: UserCardProps) {
             {userRooms.map(
               (room) =>
                 room.data && (
-                  <div className='dark:bg-gray-700 bg-gray-100 rounded-sm p-1 flex gap-1 min-w-fit'>
+                  <div
+                    key={uniqid()}
+                    className='dark:bg-gray-700 bg-gray-100 rounded-sm p-1 flex gap-1 min-w-fit'
+                  >
                     {room.data.avatar ? (
                       <div className='h-6 w-6 rounded-3xl overflow-hidden'>
                         <img className='h-6 w-6' src={room.data.avatar} />
