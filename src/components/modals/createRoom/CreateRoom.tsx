@@ -9,17 +9,10 @@ import { motion } from 'framer-motion';
 
 const apiURL: string = import.meta.env.VITE_SOCKET_ADDRESS;
 type CreateRoomProps = {
-  toggleCreateRoom: Function;
   refreshUserData: Function;
-  openCreateRoom: Function;
   closeCreateRoom: Function;
 };
-function CreateRoom({
-  toggleCreateRoom,
-  refreshUserData,
-  openCreateRoom,
-  closeCreateRoom,
-}: CreateRoomProps) {
+function CreateRoom({ refreshUserData, closeCreateRoom }: CreateRoomProps) {
   const loggedInUser = useContext(UserContext);
   const token = useContext(TokenContext);
   const navigate = useNavigate();
@@ -37,7 +30,10 @@ function CreateRoom({
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) {
+        e.stopPropagation();
+        e.preventDefault();
         closeCreateRoom();
+        console.log('clicked out');
       }
     };
     document.addEventListener('click', handleClickOutside, true);
@@ -146,12 +142,6 @@ function CreateRoom({
       exit={{ opacity: 0, scale: 0, transition: { duration: 0.1 } }}
       className='max-h-[70vh] min-w-[30vw] absolute z-10 bg-white shadow-2xl top-[15vh] left-[calc(35vw)] p-5 flex items-center flex-col rounded-md'
     >
-      <span
-        onClick={() => closeCreateRoom()}
-        className='absolute top-3 right-3 cursor-pointer'
-      >
-        <img className='h-10' src='/assets/favicons/close-grey.svg' />
-      </span>
       <h1>Create a room</h1>
       <p className='text-gray-500 mb-1'>
         Your room is where you and your friends hang out. Create a room to start

@@ -53,8 +53,10 @@ function Sidebar({
           />
         </Link>
         <div
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             if (!createRoom) openCreateRoom();
+            console.log('clicked open');
           }}
         >
           <Icon icon={<BsPlus size={52} />} text={'Create Room'} />

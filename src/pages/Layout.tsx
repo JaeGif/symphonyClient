@@ -11,23 +11,19 @@ type LayoutProps = {
 function Layout({ refreshUserData, setTheme }: LayoutProps) {
   const theme = useContext(ThemeContext);
   const [createRoom, setCreateRoom] = useState<boolean>(false);
-  const toggleCreateRoom = () => {
-    setCreateRoom(!createRoom);
-  };
+
   const closeCreateRoom = () => {
-    if (createRoom) setCreateRoom(false);
+    setCreateRoom(false);
   };
   const openCreateRoom = () => {
-    if (!createRoom) setCreateRoom(true);
+    setCreateRoom(true);
   };
   return (
     <div className={`${theme} relative`}>
       <AnimatePresence>
         {createRoom && (
           <CreateRoom
-            openCreateRoom={openCreateRoom}
             closeCreateRoom={closeCreateRoom}
-            toggleCreateRoom={toggleCreateRoom}
             refreshUserData={refreshUserData}
           />
         )}
