@@ -84,7 +84,7 @@ function Message({ message, removeMessage }: MessageProps) {
   };
   return (
     <div
-      className={`flex hover:dark:bg-gray-600 p-3 hover:bg-gray-300 justify-between relative`}
+      className={`max-w-[100vw] flex hover:dark:bg-gray-600 p-3 hover:bg-gray-300 justify-between relative`}
     >
       <div className='flex gap-2 items-center'>
         <UserHead
@@ -105,13 +105,16 @@ function Message({ message, removeMessage }: MessageProps) {
               onInput={(e: any) => {
                 e.target.dataset.replicatedValue = e.value;
               }}
-              className='p-2.5 dark:bg-gray-600 m-3 mt-1 mr-0 w-screen focus:outline-none resize-none rounded-lg placeholder-gray-500 shadow-md drop-shadow-sm'
+              className='p-2.5 dark:bg-gray-600 m-3 mt-1 mr-0 w-full focus:outline-none resize-none rounded-lg placeholder-gray-500 shadow-md drop-shadow-sm'
               onKeyDown={(e) => handleEnterPress(e)}
               onChange={(e) => setEdits(e.target.value)}
               defaultValue={edits}
             ></TextareaAutosize>
           ) : (
-            <ReactMarkdown remarkPlugins={[gfm, remarkGemoji]}>
+            <ReactMarkdown
+              className='w-4/5 break-words'
+              remarkPlugins={[gfm, remarkGemoji]}
+            >
               {edits !== message.message ? `${edits}` : `${message.message!}`}
             </ReactMarkdown>
           )}
@@ -121,7 +124,6 @@ function Message({ message, removeMessage }: MessageProps) {
         <img
           className='hover:cursor-pointer h-8 sm:h-auto'
           onClick={(e) => {
-            e.preventDefault();
             e.stopPropagation();
             setVisibleOptions(true);
           }}

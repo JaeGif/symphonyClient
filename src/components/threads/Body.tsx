@@ -93,7 +93,7 @@ function Body({ room, recievedMessage }: BodyProps) {
     <div
       ref={ref}
       className={
-        'overflow-scroll h-[calc(100vh-11rem)] sm:h-[calc(100vh-7rem)] flex flex-1 flex-col-reverse'
+        'overflow-scroll h-[calc(100vh-10rem)] sm:h-[calc(100vh-7rem)] flex flex-1 flex-col-reverse'
       }
     >
       <div>

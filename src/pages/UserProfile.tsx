@@ -17,7 +17,7 @@ function UserProfile({ logoutUser, refreshUserData }: UserProfileProps) {
   const isCurrentUser = useIsCurrentUser(user!._id, profile.id!);
 
   return (
-    <div className='flex max-h-[calc(100vh-4rem)] gap-4 flex-col sm:flex-row overflow-y-scroll'>
+    <div className='flex max-h-[calc(100vh-4rem)] gap-4 flex-col sm:flex-row overflow-y-scroll w-screen sm:w-auto'>
       <UserCard logoutUser={logoutUser} />
       {isCurrentUser && <EditUser refreshUserData={refreshUserData} />}
     </div>

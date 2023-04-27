@@ -36,12 +36,16 @@ function Header({ room }: HeaderProps) {
         />
         <div className='dark:border-r-gray-600 border-r-gray-400 border-solid border-r p-1.5'>
           {roomQuery.data && (
-            <p className='font-semibold'>{roomQuery.data.title}</p>
+            <p className='w-36 font-semibold overflow-ellipsis overflow-hidden whitespace-nowrap'>
+              {roomQuery.data.title}
+            </p>
           )}
         </div>
         <div className='flex content-center p-1.5'>
           {roomQuery.data && (
-            <p className='text-gray-500'>{roomQuery.data.description}</p>
+            <p className='sm:max-w-none overflow-ellipsis overflow-hidden whitespace-nowrap text-gray-500'>
+              {roomQuery.data.description}
+            </p>
           )}
         </div>
       </div>

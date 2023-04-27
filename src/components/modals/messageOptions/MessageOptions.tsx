@@ -37,13 +37,17 @@ function MessageOptions({
       className='h-full flex dark:bg-gray-950 absolute right-[calc(48px+.75rem)] top-0 rounded-lg overflow-hidden'
     >
       <button
-        className='text-blue-50 dark:hover:bg-gray-900 dark:bg-gray-950 hover:bg-blue-500 bg-blue-400 p-5'
-        onClick={() => openEdit()}
+        className='text-blue-50 dark:hover:bg-gray-900 dark:bg-gray-950 hover:bg-blue-500 bg-blue-400 p-2'
+        onClick={(e) => {
+          e.stopPropagation();
+          closeOptions();
+          openEdit();
+        }}
       >
         Edit
       </button>
       <button
-        className='dark:text-red-500 text-white dark:hover:bg-gray-900 dark:bg-gray-950 hover:bg-red-600 bg-red-500 p-5'
+        className='dark:text-red-500 text-white dark:hover:bg-gray-900 dark:bg-gray-950 hover:bg-red-600 bg-red-500 p-2'
         onClick={(e) => {
           e.stopPropagation();
           handleDelete();
