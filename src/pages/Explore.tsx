@@ -6,7 +6,7 @@ import { useSearchParams } from 'react-router-dom';
 import uniqid from 'uniqid';
 
 import SearchResults from './SearchResults';
-import { Room } from '../utilities/Interfaces';
+import { Room } from '../types/Interfaces';
 
 const apiURL = import.meta.env.VITE_SOCKET_ADDRESS;
 type ExploreProps = {

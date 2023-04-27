@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext, useEffect, useState } from 'react';
 import { UserContext, TokenContext } from '../../App';
-import { Room } from '../../utilities/Interfaces';
+import { Room } from '../../types/Interfaces';
 
 const apiURL: string = import.meta.env.VITE_SOCKET_ADDRESS;
 type RoomCardProps = {

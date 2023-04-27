@@ -1,5 +1,5 @@
 import React from 'react';
-import { User } from '../../utilities/Interfaces';
+import { User } from '../../types/Interfaces';
 import { useNavigate } from 'react-router';
 const apiURL = import.meta.env.VITE_SOCKET_ADDRESS;
 

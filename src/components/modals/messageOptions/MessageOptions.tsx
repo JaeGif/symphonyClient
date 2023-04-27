@@ -17,6 +17,8 @@ function MessageOptions({
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) {
+        e.preventDefault();
+        e.stopPropagation();
         closeOptions(false);
       }
     };
@@ -42,7 +44,10 @@ function MessageOptions({
       </button>
       <button
         className='dark:text-red-500 text-white dark:hover:bg-gray-900 dark:bg-gray-950 hover:bg-red-600 bg-red-500 p-5'
-        onClick={() => handleDelete()}
+        onClick={(e) => {
+          e.stopPropagation();
+          handleDelete();
+        }}
       >
         Delete
       </button>

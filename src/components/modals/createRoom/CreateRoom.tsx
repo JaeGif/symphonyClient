@@ -33,7 +33,6 @@ function CreateRoom({ refreshUserData, closeCreateRoom }: CreateRoomProps) {
         e.stopPropagation();
         e.preventDefault();
         closeCreateRoom();
-        console.log('clicked out');
       }
     };
     document.addEventListener('click', handleClickOutside, true);

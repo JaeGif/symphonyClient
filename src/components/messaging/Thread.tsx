@@ -4,7 +4,7 @@ import * as io from 'socket.io-client';
 import Body from '../threads/Body';
 import Footer from '../threads/Footer';
 import Header from '../threads/Header';
-import { MessageType } from '../../utilities/Interfaces';
+import { MessageType } from '../../types/Interfaces';
 import uniqid from 'uniqid';
 import { QueryClient, useQueryClient } from '@tanstack/react-query';
 

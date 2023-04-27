@@ -1,7 +1,7 @@
 import React from 'react';
 import RoomCard from '../components/details/RoomCard';
 import uniqid from 'uniqid';
-import { Room } from '../utilities/Interfaces';
+import { Room } from '../types/Interfaces';
 type SearchResultsProps = {
   data: Room[];
   refreshUserData: Function;

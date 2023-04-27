@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { TokenContext, UserContext } from '../../../App';
 import UserHead from '../../users/UserHead';
 import uniqid from 'uniqid';
-import { User } from '../../../utilities/Interfaces';
+import { User } from '../../../types/Interfaces';
 const apiURL = import.meta.env.VITE_SOCKET_ADDRESS;
 type AddUsersProps = {
   handleUsersSelection: Function;

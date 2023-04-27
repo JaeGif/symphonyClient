@@ -18,7 +18,7 @@ import Error404 from './pages/Error404';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import RoomMountingWrapper from './components/utilities/RoomMountingWrapper';
 import SearchResults from './pages/SearchResults';
-import { User } from './utilities/Interfaces';
+import { User } from './types/Interfaces';
 const UserContext = React.createContext<User | null>(null);
 const TokenContext = React.createContext<string | null>(null);
 const ThemeContext = React.createContext<'light' | 'dark'>('dark');

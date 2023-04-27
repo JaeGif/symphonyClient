@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { useOutlet, useOutletContext, useParams } from 'react-router';
-import { User, Room } from '../../utilities/Interfaces';
+import { User, Room } from '../../types/Interfaces';
 import { TokenContext } from '../../App';
 import { useQueries } from '@tanstack/react-query';
 import UserHead from './UserHead';

@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useOutletContext, useParams } from 'react-router';
 import { TokenContext, UserContext } from '../App';
 import UserHead from '../components/users/UserHead';
-import { Room, User } from '../utilities/Interfaces';
+import { Room, User } from '../types/Interfaces';
 import EditUser from '../components/users/EditUser';
 import UserCard from '../components/users/UserCard';
 import useIsCurrentUser from '../hooks/useIsCurrentUser';

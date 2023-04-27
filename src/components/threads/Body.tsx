@@ -3,7 +3,7 @@ import Message from '../messaging/Message';
 import { useInfiniteQuery, useMutation } from '@tanstack/react-query';
 import { TokenContext } from '../../App';
 import LoadingChat from '../utilities/LoadingChat';
-import { MessageType } from '../../utilities/Interfaces';
+import { MessageType } from '../../types/Interfaces';
 import uniqid from 'uniqid';
 const apiURL = import.meta.env.VITE_SOCKET_ADDRESS;
 type BodyProps = {
@@ -26,7 +26,16 @@ function Body({ room, recievedMessage }: BodyProps) {
         let threadMod = [...currentThread];
         threadMod.splice(i, 1);
         setCurrentThread(threadMod);
-        break;
+        return;
+      }
+    }
+    for (let i = 0; i < savedMessages.length; i++) {
+      if (savedMessages[i]._id === _id) {
+        console.log('removing', i, savedMessages[i]);
+        let threadMod = [...savedMessages];
+        threadMod.splice(i, 1);
+        setSavedMessages(threadMod);
+        return;
       }
     }
   };
@@ -59,7 +68,6 @@ function Body({ room, recievedMessage }: BodyProps) {
     for (let i = messagesQuery.data.pages.length - 1; i >= 0; i--) {
       intermediateArray.push(...messagesQuery.data.pages[i].messages);
     }
-    console.log(intermediateArray);
     setSavedMessages([...intermediateArray]);
   }, [messagesQuery.data?.pages.length]);
 
@@ -78,14 +86,8 @@ function Body({ room, recievedMessage }: BodyProps) {
   }, [messagesQuery.isFetching]);
 
   useEffect(() => {
-    console.log(savedMessages);
-  }, [savedMessages]);
-
-  useEffect(() => {
-    console.log(currentThread);
     if (recievedMessage)
       setCurrentThread(currentThread.concat(recievedMessage));
-    console.log(currentThread);
   }, [recievedMessage]);
   return (
     <div

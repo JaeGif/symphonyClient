@@ -4,7 +4,7 @@ import remarkGemoji from 'remark-gemoji';
 import ReactMarkdown from 'react-markdown';
 import UserHead from '../users/UserHead';
 import Timestamp from '../utilities/Timestamp';
-import { MessageType } from '../../utilities/Interfaces';
+import { MessageType } from '../../types/Interfaces';
 import { ThemeContext, TokenContext, UserContext } from '../../App';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import MessageOptions from '../modals/messageOptions/MessageOptions';
@@ -42,7 +42,6 @@ function Message({ message, removeMessage }: MessageProps) {
       mode: 'cors',
       method: 'PUT',
       body: JSON.stringify(editData),
-
       headers: {
         'Content-Type': 'application/json',
         Authorization: 'Bearer' + ' ' + token,
@@ -56,6 +55,7 @@ function Message({ message, removeMessage }: MessageProps) {
     mutationFn: deleteMessage,
     onSuccess: () => {
       removeMessage(message._id);
+      setVisibleOptions(false);
     },
   });
   const editMutatation = useMutation({
@@ -120,7 +120,11 @@ function Message({ message, removeMessage }: MessageProps) {
       {user?._id === message.user?._id && !visibleOptions && (
         <img
           className='hover:cursor-pointer'
-          onClick={() => setVisibleOptions(true)}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            setVisibleOptions(true);
+          }}
           src={
             theme === 'dark'
               ? '/assets/favicons/ellipses.svg'
