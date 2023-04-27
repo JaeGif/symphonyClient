@@ -4,7 +4,7 @@ import { UserContext, TokenContext } from '../App';
 import Search from '../components/modals/createRoom/Search';
 import { useSearchParams } from 'react-router-dom';
 import uniqid from 'uniqid';
-
+import { Audio } from 'react-loading-icons';
 import SearchResults from './SearchResults';
 import { Room } from '../types/Interfaces';
 
@@ -155,11 +155,19 @@ function Explore({ refreshUserData }: ExploreProps) {
         {!searching ? (
           <>
             <h2>Popular Rooms</h2>
-            {popularRoomsQuery.data && (
+            {popularRoomsQuery.data && popularRoomsQuery.isFetched ? (
               <SearchResults
                 refreshUserData={refreshUserData}
                 data={popularRoomsQuery.data}
               />
+            ) : (
+              <div className='flex justify-center items-center'>
+                {popularRoomsQuery.isFetching ? (
+                  <Audio />
+                ) : (
+                  <p>Nothing matched your search.</p>
+                )}
+              </div>
             )}
           </>
         ) : (
@@ -171,7 +179,13 @@ function Explore({ refreshUserData }: ExploreProps) {
                 data={searchRoomsQuery.data}
               />
             ) : (
-              <h1>No rooms match your search.</h1>
+              <div className='flex justify-center items-center'>
+                {searchRoomsQuery.isFetching ? (
+                  <Audio />
+                ) : (
+                  <p>Nothing matched your search.</p>
+                )}
+              </div>
             )}
           </>
         )}
