@@ -7,14 +7,9 @@ const apiURL: string = import.meta.env.VITE_SOCKET_ADDRESS;
 
 type OptionsEllipsesProps = {
   room: string;
-  size: string;
   refreshUserData: Function;
 };
-function OptionsEllipses({
-  room,
-  size,
-  refreshUserData,
-}: OptionsEllipsesProps) {
+function OptionsEllipses({ room, refreshUserData }: OptionsEllipsesProps) {
   const token = useContext(TokenContext);
   const loggedInUser = useContext(UserContext);
   const theme = useContext(ThemeContext);
@@ -109,7 +104,7 @@ function OptionsEllipses({
         </div>
       }
       <img
-        className={size}
+        className='h-8 hidden sm:block'
         src={
           theme === 'dark'
             ? `/assets/favicons/ellipses.svg`

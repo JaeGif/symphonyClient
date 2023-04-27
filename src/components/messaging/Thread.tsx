@@ -21,13 +21,23 @@ function Thread({ socket, room }: ThreadProps) {
 
   const submitMessage = async () => {
     if (message !== '') {
+      let date = new Date();
+      let options = {
+        weekday: 'short',
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+      };
+      console.log(date.toLocaleTimeString('en-us', options));
       // send message
       const data = {
         _id: uniqid() + Date.now(),
         room: room,
         user: user,
         message: message,
-        timestamp: new Date(Date.now()).toString(),
+        timestamp: date.toLocaleTimeString('en-us', options),
       };
       socket.emit('send_message', data);
     }
@@ -38,7 +48,7 @@ function Thread({ socket, room }: ThreadProps) {
     });
   }, [socket, io]);
   return (
-    <div>
+    <div className='sm:h-screen h-[calc(100vh-4rem)]'>
       <Header room={room} />
       <Body room={room} recievedMessage={recievedMessage!} />
       <Footer setMessage={setMessage} submitMessage={submitMessage} />

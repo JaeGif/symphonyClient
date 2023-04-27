@@ -21,7 +21,7 @@ function UserLayout() {
     queryFn: getUser,
   });
   return (
-    <div className='p-6'>
+    <div className='sm:p-6'>
       {userQuery.data && <Outlet context={userQuery.data} />}
     </div>
   );

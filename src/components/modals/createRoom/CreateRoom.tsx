@@ -139,7 +139,7 @@ function CreateRoom({ refreshUserData, closeCreateRoom }: CreateRoomProps) {
       }}
       initial={{ opacity: 0, scale: 0 }}
       exit={{ opacity: 0, scale: 0, transition: { duration: 0.1 } }}
-      className='max-h-[70vh] min-w-[30vw] absolute z-10 bg-white shadow-2xl shadow-gray-800 top-[15vh] left-[calc(35vw)] p-5 flex items-center flex-col rounded-md'
+      className='max-h-[70vh] w-screen sm:min-w-[35vw] sm:w-fit absolute z-10 bg-white shadow-2xl shadow-gray-800 top-[calc(15vh)] left-0 sm:left-[35vw] p-5 flex items-center flex-col rounded-md'
     >
       <h1>Create a room</h1>
       <p className='text-gray-500 mb-1'>

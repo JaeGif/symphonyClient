@@ -196,7 +196,6 @@ function App() {
               <Route path='*' element={<Error404 />} />
             </Routes>
           )}
-          <ReactQueryDevtools />
         </ThemeContext.Provider>
       </TokenContext.Provider>
     </UserContext.Provider>

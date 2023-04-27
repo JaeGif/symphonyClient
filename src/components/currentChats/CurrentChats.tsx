@@ -36,7 +36,7 @@ function CurrentChats({ refreshUserData }: CurrentChatsProps) {
   return (
     <div
       style={{ transform: 'scaleX(-1)' }}
-      className={`w-1/5 min-w-fit dark:bg-gray-800 bg-gray-100 shadow-sm overflow-scroll`}
+      className={`sm:w-1/5 max-h-[calc(100vh-4rem)] sm:max-h-[100vh] w-fit dark:bg-gray-800 bg-gray-100 shadow-sm overflow-scroll`}
     >
       {roomsQueries.map((query) =>
         query.isSuccess ? (
@@ -45,12 +45,12 @@ function CurrentChats({ refreshUserData }: CurrentChatsProps) {
               style={{ transform: 'scaleX(-1)' }}
               className={
                 roomParam.id === query.data._id
-                  ? `p-5 dark:hover:bg-gray-900 hover:bg-gray-300 cursor-pointer border-r-blue-500 border-r-4 rounded-sm flex justify-between items-center relative`
-                  : 'p-5 dark:hover:bg-gray-900 hover:bg-gray-300 cursor-pointer flex justify-between items-center relative'
+                  ? `sm:p-5 p-2 dark:hover:bg-gray-900 hover:bg-gray-300 cursor-pointer border-r-blue-500 border-r-4 rounded-sm flex justify-between items-center relative`
+                  : 'sm:p-5 p-2 dark:hover:bg-gray-900 hover:bg-gray-300 cursor-pointer flex justify-between items-center relative'
               }
             >
               <div className='flex gap-2 justify-center items-center h-10'>
-                <div className='h-8 max-w-8 relative'>
+                <div className='h-8 max-w-8'>
                   <img
                     className='h-8 max-w-[32px]'
                     src={`${query.data.avatar}`}
@@ -58,7 +58,9 @@ function CurrentChats({ refreshUserData }: CurrentChatsProps) {
                 </div>
                 <p
                   className={
-                    roomParam.id === query.data._id ? `text-pink-500` : ''
+                    roomParam.id === query.data._id
+                      ? `text-pink-500 hidden sm:block`
+                      : 'hidden sm:block'
                   }
                 >
                   {query.data.title}
@@ -66,7 +68,6 @@ function CurrentChats({ refreshUserData }: CurrentChatsProps) {
               </div>
               <OptionsEllipses
                 refreshUserData={refreshUserData}
-                size='h-8'
                 room={`${query.data._id}`}
               />
             </div>

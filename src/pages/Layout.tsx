@@ -29,7 +29,7 @@ function Layout({ refreshUserData, setTheme }: LayoutProps) {
         )}
       </AnimatePresence>
       <div
-        className={`flex space-x-16 dark:bg-gray-700 dark:text-white bg-gray-200 h-screen w-screen overflow-hidden`}
+        className={`flex sm:space-x-16 dark:bg-gray-700 dark:text-white bg-gray-200 h-screen w-screen overflow-hidden`}
       >
         <Sidebar
           createRoom={createRoom}

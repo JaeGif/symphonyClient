@@ -119,7 +119,7 @@ function Message({ message, removeMessage }: MessageProps) {
       </div>
       {user?._id === message.user?._id && !visibleOptions && (
         <img
-          className='hover:cursor-pointer'
+          className='hover:cursor-pointer h-8 sm:h-auto'
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();

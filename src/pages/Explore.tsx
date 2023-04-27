@@ -120,7 +120,7 @@ function Explore({ refreshUserData }: ExploreProps) {
   return (
     <div className='p-4 flex w-full items-center flex-col overflow-scroll gap-4'>
       <h1>Explore</h1>
-      <div className='w-full flex items-end'>
+      <div className='w-full flex flex-col gap-2 p-2'>
         <div>
           <p>Search:</p>
           <Search
@@ -129,7 +129,7 @@ function Explore({ refreshUserData }: ExploreProps) {
             setSearching={setSearching}
           />
         </div>
-        <div className='flex flex-shrink gap-2 w-full pl-5'>
+        <div className='flex flex-wrap gap-2 w-full'>
           {topics.map((topic, i) => (
             <div key={uniqid()} className='shadow-lg'>
               <button

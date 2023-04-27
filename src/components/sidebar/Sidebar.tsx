@@ -17,7 +17,9 @@ const Icon = ({ icon, text, style }: IconProps) => {
     <div style={style} className='sidebar-icon group bg-gray-200'>
       {icon}
       {text && (
-        <span className='sidebar-tooltip group-hover:scale-100'>{text}</span>
+        <span className='invisible sm:visible sidebar-tooltip group-hover:scale-100'>
+          {text}
+        </span>
       )}
     </div>
   );
@@ -41,8 +43,8 @@ function Sidebar({
     theme === 'light' ? setTheme('dark') : setTheme('light');
   };
   return (
-    <nav className='fixed top-0 left-0 h-screen w-16 flex flex-col dark:bg-gray-900 dark:border-none bg-gray-300 border-r-[1px] border-gray-300 dark:text-white shadow-lg'>
-      <div>
+    <nav className='fixed h-16 w-screen bottom-0 sm:top-0 left-0 sm:h-screen sm:w-16 flex dark:bg-gray-900 bg-gray-300 border-r-[1px] border-gray-300 dark:text-white shadow-lg'>
+      <div className='flex w-full justify-evenly sm:h-screen sm:flex-col sm:justify-start'>
         <Link to={user?.rooms[0] ? `/messages/${user?.rooms[0]}` : '/messages'}>
           <Icon icon={<GiStaticWaves size={32} />} text={'My Rooms'} />
         </Link>
@@ -56,7 +58,6 @@ function Sidebar({
           onClick={(e) => {
             e.stopPropagation();
             if (!createRoom) openCreateRoom();
-            console.log('clicked open');
           }}
         >
           <Icon icon={<BsPlus size={52} />} text={'Create Room'} />
@@ -64,20 +65,20 @@ function Sidebar({
         <Link to={`/profile/${user!._id}`}>
           <Icon icon={<FiSettings size={32} />} text={'Profile'} />
         </Link>
-      </div>
-      <div>
-        {theme === 'light' ? (
-          <div onClick={handler} className='rounded-3xl'>
-            <AnimatedMoon icon={<MdDarkMode size={32} />} text={'Theme'} />
-          </div>
-        ) : (
-          <div onClick={handler} className='rounded-3xl'>
-            <AnimatedSun
-              icon={<MdOutlineLightMode size={32} />}
-              text={'Theme'}
-            />
-          </div>
-        )}
+        <div>
+          {theme === 'light' ? (
+            <div onClick={handler} className='rounded-3xl'>
+              <AnimatedMoon icon={<MdDarkMode size={32} />} text={'Theme'} />
+            </div>
+          ) : (
+            <div onClick={handler} className='rounded-3xl'>
+              <AnimatedSun
+                icon={<MdOutlineLightMode size={32} />}
+                text={'Theme'}
+              />
+            </div>
+          )}
+        </div>
       </div>
     </nav>
   );

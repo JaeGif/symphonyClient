@@ -1,16 +1,30 @@
-import React from 'react';
+import { useState } from 'react';
 import { Outlet, useOutlet } from 'react-router';
 import CurrentChats from '../components/currentChats/CurrentChats';
 import OpenChatMessage from '../components/utilities/OpenChatMessage';
+import useSwipe from '../hooks/useSwipe';
+
 type MessageLayoutProps = {
   refreshUserData: Function;
 };
 function MessageLayout({ refreshUserData }: MessageLayoutProps) {
   const outlet = useOutlet();
+  const [isShowingCurrent, setIsShowingCurrent] = useState(true);
+  const toggleChats = () => {
+    setIsShowingCurrent(!isShowingCurrent);
+  };
+  const swipeHandlers = useSwipe({
+    onSwipedLeft: () => setIsShowingCurrent(false),
+    onSwipedRight: () => setIsShowingCurrent(true),
+  });
   return (
-    <div className='flex w-screen'>
-      <CurrentChats refreshUserData={refreshUserData} />
-      {outlet || <OpenChatMessage />}
+    <div {...swipeHandlers} className='flex w-screen overflow-hidden'>
+      <div className={isShowingCurrent ? 'hidden' : 'flex'}>
+        <CurrentChats refreshUserData={refreshUserData} />
+      </div>
+      {<Outlet context={{ toggleChats, isShowingCurrent }} /> || (
+        <OpenChatMessage />
+      )}
     </div>
   );
 }
