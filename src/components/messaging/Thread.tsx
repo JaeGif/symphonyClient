@@ -22,15 +22,13 @@ function Thread({ socket, room }: ThreadProps) {
   const submitMessage = async () => {
     if (message !== '') {
       let date = new Date();
-      let options = {
+      let options: {} = {
         weekday: 'short',
-        year: 'numeric',
         month: 'short',
         day: 'numeric',
         hour: '2-digit',
         minute: '2-digit',
       };
-      console.log(date.toLocaleTimeString('en-us', options));
       // send message
       const data = {
         _id: uniqid() + Date.now(),
