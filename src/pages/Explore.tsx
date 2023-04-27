@@ -4,7 +4,7 @@ import { UserContext, TokenContext } from '../App';
 import Search from '../components/modals/createRoom/Search';
 import { useSearchParams } from 'react-router-dom';
 import uniqid from 'uniqid';
-import { Audio } from 'react-loading-icons';
+import { Audio, ThreeDots } from 'react-loading-icons';
 import SearchResults from './SearchResults';
 import { Room } from '../types/Interfaces';
 
@@ -131,7 +131,7 @@ function Explore({ refreshUserData }: ExploreProps) {
         </div>
         <div className='flex flex-shrink gap-2 w-full pl-5'>
           {topics.map((topic, i) => (
-            <div key={uniqid()}>
+            <div key={uniqid()} className='shadow-lg'>
               <button
                 id={uniqid()}
                 onClick={(
@@ -163,7 +163,13 @@ function Explore({ refreshUserData }: ExploreProps) {
             ) : (
               <div className='flex justify-center items-center'>
                 {popularRoomsQuery.isFetching ? (
-                  <Audio />
+                  <>
+                    <div className='flex'>
+                      <p>Searching</p>
+                      <ThreeDots className='h-1' />
+                    </div>
+                    <Audio />
+                  </>
                 ) : (
                   <p>Nothing matched your search.</p>
                 )}

@@ -12,9 +12,9 @@ type UserProfileProps = {
   refreshUserData: Function;
 };
 function UserProfile({ logoutUser, refreshUserData }: UserProfileProps) {
-  const user = useOutletContext<User>();
+  const user = useContext(UserContext);
   const profile = useParams();
-  const isCurrentUser = useIsCurrentUser(user._id, profile.id!);
+  const isCurrentUser = useIsCurrentUser(user!._id, profile.id!);
 
   return (
     <div className='flex gap-4'>

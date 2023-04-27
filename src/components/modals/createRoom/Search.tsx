@@ -11,7 +11,7 @@ function Search({ setQuery, handleSearching, setSearching }: SearchProps) {
   const token = useContext(TokenContext);
 
   return (
-    <div className='min-w-[300px] max-w-[35%]'>
+    <div className='min-w-[300px] max-w-[35%] shadow-sm'>
       <input
         onBlur={(e) => {
           if (e.target.value === '') {

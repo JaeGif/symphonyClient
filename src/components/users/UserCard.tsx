@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { useOutlet, useOutletContext, useParams } from 'react-router';
 import { User, Room } from '../../types/Interfaces';
-import { TokenContext } from '../../App';
+import { TokenContext, UserContext } from '../../App';
 import { useQueries } from '@tanstack/react-query';
 import UserHead from './UserHead';
 import useIsCurrentUser from '../../hooks/useIsCurrentUser';
@@ -12,10 +12,11 @@ type UserCardProps = {
 };
 function UserCard({ logoutUser }: UserCardProps) {
   const token = useContext(TokenContext);
-  const user = useOutletContext<User>();
+  const user = useContext(UserContext);
+
   const profile = useParams();
-  const isCurrentUser = useIsCurrentUser(user._id, profile.id!);
-  const rooms = user.rooms;
+  const isCurrentUser = useIsCurrentUser(user!._id, profile.id!);
+  const rooms = user!.rooms;
 
   const getRooms = async (room: string): Promise<Room> => {
     const res = await fetch(`${apiURL}/api/rooms/${room}`, {
@@ -32,9 +33,9 @@ function UserCard({ logoutUser }: UserCardProps) {
     })),
   });
   return (
-    <div className='dark:bg-gray-900 bg-white rounded-lg p-4 dark:text-white max-w-xl max-h-max'>
-      <UserHead hover={false} user={user} size={'2xl'} />
-      {user.isModerator && (
+    <div className='dark:bg-gray-900 bg-white rounded-lg p-4 dark:text-white max-w-xl h-fit'>
+      <UserHead hover={false} user={user!} size={'2xl'} />
+      {user!.isModerator && (
         <div>
           <h3 className='w-fit m-2 text-blue-400'>Roles</h3>
           <div className='dark:bg-gray-950 bg-gray-100 p-3 rounded-md'>
@@ -46,21 +47,21 @@ function UserCard({ logoutUser }: UserCardProps) {
       <div className='flex flex-col'>
         <h3 className='w-fit m-2 text-blue-400'>About</h3>
         <div className='dark:bg-gray-950 bg-gray-100 p-3 rounded-md max-h-80 overflow-scroll'>
-          <p>{user.bio ? `${user.bio}` : 'I need no introduction.'}</p>
+          <p>{user!.bio ? `${user!.bio}` : 'I need no introduction.'}</p>
         </div>
       </div>
 
-      {user.website !== '' && (
+      {user!.website !== '' && (
         <div className='flex flex-col'>
           <h3 className='w-fit m-2 text-blue-400'>Personal Site</h3>
           <div className='dark:bg-gray-950 bg-gray-100 p-3 rounded-md'>
-            <a href={`${user.website}`} rel='noreferrer' target='_blank'>
-              {user.website}
+            <a href={`${user!.website}`} rel='noreferrer' target='_blank'>
+              {user!.website}
             </a>
           </div>
         </div>
       )}
-      {user.rooms.length !== 0 ? (
+      {user!.rooms.length !== 0 ? (
         <div>
           <h3 className='text-blue-400 w-fit m-2'>Active Rooms</h3>
           <div className='gap-1 overflow-scroll flex'>
@@ -92,7 +93,7 @@ function UserCard({ logoutUser }: UserCardProps) {
       ) : (
         <>
           <h3 className='text-blue-400 w-fit m-2'>Active Rooms</h3>
-          <p>{user.username} hasn't joined any rooms yet.</p>
+          <p>{user!.username} hasn't joined any rooms yet.</p>
         </>
       )}
       {isCurrentUser && (
