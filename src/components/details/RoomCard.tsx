@@ -1,5 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { UserContext, TokenContext } from '../../App';
 import { Room } from '../../types/Interfaces';
 

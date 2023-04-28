@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { TokenContext, UserContext } from '../../App';
-import { useQueries, useQuery } from '@tanstack/react-query';
+import { useQueries } from '@tanstack/react-query';
 import { Link, useParams } from 'react-router-dom';
 import { BallTriangle } from 'react-loading-icons';
 import OptionsEllipses from '../utilities/OptionsEllipses';

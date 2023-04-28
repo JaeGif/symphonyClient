@@ -1,17 +1,14 @@
-import React, { useContext, useState, useEffect } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { UserContext, TokenContext } from '../../App';
+import { TokenContext } from '../../App';
 const apiURL = import.meta.env.VITE_SOCKET_ADDRESS;
-import { Room } from '../../types/Interfaces';
 import { useOutletContext } from 'react-router';
 
 type HeaderProps = {
   room: string | undefined;
 };
 function Header({ room }: HeaderProps) {
-  const user = useContext(UserContext);
   const token = useContext(TokenContext);
-  const [openW, setOpenW] = useState('');
 
   const context: { toggleChats: Function; isShowingCurrent: boolean } =
     useOutletContext();

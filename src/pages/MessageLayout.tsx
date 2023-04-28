@@ -8,7 +8,6 @@ type MessageLayoutProps = {
   refreshUserData: Function;
 };
 function MessageLayout({ refreshUserData }: MessageLayoutProps) {
-  const outlet = useOutlet();
   const [isShowingCurrent, setIsShowingCurrent] = useState(true);
   const toggleChats = () => {
     setIsShowingCurrent(!isShowingCurrent);

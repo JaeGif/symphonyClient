@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { Outlet, useParams } from 'react-router';
 import { TokenContext } from '../App';
 import { useQuery } from '@tanstack/react-query';

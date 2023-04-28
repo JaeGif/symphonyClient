@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import gfm from 'remark-gfm'; // GH flavored markdown plugin
 import remarkGemoji from 'remark-gemoji';
 import ReactMarkdown from 'react-markdown';
@@ -6,7 +6,7 @@ import UserHead from '../users/UserHead';
 import Timestamp from '../utilities/Timestamp';
 import { MessageType } from '../../types/Interfaces';
 import { ThemeContext, TokenContext, UserContext } from '../../App';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import MessageOptions from '../modals/messageOptions/MessageOptions';
 import { AnimatePresence } from 'framer-motion';
 import TextareaAutosize from 'react-textarea-autosize';

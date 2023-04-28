@@ -1,7 +1,5 @@
-import React from 'react';
 import { User } from '../../types/Interfaces';
 import { useNavigate } from 'react-router';
-const apiURL = import.meta.env.VITE_SOCKET_ADDRESS;
 
 type UserHeadProps = {
   user: User;

@@ -1,7 +1,6 @@
 import React, { useContext, useRef, useState, useEffect } from 'react';
 import TailSpin from 'react-loading-icons/dist/esm/components/tail-spin';
 import { ThemeContext, TokenContext, UserContext } from '../../App';
-import style from './options.module.css';
 
 const apiURL: string = import.meta.env.VITE_SOCKET_ADDRESS;
 

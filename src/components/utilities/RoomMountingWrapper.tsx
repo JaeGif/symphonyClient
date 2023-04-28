@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { Navigate, useParams } from 'react-router';
+import { useContext } from 'react';
+import { useParams } from 'react-router';
 import { UserContext } from '../../App';
 import Error404 from '../../pages/Error404';
 import Room from '../../pages/Room';

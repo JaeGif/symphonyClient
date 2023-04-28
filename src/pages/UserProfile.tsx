@@ -1,9 +1,6 @@
-import { useQueries } from '@tanstack/react-query';
-import React, { useContext, useEffect, useState } from 'react';
-import { useOutletContext, useParams } from 'react-router';
-import { TokenContext, UserContext } from '../App';
-import UserHead from '../components/users/UserHead';
-import { Room, User } from '../types/Interfaces';
+import { useContext } from 'react';
+import { useParams } from 'react-router';
+import { UserContext } from '../App';
 import EditUser from '../components/users/EditUser';
 import UserCard from '../components/users/UserCard';
 import useIsCurrentUser from '../hooks/useIsCurrentUser';

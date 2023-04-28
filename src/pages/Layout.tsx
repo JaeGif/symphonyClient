@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react';
-import { Outlet, useOutlet } from 'react-router';
+import { useContext, useState } from 'react';
+import { Outlet } from 'react-router';
 import CreateRoom from '../components/modals/createRoom/CreateRoom';
 import Sidebar from '../components/sidebar/Sidebar';
 import { AnimatePresence } from 'framer-motion';

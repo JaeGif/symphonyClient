@@ -1,11 +1,10 @@
-import React, { useState, useContext, ReactNode, CSSProperties } from 'react';
+import { useContext, ReactNode, CSSProperties } from 'react';
 import { GiStaticWaves } from 'react-icons/gi';
 import { RiCompass3Fill } from 'react-icons/ri';
 import { BsPlus } from 'react-icons/bs';
 import { FiSettings } from 'react-icons/fi';
 import { MdOutlineLightMode, MdDarkMode } from 'react-icons/md';
 import { Link } from 'react-router-dom';
-import { useSpring, animated } from '@react-spring/web';
 import { UserContext } from '../../App';
 type IconProps = {
   icon: ReactNode;
@@ -24,8 +23,8 @@ const Icon = ({ icon, text, style }: IconProps) => {
     </div>
   );
 };
-const AnimatedSun = animated(Icon);
-const AnimatedMoon = animated(Icon);
+const AnimatedSun = Icon;
+const AnimatedMoon = Icon;
 type SidebarProps = {
   theme: 'light' | 'dark';
   setTheme: Function;

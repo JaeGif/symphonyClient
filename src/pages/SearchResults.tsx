@@ -1,4 +1,3 @@
-import React from 'react';
 import RoomCard from '../components/details/RoomCard';
 import uniqid from 'uniqid';
 import { Room } from '../types/Interfaces';

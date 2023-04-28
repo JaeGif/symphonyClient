@@ -1,33 +1,24 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import Message from '../messaging/Message';
-import { useInfiniteQuery, useMutation } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import { TokenContext } from '../../App';
 import LoadingChat from '../utilities/LoadingChat';
 import { MessageType } from '../../types/Interfaces';
 import uniqid from 'uniqid';
-import { useOutletContext } from 'react-router';
 const apiURL = import.meta.env.VITE_SOCKET_ADDRESS;
 type BodyProps = {
   room: string | undefined;
   recievedMessage: MessageType;
 };
 function Body({ room, recievedMessage }: BodyProps) {
-  const context: { toggleChats: Function; isShowingCurrent: boolean } =
-    useOutletContext();
   const [currentThread, setCurrentThread] = useState<MessageType[]>([]);
   const [savedMessages, setSavedMessages] = useState<MessageType[]>([]);
-  const [openW, setOpenW] = useState('');
 
   const ref = useRef<HTMLDivElement | null>(null);
   const skeletonMap = [1];
 
   const token = useContext(TokenContext);
   const returnLimit = 10;
-
-  useEffect(() => {
-    if (context.isShowingCurrent) setOpenW('-5vw');
-    else if (!context.isShowingCurrent) setOpenW('');
-  }, [context.isShowingCurrent]);
 
   const removeMessage = (_id: string) => {
     for (let i = 0; i < currentThread.length; i++) {

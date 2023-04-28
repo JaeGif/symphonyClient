@@ -1,6 +1,6 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { useOutlet, useOutletContext, useParams } from 'react-router';
-import { User, Room } from '../../types/Interfaces';
+import { useContext } from 'react';
+import { useParams } from 'react-router';
+import { Room } from '../../types/Interfaces';
 import { TokenContext, UserContext } from '../../App';
 import { useQueries } from '@tanstack/react-query';
 import UserHead from './UserHead';

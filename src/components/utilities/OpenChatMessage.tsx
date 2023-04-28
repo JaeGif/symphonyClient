@@ -1,5 +1,3 @@
-import React from 'react';
-
 function OpenChatMessage() {
   return (
     <div className='flex p-6'>

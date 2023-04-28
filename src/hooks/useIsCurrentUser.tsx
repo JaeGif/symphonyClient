@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function useIsCurrentUser(loggedInUserID: string, userID: string) {
   const [loggedInIsCurrent, setLoggedInIsCurrent] = useState<boolean>(false);

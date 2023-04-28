@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import * as io from 'socket.io-client';
 import { UserContext } from '../App';
 import Thread from '../components/messaging/Thread';

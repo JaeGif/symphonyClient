@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import style from './effects.module.css';
 
 function Background() {

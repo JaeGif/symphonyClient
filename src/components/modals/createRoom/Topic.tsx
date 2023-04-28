@@ -1,4 +1,3 @@
-import React, { ReactNode } from 'react';
 type TopicProps = {
   handleTopicSelection: Function;
   title: string;

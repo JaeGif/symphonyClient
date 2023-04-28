@@ -1,4 +1,3 @@
-import React from 'react';
 import Topic from './Topic';
 type TopicsListProps = {
   handleTopicSelection: Function;

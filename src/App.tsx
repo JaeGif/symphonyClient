@@ -1,10 +1,4 @@
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Navigate,
-  useNavigate,
-} from 'react-router-dom';
+import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 
 import React, { useState, useEffect } from 'react';
 import Layout from './pages/Layout';
@@ -15,9 +9,7 @@ import UserProfile from './pages/UserProfile';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Error404 from './pages/Error404';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import RoomMountingWrapper from './components/utilities/RoomMountingWrapper';
-import SearchResults from './pages/SearchResults';
 import { User } from './types/Interfaces';
 const UserContext = React.createContext<User | null>(null);
 const TokenContext = React.createContext<string | null>(null);

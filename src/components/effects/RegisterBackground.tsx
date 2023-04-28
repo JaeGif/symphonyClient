@@ -1,4 +1,3 @@
-import React from 'react';
 import style from './effects.module.css';
 
 function RegisterBackground() {

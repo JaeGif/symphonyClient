@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import ChangeUserInformation from './ChangeUserInformation';
 import ChangePassword from './ChangePassword';
 import { motion, AnimatePresence } from 'framer-motion';
