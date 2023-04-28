@@ -9,7 +9,7 @@ type TimestampProps = {
 function Timestamp({ timestamp, username, user }: TimestampProps) {
   const navigate = useNavigate();
   return (
-    <div className='flex gap-2'>
+    <div className='flex gap-2 w-fit'>
       <p>
         <em
           onClick={() => {

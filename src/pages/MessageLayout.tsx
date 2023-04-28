@@ -19,8 +19,11 @@ function MessageLayout({ refreshUserData }: MessageLayoutProps) {
   });
   return (
     <div {...swipeHandlers} className='flex w-screen overflow-hidden'>
-      <div className={isShowingCurrent ? 'hidden' : 'flex'}>
-        <CurrentChats refreshUserData={refreshUserData} />
+      <div className={isShowingCurrent ? 'flex' : 'hidden'}>
+        <CurrentChats
+          refreshUserData={refreshUserData}
+          isShowing={isShowingCurrent}
+        />
       </div>
       {<Outlet context={{ toggleChats, isShowingCurrent }} /> || (
         <OpenChatMessage />

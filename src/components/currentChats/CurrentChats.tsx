@@ -8,8 +8,9 @@ import uniqid from 'uniqid';
 const apiURL: string = import.meta.env.VITE_SOCKET_ADDRESS;
 type CurrentChatsProps = {
   refreshUserData: Function;
+  isShowing: boolean;
 };
-function CurrentChats({ refreshUserData }: CurrentChatsProps) {
+function CurrentChats({ refreshUserData, isShowing }: CurrentChatsProps) {
   const loggedInUser = useContext(UserContext);
   const token = useContext(TokenContext);
   const roomParam = useParams();
@@ -36,7 +37,7 @@ function CurrentChats({ refreshUserData }: CurrentChatsProps) {
   return (
     <div
       style={{ transform: 'scaleX(-1)' }}
-      className={`sm:w-1/5 max-h-[calc(100vh-4rem)] sm:max-h-[100vh] w-fit dark:bg-gray-800 bg-gray-100 shadow-sm overflow-scroll`}
+      className={`max-h-[calc(100vh-4rem)] sm:max-h-[100vh] w-fit dark:bg-gray-800 bg-gray-100 shadow-sm overflow-scroll`}
     >
       {roomsQueries.map((query) =>
         query.isSuccess ? (

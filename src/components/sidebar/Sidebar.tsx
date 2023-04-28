@@ -43,7 +43,7 @@ function Sidebar({
     theme === 'light' ? setTheme('dark') : setTheme('light');
   };
   return (
-    <nav className='fixed h-16 w-screen bottom-0 sm:top-0 left-0 sm:h-screen sm:w-16 flex dark:bg-gray-900 dark:border-none bg-gray-300 border-r-[1px] border-gray-300 dark:text-white shadow-lg'>
+    <nav className='fixed h-16 w-screen bottom-0 sm:top-0 left-0 sm:h-screen sm:w-16 flex dark:bg-gray-900 dark:border-none bg-gray-300 border-r-[1px] border-gray-300 dark:text-white shadow-lg z-50'>
       <div className='flex w-full justify-evenly sm:h-screen sm:flex-col sm:justify-start'>
         <Link to={user?.rooms[0] ? `/messages/${user?.rooms[0]}` : '/messages'}>
           <Icon icon={<GiStaticWaves size={32} />} text={'My Rooms'} />

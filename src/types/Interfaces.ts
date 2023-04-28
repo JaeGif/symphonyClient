@@ -25,5 +25,6 @@ export interface MessageType {
   room: string | undefined;
   user: User | null;
   message: string | undefined;
+  seen: boolean | undefined;
   timestamp: string;
 }

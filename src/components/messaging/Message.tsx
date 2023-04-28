@@ -83,67 +83,73 @@ function Message({ message, removeMessage }: MessageProps) {
     setIsEditing(true);
   };
   return (
-    <div
-      className={`max-w-[100vw] flex hover:dark:bg-gray-600 p-3 hover:bg-gray-300 justify-between relative`}
-    >
-      <div className='flex gap-2 items-center'>
-        <UserHead
-          hover={false}
-          user={message.user!}
-          isUsername={false}
-          size={'md'}
-        />
-        <div>
-          <Timestamp
-            timestamp={message.timestamp}
+    <div>
+      <div
+        className={`flex hover:dark:bg-gray-600 p-3 hover:bg-gray-300 justify-between relative`}
+      >
+        <div className='flex gap-2 items-center'>
+          <UserHead
+            hover={false}
             user={message.user!}
-            username={message.user!.username}
+            isUsername={false}
+            size={'md'}
           />
-          {isEditing ? (
-            <TextareaAutosize
-              rows={1}
-              onInput={(e: any) => {
-                e.target.dataset.replicatedValue = e.value;
-              }}
-              className='p-2.5 dark:bg-gray-600 m-3 mt-1 mr-0 w-full focus:outline-none resize-none rounded-lg placeholder-gray-500 shadow-md drop-shadow-sm'
-              onKeyDown={(e) => handleEnterPress(e)}
-              onChange={(e) => setEdits(e.target.value)}
-              defaultValue={edits}
-            ></TextareaAutosize>
-          ) : (
-            <ReactMarkdown
-              className='w-4/5 break-words'
-              remarkPlugins={[gfm, remarkGemoji]}
-            >
-              {edits !== message.message ? `${edits}` : `${message.message!}`}
-            </ReactMarkdown>
-          )}
+          <div className='max-w-fit'>
+            <Timestamp
+              timestamp={message.timestamp}
+              user={message.user!}
+              username={message.user!.username}
+            />
+            {isEditing ? (
+              <TextareaAutosize
+                rows={1}
+                onInput={(e: any) => {
+                  e.target.dataset.replicatedValue = e.value;
+                }}
+                className='p-2.5 dark:bg-gray-600 m-3 mt-1 mr-0 w-full focus:outline-none resize-none rounded-lg placeholder-gray-500 shadow-md drop-shadow-sm'
+                onKeyDown={(e) => handleEnterPress(e)}
+                onChange={(e) => setEdits(e.target.value)}
+                defaultValue={edits}
+              ></TextareaAutosize>
+            ) : (
+              <div>
+                <ReactMarkdown
+                  className='break-all'
+                  remarkPlugins={[gfm, remarkGemoji]}
+                >
+                  {edits !== message.message
+                    ? `${edits}`
+                    : `${message.message!}`}
+                </ReactMarkdown>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
-      {user?._id === message.user?._id && !visibleOptions && (
-        <img
-          className='hover:cursor-pointer h-8 sm:h-auto'
-          onClick={(e) => {
-            e.stopPropagation();
-            setVisibleOptions(true);
-          }}
-          src={
-            theme === 'dark'
-              ? '/assets/favicons/ellipses.svg'
-              : '/assets/favicons/ellipses-black.svg'
-          }
-          alt='message options'
-        />
-      )}
-      <AnimatePresence>
-        {visibleOptions && (
-          <MessageOptions
-            handleDelete={handleDelete}
-            openEdit={openEdit}
-            closeOptions={setVisibleOptions}
+        {user?._id === message.user?._id && !visibleOptions && (
+          <img
+            className='hover:cursor-pointer h-8 '
+            onClick={(e) => {
+              e.stopPropagation();
+              setVisibleOptions(true);
+            }}
+            src={
+              theme === 'dark'
+                ? '/assets/favicons/ellipses.svg'
+                : '/assets/favicons/ellipses-black.svg'
+            }
+            alt='message options'
           />
         )}
-      </AnimatePresence>
+        <AnimatePresence>
+          {visibleOptions && (
+            <MessageOptions
+              handleDelete={handleDelete}
+              openEdit={openEdit}
+              closeOptions={setVisibleOptions}
+            />
+          )}
+        </AnimatePresence>
+      </div>
     </div>
   );
 }

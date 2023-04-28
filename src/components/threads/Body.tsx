@@ -5,19 +5,29 @@ import { TokenContext } from '../../App';
 import LoadingChat from '../utilities/LoadingChat';
 import { MessageType } from '../../types/Interfaces';
 import uniqid from 'uniqid';
+import { useOutletContext } from 'react-router';
 const apiURL = import.meta.env.VITE_SOCKET_ADDRESS;
 type BodyProps = {
   room: string | undefined;
   recievedMessage: MessageType;
 };
 function Body({ room, recievedMessage }: BodyProps) {
+  const context: { toggleChats: Function; isShowingCurrent: boolean } =
+    useOutletContext();
   const [currentThread, setCurrentThread] = useState<MessageType[]>([]);
   const [savedMessages, setSavedMessages] = useState<MessageType[]>([]);
+  const [openW, setOpenW] = useState('');
+
   const ref = useRef<HTMLDivElement | null>(null);
   const skeletonMap = [1];
 
   const token = useContext(TokenContext);
   const returnLimit = 10;
+
+  useEffect(() => {
+    if (context.isShowingCurrent) setOpenW('-5vw');
+    else if (!context.isShowingCurrent) setOpenW('');
+  }, [context.isShowingCurrent]);
 
   const removeMessage = (_id: string) => {
     for (let i = 0; i < currentThread.length; i++) {
@@ -92,9 +102,7 @@ function Body({ room, recievedMessage }: BodyProps) {
   return (
     <div
       ref={ref}
-      className={
-        'overflow-scroll h-[calc(100vh-10rem)] sm:h-[calc(100vh-7rem)] flex flex-1 flex-col-reverse'
-      }
+      className={`overflow-y-scroll overflow-x-hidden h-[calc(100vh-10rem)] sm:h-[calc(100vh-7rem)] flex flex-1 flex-col-reverse`}
     >
       <div>
         {currentThread.length !== 0 &&
