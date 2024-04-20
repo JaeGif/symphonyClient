@@ -83,15 +83,26 @@ function Login({ loginUser, loginStatus }: LoginProps) {
               />
             </div>
             <div>
-              <button
-                onClick={() => {
-                  setIsLoading(true);
-                  loginUser(username, password);
-                }}
-                className='h-8 bg-blue-800 hover:bg-blue-700 w-full rounded-sm text-md flex justify-center items-center'
-              >
-                {isLoading ? <Bars className='h-5' /> : 'Login'}
-              </button>
+              <div className='flex flex-col gap-2'>
+                <button
+                  onClick={() => {
+                    setIsLoading(true);
+                    loginUser(username, password);
+                  }}
+                  className='h-8 bg-blue-800 hover:bg-blue-700 w-full rounded-sm text-md flex justify-center items-center'
+                >
+                  {isLoading ? <Bars className='h-5' /> : 'Login'}
+                </button>
+                <button
+                  onClick={() => {
+                    setIsLoading(true);
+                    loginUser('Guest123', '4%HZ43SdnY")mMR');
+                  }}
+                  className='h-8 bg-green-800 hover:bg-green-700 w-full rounded-sm text-md flex justify-center items-center'
+                >
+                  {isLoading ? <Bars className='h-5' /> : 'Guest Login'}
+                </button>
+              </div>
               <Link
                 className='text-blue-500 text-sm'
                 to='/register'

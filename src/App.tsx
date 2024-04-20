@@ -99,6 +99,7 @@ function App() {
       fetchUserData(data.user, data.token);
     }
   };
+
   const logoutUser = async () => {
     setIsLoggedIn(false);
     setLoggedInUser(null);
